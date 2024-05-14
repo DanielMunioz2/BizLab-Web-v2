@@ -141,7 +141,7 @@ if (document.querySelector(".registroHTML") !== null) {
   //
 
   //INPUTS
-
+  console.log("registro");
   const nombreRegisInput = document.querySelector(".nombreRegisInput");
   const apellidoRegisInput = document.querySelector(".apellidoRegisInput");
   const documentoInput = document.querySelector(".documentoInput");
