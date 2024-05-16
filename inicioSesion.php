@@ -49,7 +49,7 @@
                         </form>     
                         <div class="divRegistrar">
                             <div>
-                                <span>¿Olvidó su contraseña? <a href="recuperarContra.php">Recuperar</a></span>
+                                <span>¿Olvidó su contraseña? <a href="recuperarContrasenia.php">Recuperar</a></span>
                             </div>
                             <div>
                                 <span>¿No tiene cuenta? <a href="registro.php">Regístrese aquí</a></span>

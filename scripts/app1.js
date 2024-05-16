@@ -125,7 +125,7 @@ if (document.querySelector("#iniSesionHTML") !== null) {
 
 //
 //
-//<<-- Registro Inicio-->>
+//<<-- Registro Inicio -->>
 //
 //
 
@@ -1469,6 +1469,11 @@ if (document.querySelector(".registroHTML") !== null) {
     window.location.href = "index.php";
   });
 
+  btnCancelarRegisM.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "index.php";
+  });
+
   //
   //--------------------------------------------------------------------------
   //
@@ -1522,6 +1527,8 @@ if (document.querySelector(".registroHTML") !== null) {
   //
 }
 
+//
+//
 //<<-- Registro Fin -->>
 //
 //
@@ -1532,5 +1539,383 @@ if (document.querySelector(".registroHTML") !== null) {
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
+//
+//
+
+//
+//
+//<<-- recuperarContraseña.php INICIO -->>
+//
+//
+
+if (document.querySelector(".recuvaContraHTML") !== null) {
+  //SELECION OBJETOS DEL DOM
+  //
+
+  //CONTENEDORES
+  const form2Contenedor = document.querySelector(".conteForm2");
+
+  //FORM
+  const formCambioPassConfir = document.querySelector("#formCambioPassConfir");
+
+  //INPUTS
+  const correoInput = document.querySelector(".correoExisRecuInput");
+  const codigoInput = document.querySelector(".codigoInput");
+  const inputOConfirmado = document.querySelector(".esend");
+
+  //SPAN
+  const spanErrCorreo = document.querySelector(".spanErrCorreo1");
+  const spanErrCodigo = document.querySelector(".spanErrCodigo");
+  const spanCorreoEnviar = document.querySelector(".spanCorreo2");
+
+  //BOTONES
+  const btnCancelar = document.querySelector(".btnCancelar");
+  const btnEnviar = document.querySelector(".btnEnviar");
+  const btnVerifCodi = document.querySelector(".btnCodiVerif");
+  const aReenviarCodigo = document.querySelector(".reenviarA");
+
+  //
+  //SELECION OBJETOS DEL DOM
+
+  //
+
+  //EVENTOS
+  //
+
+  correoInput.addEventListener("input", (e) => {
+    var correo = correoInput.value;
+    var url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+
+    if (correo.length != 0) {
+      let formCorreoRecuContra = new FormData();
+
+      formCorreoRecuContra.append("correoRecuContra", correo);
+      formCorreoRecuContra.append("userVerifi", true);
+
+      fetch(url, {
+        method: "POST",
+        body: formCorreoRecuContra,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data == true) {
+            spanErrCorreo.textContent = "Correo Encontrado";
+            spanErrCorreo.style.color = "#2d0";
+            spanErrCorreo.style.opacity = "1";
+            btnEnviar.classList.replace("btnEnv1", "btnEnv2");
+            btnEnviar.removeAttribute("disabled");
+          } else {
+            if (data == false) {
+              spanErrCorreo.textContent = "El Correo NO existe";
+              spanErrCorreo.style.opacity = "1";
+              spanErrCorreo.style.color = "#f30";
+              if (btnEnviar.removeAttribute("disabled") == null) {
+                btnEnviar.setAttribute("disabled", "");
+                btnEnviar.classList.replace("btnEnv2", "btnEnv1");
+              }
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      spanErrCorreo.textContent = "#";
+      spanErrCorreo.style.opacity = "0";
+      btnCancelar.classList.replace("btnCancelar1", "btnCancelar2");
+      if (btnEnviar.removeAttribute("disabled") == null) {
+        btnEnviar.setAttribute("disabled", "");
+        btnEnviar.classList.replace("btnEnv2", "btnEnv1");
+      }
+    }
+  });
+
+  btnEnviar.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (correoInput.value.trim() != "") {
+      btnEnviar.setAttribute("disabled", "");
+      btnEnviar.classList.replace("btnEnv2", "btnEnv1");
+
+      btnCancelar.setAttribute("disabled", "");
+      btnCancelar.classList.replace("btnCan1", "btnCan2");
+
+      let correo = correoInput.value.trim();
+      let url = "http://localhost/BizLab-Web-v2/enviarContraRecu.php";
+      var cod = "";
+
+      let formRecuContra = new FormData();
+
+      formRecuContra.append("correoUser", correo);
+      formRecuContra.append("send", true);
+
+      fetch(url, {
+        method: "POST",
+        body: formRecuContra,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          cod = data;
+          btnVerifCodi.addEventListener(
+            "click",
+            (funcionEnv1 = (e) => {
+              e.preventDefault();
+              console.log("boton codigo verificar tocado");
+              let codigo = codigoInput.value;
+
+              if (cod != codigo && codigo.length != 0) {
+                spanErrCodigo.textContent =
+                  "El código es incorrecto, intente de nuevo";
+                spanErrCodigo.style.opacity = "1";
+              } else {
+                if (cod == codigo && codigo.length != 0) {
+                  spanErrCodigo.textContent = "#";
+                  spanErrCodigo.style.opacity = "0";
+                  cod = "";
+                  codigoInput.value = "";
+                  correoInput.value = "";
+                  console.log("te fuiste por el boton normal");
+                  inputOConfirmado.value = spanCorreoEnviar.textContent;
+                  document.getElementById("formCambioPassConfir").submit();
+                }
+              }
+            })
+          );
+
+          aReenviarCodigo.addEventListener("click", (e) => {
+            cod = "";
+            btnVerifCodi.removeEventListener("click", funcionEnv1);
+            console.log("boton codigo REENVIAR tocado");
+            btnVerifCodi.setAttribute("disabled", "");
+            let correo = correoInput.value.trim();
+            let url = "http://localhost/BizLab-Web-v2/enviarContraRecu.php";
+
+            let formRecuContraRe = new FormData();
+
+            formRecuContraRe.append("correoUser", correo);
+            formRecuContraRe.append("send", true);
+
+            fetch(url, {
+              method: "POST",
+              body: formRecuContraRe,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                cod = data;
+                btnVerifCodi.removeAttribute("disabled");
+                btnVerifCodi.addEventListener("click", (e) => {
+                  e.preventDefault();
+
+                  console.log("boton codigo verificar tocado");
+                  let codigo = codigoInput.value;
+
+                  if (data != codigo && codigo.length != 0) {
+                    spanErrCodigo.textContent =
+                      "El código es incorrecto, intente de nuevo";
+                    spanErrCodigo.style.opacity = "1";
+                  } else {
+                    if (data == codigo && codigo.length != 0) {
+                      spanErrCodigo.textContent = "#";
+                      spanErrCodigo.style.opacity = "0";
+                      cod = "";
+                      codigoInput.value = "";
+                      correoInput.value = "";
+                      console.log("te fuiste por boton REENVIADO");
+                      inputOConfirmado.value = spanCorreoEnviar.textContent;
+                      document.getElementById("formCambioPassConfir").submit();
+                    }
+                  }
+                });
+              })
+              .catch((err) => console.log(err));
+          });
+
+          spanCorreoEnviar.textContent = correoInput.value;
+          spanErrCorreo.textContent = "Enviado";
+
+          btnCancelar.removeAttribute("disabled");
+          btnCancelar.classList.replace("btnCan1", "btnCan2");
+          btnVerifCodi.style.cursor = "pointer";
+          btnVerifCodi.removeAttribute("disabled");
+
+          form2Contenedor.style.opacity = "1";
+
+          codigoInput.style.cursor = "text";
+
+          aReenviarCodigo.style.cursor = "pointer";
+        })
+        .catch((err) => console.log(err));
+    }
+  });
+
+  btnCancelar.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "inicioSesion.php";
+  });
+
+  //
+  //EVENTOS
+}
+
+//
+//
+//<<-- recuperarContraseña.php FIN -->>
+//
+//
+
+//
+//
+//
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//
+//
+//
+
+//
+//
+//<<-- recuperarContraseña2.php INICIO -->>
+//
+//
+
+if (document.querySelector(".recuvaContra2HTML") !== null) {
+  //INPUTS
+  const contraNewInput = document.querySelector(".contraNewInput");
+  const contraNewInputConfir = document.querySelector(".contraNewInputConfir");
+
+  //SPAN
+  const spanErrCorreo1 = document.querySelector(".spanErrCorreo1");
+
+  //BOTONES
+  const btnCambioContra = document.querySelector(".btnEnviar");
+  const btnCancel = document.querySelector(".btnCancelar");
+  const ojoAbierto = document.querySelector(".ojoAbierto");
+  const ojoCerrado = document.querySelector(".ojoCerrado");
+
+  //FORM
+  const formContraNew = document.querySelector("#formCambiarContra");
+
+  //
+  //EVENTOS
+  //
+
+  btnCancel.addEventListener("click", (e) => {
+    e.preventDefault();
+    btnCambioContra.setAttribute("disabled", "");
+    btnCambioContra.classList.replace("btnEnv1", "btnEnv2");
+    btnCancel.setAttribute("disabled", "");
+    btnCancel.classList.replace("btnCan1", "btnCan2");
+    window.location.href = "inicioSesion.php";
+  });
+
+  btnCambioContra.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    var contra1 = contraNewInput.value;
+    var contra2 = contraNewInputConfir.value;
+
+    if (contra1 != "" && contra2 != "") {
+      btnCambioContra.setAttribute("disabled", "");
+      btnCambioContra.classList.replace("btnEnv1", "btnEnv2");
+      btnCancel.setAttribute("disabled", "");
+      btnCancel.classList.replace("btnCan1", "btnCan2");
+      spanErrCorreo1.textContent =
+        "Contraseña cambiada con éxito. Redireccionando…";
+      spanErrCorreo1.style.opacity = "1";
+      spanErrCorreo1.style.color = "green";
+      formContraNew.submit();
+    }
+  });
+
+  ojoAbierto.addEventListener("click", () => {
+    ojoAbierto.classList.replace("ojoIconA", "ojoIconA2");
+    ojoCerrado.classList.replace("ojoIconC2", "ojoIconC");
+
+    contraNewInput.removeAttribute("type");
+    contraNewInputConfir.removeAttribute("type");
+
+    contraNewInput.setAttribute("type", "text");
+    contraNewInputConfir.setAttribute("type", "text");
+  });
+
+  ojoCerrado.addEventListener("click", () => {
+    ojoAbierto.classList.replace("ojoIconA2", "ojoIconA");
+    ojoCerrado.classList.replace("ojoIconC", "ojoIconC2");
+
+    contraNewInput.removeAttribute("type");
+    contraNewInputConfir.removeAttribute("type");
+
+    contraNewInput.setAttribute("type", "password");
+    contraNewInputConfir.setAttribute("type", "password");
+  });
+
+  contraNewInput.addEventListener("input", (e) => {
+    var contra1 = contraNewInput.value;
+    var contra2 = contraNewInputConfir.value;
+
+    if (contra1 == "" && contra2 == "") {
+      spanErrCorreo1.textContent = "#";
+      spanErrCorreo1.style.opacity = "0";
+      btnCambioContra.setAttribute("disabled", "");
+      btnCambioContra.classList.replace("btnEnv1", "btnEnv2");
+    } else {
+      if (contra1.length < 9) {
+        spanErrCorreo1.textContent = "La contraseña es muy corta";
+        spanErrCorreo1.style.opacity = "1";
+        btnCambioContra.setAttribute("disabled", "");
+        btnCambioContra.classList.replace("btnEnv1", "btnEnv2");
+      } else {
+        if (contra1.length >= 9 && contra1 != contra2) {
+          spanErrCorreo1.textContent = "Las contraseñas no coinciden";
+          spanErrCorreo1.style.opacity = "1";
+          btnCambioContra.setAttribute("disabled", "");
+          btnCambioContra.classList.replace("btnEnv1", "btnEnv2");
+        } else {
+          if (contra1.length >= 9 && contra1 == contra2) {
+            spanErrCorreo1.textContent = "#";
+            spanErrCorreo1.style.opacity = "0";
+            if (btnCambioContra.getAttribute("disabled") != null) {
+              btnCambioContra.removeAttribute("disabled");
+            }
+            btnCambioContra.classList.replace("btnEnv2", "btnEnv1");
+          }
+        }
+      }
+    }
+  });
+
+  contraNewInputConfir.addEventListener("input", (e) => {
+    let contra1 = contraNewInput.value;
+    let contra2 = contraNewInputConfir.value;
+
+    if (contra1 == "" && contra2 == "") {
+      spanErrCorreo1.textContent = "#";
+      spanErrCorreo1.style.opacity = "0";
+    } else {
+      if (contra1.length < 8) {
+        spanErrCorreo1.textContent = "La contraseña es muy corta";
+        spanErrCorreo1.style.opacity = "1";
+      } else {
+        if (contra1.length >= 8 && contra1 != contra2) {
+          spanErrCorreo1.textContent = "Las contraseñas no coinciden";
+          spanErrCorreo1.style.opacity = "1";
+        } else {
+          spanErrCorreo1.textContent = "#";
+          spanErrCorreo1.style.opacity = "0";
+          if (contra1.length >= 8 && contra1 == contra2) {
+            spanErrCorreo1.textContent = "#";
+            spanErrCorreo1.style.opacity = "0";
+            if (btnCambioContra.getAttribute("disabled") != null) {
+              btnCambioContra.removeAttribute("disabled");
+            }
+            btnCambioContra.classList.replace("btnEnv2", "btnEnv1");
+          }
+        }
+      }
+    }
+  });
+}
+
+//
+//
+//<<-- recuperarContraseña2.php FIN -->>
 //
 //

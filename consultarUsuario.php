@@ -125,6 +125,28 @@
             echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
         }
     }
+
+    if(isset($_POST["correoRecuContra"])){
+        $correoMiembroExi = isset($_POST["correoRecuContra"]) ? $conn->real_escape_string($_POST["correoRecuContra"]) : null;
+    
+        if($correoMiembroExi!=null){
+            $queryCorreoExi = 
+            "SELECT `user_correo` FROM `bizlab`.`usuarios`
+            WHERE `bizlab`.`usuarios`.`user_correo` = '".$correoMiembroExi."';";
+
+            $resultadoCorreo = $conn->query($queryCorreoExi);
+
+            $row = $resultadoCorreo -> fetch_assoc();
+
+            if($row == null){
+                $respuesta = false;
+            }else{
+                $respuesta = true;
+            }
+
+            echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+        }
+    }
     
     if(isset($_POST["fechaVerificar"])){
 
