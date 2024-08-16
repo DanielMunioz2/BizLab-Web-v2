@@ -216,17 +216,20 @@ img {
   padding-top: 1.4rem;
   padding-left: 2rem;
   padding-bottom: 1.4rem;
-  & svg {
+}
+
+.headerDiv1 .cuadroOPerfil2 .div1 div svg {
     width: 2rem;
     height: max-content;
     fill: #002d5699;
-  }
-  & span {
-    font-size: 1.6rem;
-    margin-left: 1rem;
-    color: #002d56aa;
-  }
 }
+
+.headerDiv1 .cuadroOPerfil2 .div1 div span {
+  font-size: 1.6rem;
+  margin-left: 1rem;
+  color: #002d56aa;
+}
+
 .headerDiv1 .cuadroOPerfil2 .div1 button {
   width: 100%;
   display: flex;
@@ -296,7 +299,9 @@ img {
   width: 100%;
   display: flex;
   height: max-content;
-  & button {
+}
+
+.headerDiv1 .cuadroOPerfil2 .div3 button {
     font-size: 1.6rem;
     width: 100%;
     padding: 1.8rem;
@@ -305,21 +310,23 @@ img {
     color: #002d56aa;
     transition: 0.2s;
     cursor: pointer;
-    & svg {
+}
+
+.headerDiv1 .cuadroOPerfil2 .div3 button svg {
       width: 2rem;
       height: max-content;
       fill: #002d56aa;
       margin-right: 1rem;
       transition: 0.2s;
-    }
-    &:hover {
-      background-color: #002d5633;
-      color: #ffffff;
-      & svg {
-        fill: #ffffff;
-      }
-    }
-  }
+}
+
+.headerDiv1 .cuadroOPerfil2 .div3 button:hover {
+  background-color: #002d5633;
+  color: #ffffff;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div3 button:hover svg {
+    fill: #ffffff;
 }
 
 .header .headerNav{
@@ -328,29 +335,33 @@ img {
   width: 100%;
   display: flex;
   border-bottom: .5rem solid #7A97CC;
-  & ul{
+}
+
+.header .headerNav ul{
     width: 100%;
     height: 100%;
     display: flex;
     padding-left: 3rem;
     justify-content: flex-start;
-    & li{
+}
+
+.header .headerNav ul li{
       width: max-content;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-right: 1.4rem;
-      &:last-child{
-        margin-right: 0;
-      }
-      & a{
-        font-size: 1.6rem;
-        font-weight: 600;
-        color: #183a6d;
-      }
-    }
-  }
+}
+
+.header .headerNav ul li:last-child{
+  margin-right: 0;
+}
+
+.header .headerNav ul li a{
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #183a6d;
 }
 
 .body {
@@ -361,14 +372,16 @@ img {
   display: flex;
   flex-direction: column;
   padding-bottom: 14rem;
-  &::-webkit-scrollbar {
+}
+
+.body::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 1rem;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 1rem;
-    background-color: #004f7866;
-  }
+}
+
+.body::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #004f7866;
 }
 
 .footer{
@@ -379,11 +392,12 @@ img {
   justify-content: end;
   position: absolute;
   bottom: 0;
-  align-items: center;
-  & .red {
+  align-items: center;  
+}
+
+.footer .red {
     padding: 2rem;
     padding-bottom: 2rem;
-  }
 }
 
 .main {
