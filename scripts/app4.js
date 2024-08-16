@@ -64,7 +64,7 @@ if(document.querySelector("#reservasAdminHTML") != null){
 
         // Urls
 
-            var urlInfoAdmin = "http://localhost/BizLab/consultarInfoAdmin.php";
+            var urlInfoAdmin = "http://165.22.176.119/BizLab/consultarInfoAdmin.php";
         
         //-------------------------------------------------------------------------------------
 

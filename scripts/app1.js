@@ -155,7 +155,7 @@ if(document.querySelector("#iniSesionHTML") !== null) {
     if (inputCorreo.value !== "" && inputContraseña.value !== "") {
       let correo = inputCorreo.value;
       let contraseña = inputContraseña.value;
-      let url = "http://localhost/BizLab/consultarUsuario.php";
+      let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
       let formUserLogin = new FormData();
 
@@ -635,7 +635,7 @@ if (document.querySelector(".registroHTML") !== null) {
       ) {
         let documentoComprobar = documentoInput.value;
 
-        let url = "http://localhost/BizLab/consultarUsuario.php";
+        let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
         let formDocumentoVerificar = new FormData();
 
@@ -684,7 +684,7 @@ if (document.querySelector(".registroHTML") !== null) {
       fecha = fechaNInputRegis.value.trim();
     }
 
-    let url = "http://localhost/BizLab/consultarUsuario.php";
+    let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
     let formFechaVerificar = new FormData();
 
@@ -774,7 +774,7 @@ if (document.querySelector(".registroHTML") !== null) {
     if (erroneos[5] == 0 && telefonoInputRegis.value.length != 0) {
       let telefonoExistente = telefonoInputRegis.value;
 
-      let url = "http://localhost/BizLab/consultarUsuario.php";
+      let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
       let formTelefVerificar = new FormData();
 
@@ -911,7 +911,7 @@ if (document.querySelector(".registroHTML") !== null) {
     if (erroneos[9] == 0 && inputCorreo.value.length != 0) {
       let correoExistente = inputCorreo.value;
 
-      let url = "http://localhost/BizLab/consultarUsuario.php";
+      let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
       let formCorreoVerificar = new FormData();
 
@@ -995,7 +995,7 @@ if (document.querySelector(".registroHTML") !== null) {
     if (erroneos[11] == 0 && correoAdminInput.value.length != 0) {
       let correoAdminExis = correoAdminInput.value;
 
-      let url = "http://localhost/BizLab/consultarUsuario.php";
+      let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
       let formCorreoAVerifi = new FormData();
 
@@ -1474,7 +1474,7 @@ if (document.querySelector(".registroHTML") !== null) {
 
       if (estadoBTNA != false) {
         let codAcceso = inputCodigoAcce.value.trim();
-        let url = "http://localhost/BizLab/consultarUsuario.php";
+        let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
         let formRegisAdmin = new FormData();
 
@@ -1559,7 +1559,7 @@ if (document.querySelector(".registroHTML") !== null) {
                 // formRegisAdmin.append("nitAdmin", 0);
                 // formRegisAdmin.append("userVerifi", true);
 
-                // fetch("http://localhost/BizLab/consultarUsuario.php", {
+                // fetch("http://165.22.176.119/BizLab/consultarUsuario.php", {
                 //   method: "POST",
                 //   body: formRegisAdmin,
                 // })
@@ -1782,7 +1782,7 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
 
   correoInput.addEventListener("input", (e) => {
     var correo = correoInput.value;
-    var url = "http://localhost/BizLab/consultarUsuario.php";
+    var url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
     if (correo.length != 0) {
       let formCorreoRecuContra = new FormData();
@@ -2224,7 +2224,7 @@ if (document.querySelector(".confirmarCorreoHTML") != null) {
                 formRegisMiembro.append("nitMiembro", inputNitM.value);
                 formRegisMiembro.append("userVerifi", true);
 
-                fetch("http://localhost/BizLab/consultarUsuario.php", {
+                fetch("http://165.22.176.119/BizLab/consultarUsuario.php", {
                   method: "POST",
                   body: formRegisMiembro,
                 })
@@ -2295,7 +2295,7 @@ if (document.querySelector(".confirmarCorreoHTML") != null) {
                   );
                   formRegisMiembro.append("userVerifi", true);
 
-                  fetch("http://localhost/BizLab/consultarUsuario.php", {
+                  fetch("http://165.22.176.119/BizLab/consultarUsuario.php", {
                     method: "POST",
                     body: formRegisMiembro,
                   })

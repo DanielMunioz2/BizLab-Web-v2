@@ -4,7 +4,7 @@
 
   // URLS para consultas a la base de datos
 
-    var urlBuscarInfoAdminDB = "http://localhost/BizLab/consultarInfoAdmin.php";
+    var urlBuscarInfoAdminDB = "http://165.22.176.119/BizLab/consultarInfoAdmin.php";
 
   //-------------------------------------------------------------------------------------------------
 
