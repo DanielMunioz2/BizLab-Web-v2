@@ -10,312 +10,344 @@
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
   outline: none;
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .header{
   width: 100%;
   height: 16rem;
   background: linear-gradient(0deg, rgba(217,219,224,1) 0%, rgb(100, 113, 209) 100%);
-  & .headerDiv1{
+}
+
+.header .headerDiv1{
+  width: 100%;
+  height: 70%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  background: linear-gradient(0deg, #0c79b4 0%, #086496 100%);;
+}
+
+.headerDiv1 .divLogo{
+  width: max-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 3rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.headerDiv1 .divLogo svg{
+  width: 6rem;
+  height: max-content;
+}
+
+.headerDiv1 .divPerfilGene{
+  width: max-content;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  padding-right: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.headerDiv1 .divPerfilGene .divPerfil{
+  width: 10rem;
+  height: 10rem;
+  background-color: #ffffff88;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.headerDiv1 .divPerfilGene .divPerfil:hover{
+  background-color: #e4f2ffaa;
+}
+
+.headerDiv1 .divPerfilGene .divPerfil:hover .divImg{
+  background-color: #e4f2ffaa;
+}
+
+.headerDiv1 .divPerfilGene .divPerfil:hover .divImg img{
+  width: 106%;
+  height: 106%;
+  position: absolute;
+}
+
+.headerDiv1 .divPerfilGene .divPerfil .divImg{
+  width: 9rem;
+  height: 9rem;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border-radius: 100%;
+  overflow: hidden;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  padding: .2rem;
+  border: 2px solid #003e5f66;
+  transition: .3s;
+}
+
+.headerDiv1 .divPerfilGene .divPerfil .divImg img{
+  transition: .3s;
+  border-radius: 50%;
+  border: 4px solid #003e5f66;
+}
+
+.headerDiv1 .divBtnInicioRegis{
+  width: max-content;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.headerDiv1 .divBtnInicioRegis .divBtnInicio{
+  width: max-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.headerDiv1 .divBtnInicioRegis .divBtnInicio .btnIniSesion{
+  cursor: pointer;
+  width: max-content;
+  height: max-content;
+  font-size: 1.8rem;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  color: #ffffff;
+  font-weight: 600;
+  background-color: #2e97cf;
+  transition: .3s; 
+}
+
+.headerDiv1 .divBtnInicioRegis .divBtnInicio .btnIniSesion:hover{
+  background-color: #67beed;
+}
+
+.headerDiv1 .divBtnInicioRegis .divBtnRegis{
+  width: max-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 2rem;
+}
+
+.headerDiv1 .divBtnInicioRegis .divBtnRegis .btnRegis{
+  cursor: pointer;
+  width: max-content;
+  height: max-content;
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  color: #2e97cf;
+  transition: .3s;
+}
+
+.headerDiv1 .divBtnInicioRegis .divBtnRegis .btnRegis:hover{
+  background-color: #dcdcdc;
+}
+
+.headerDiv1 .cuadroOPerfil1 {
+  height: 0rem;
+  width: 0rem;
+  box-shadow: none;
+  overflow: hidden;
+  position: absolute;
+  transform-origin: top left;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.headerDiv1 .cuadroOPerfil2 {
+  display: flex;
+  position: absolute;
+  z-index: 1000;
+  width: 50rem;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  top: 100%;
+  right: 2rem;
+  transition: 0.3s;
+  overflow: hidden;
+  background-color: #e9e8e8;
+  transform-origin: top right;
+  box-shadow: 0.2rem 0.4rem 0.4rem #33333355;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div1 {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #002d5622;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div1 div {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  padding-top: 1.4rem;
+  padding-left: 2rem;
+  padding-bottom: 1.4rem;
+  & svg {
+    width: 2rem;
+    height: max-content;
+    fill: #002d5699;
+  }
+  & span {
+    font-size: 1.6rem;
+    margin-left: 1rem;
+    color: #002d56aa;
+  }
+}
+.headerDiv1 .cuadroOPerfil2 .div1 button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 1.8rem;
+  font-size: 1.6rem;
+  color: #002d56aa;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div1 button svg {
+  width: 2rem;
+  height: max-content;
+  fill: #002d56aa;
+  margin-right: 1rem;
+  transition: 0.2s;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div1 button:hover {
+  background-color: #002d5633;
+  color: #ffffff;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div1 button:hover svg {
+  fill: #ffffff;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div2 {
+  width: 100%;
+  display: flex;
+  height: max-content;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div2 a {
+  width: 100%;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div2 button {
+  font-size: 1.6rem;
+  width: 100%;
+  padding: 1.8rem;
+  display: flex;
+  justify-content: flex-start;
+  color: #002d56aa;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div2 button svg {
+  width: 2rem;
+  height: max-content;
+  fill: #002d56aa;
+  margin-right: 1rem;
+  transition: 0.2s;
+}
+.headerDiv1 .cuadroOPerfil2 .div2 button:hover {
+  background-color: #002d5633;
+  color: #ffffff;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div2 button:hover svg {
+  fill: #ffffff;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div3 {
+  width: 100%;
+  display: flex;
+  height: max-content;
+  & button {
+    font-size: 1.6rem;
     width: 100%;
-    height: 70%;
+    padding: 1.8rem;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-    background: linear-gradient(0deg, #0c79b4 0%, #086496 100%);;
-    & .divLogo{
-      width: max-content;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding-left: 3rem;
-      position: absolute;
-      top: 0;
-      left: 0;
-      & svg{
-        width: 6rem;
-        height: max-content;
-      }
-    }
-    & .divPerfilGene{
-      width: max-content;
-      height: 100%;
-      padding: 0;
-      margin: 0;
-      padding-right: 3rem;
-      display: flex;
-      align-items: center;
-      & .divPerfil{
-        width: 10rem;
-        height: 10rem;
-        background-color: #ffffff88;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        position: relative;
-        align-items: center;
-        border-radius: 100%;
-        cursor: pointer;
-        transition: .3s;
-        &:hover{
-          background-color: #e4f2ffaa;
-          & .divImg{
-            background-color: #e4f2ffaa;
-            & img{
-              width: 106%;
-              height: 106%;
-              position: absolute;
-            }
-          }
-        }
-        & .divImg{
-          width: 9rem;
-          height: 9rem;
-          margin: 0;
-          padding: 0;
-          position: relative;
-          border-radius: 100%;
-          overflow: hidden;
-          display: flex;
-          overflow: hidden;
-          align-items: center;
-          justify-content: center;
-          padding: .2rem;
-          border: 2px solid #003e5f66;
-          transition: .3s;
-          & img{
-            transition: .3s;
-            border-radius: 50%;
-            border: 4px solid #003e5f66;
-          }
-        }
-      }
-    }
-    & .divBtnInicioRegis{
-      width: max-content;
-      height: 100%;
-      display: flex;
-      justify-content: flex-end;
-      & .divBtnInicio{
-        width: max-content;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 1rem;
-        & .btnIniSesion{
-          cursor: pointer;
-          width: max-content;
-          height: max-content;
-          font-size: 1.8rem;
-          padding: 1rem 2rem;
-          border-radius: 1rem;
-          color: #ffffff;
-          font-weight: 600;
-          background-color: #2e97cf;
-          transition: .3s;
-          &:hover{
-            background-color: #67beed;
-          }
-        }
-      }
-      & .divBtnRegis{
-        width: max-content;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 2rem;
-        & .btnRegis{
-          cursor: pointer;
-          width: max-content;
-          height: max-content;
-          font-size: 1.8rem;
-          font-weight: 600;
-          padding: 1rem 2rem;
-          border-radius: 1rem;
-          color: #2e97cf;
-          transition: .3s;
-          &:hover{
-            background-color: #dcdcdc;
-          }
-        }
-      }
-    }
-    & .cuadroOPerfil1 {
-      height: 0rem;
-      width: 0rem;
-      box-shadow: none;
-      overflow: hidden;
-      position: absolute;
-      transform-origin: top left;
-      transition: 0.3s;
-      z-index: 1000;
-    }
-    & .cuadroOPerfil2 {
-      display: flex;
-      position: absolute;
-      z-index: 1000;
-      width: 50rem;
+    justify-content: flex-start;
+    color: #002d56aa;
+    transition: 0.2s;
+    cursor: pointer;
+    & svg {
+      width: 2rem;
       height: max-content;
-      display: flex;
-      flex-direction: column;
-      border-radius: 1rem;
-      top: 100%;
-      right: 2rem;
-      transition: 0.3s;
-      overflow: hidden;
-      background-color: #e9e8e8;
-      transform-origin: top right;
-      box-shadow: 0.2rem 0.4rem 0.4rem #33333355;
-      & .div1 {
-        width: 100%;
-        height: max-content;
-        display: flex;
-        flex-direction: column;
-        border-bottom: 1px solid #002d5622;
-        & div {
-          width: 100%;
-          height: max-content;
-          display: flex;
-          align-items: center;
-          padding-top: 1.4rem;
-          padding-left: 2rem;
-          padding-bottom: 1.4rem;
-          & svg {
-            width: 2rem;
-            height: max-content;
-            fill: #002d5699;
-          }
-          & span {
-            font-size: 1.6rem;
-            margin-left: 1rem;
-            color: #002d56aa;
-          }
-        }
-        & button {
-          width: 100%;
-          display: flex;
-          justify-content: flex-start;
-          padding: 1.8rem;
-          font-size: 1.6rem;
-          color: #002d56aa;
-          cursor: pointer;
-          transition: 0.2s;
-          & svg {
-            width: 2rem;
-            height: max-content;
-            fill: #002d56aa;
-            margin-right: 1rem;
-            transition: 0.2s;
-          }
-          &:hover {
-            background-color: #002d5633;
-            color: #ffffff;
-            & svg {
-              fill: #ffffff;
-            }
-          }
-        }
-      }
-      & .div2 {
-        width: 100%;
-        display: flex;
-        height: max-content;
-        & a {
-          width: 100%;
-        }
-        & button {
-          font-size: 1.6rem;
-          width: 100%;
-          padding: 1.8rem;
-          display: flex;
-          justify-content: flex-start;
-          color: #002d56aa;
-          transition: 0.2s;
-          cursor: pointer;
-          & svg {
-            width: 2rem;
-            height: max-content;
-            fill: #002d56aa;
-            margin-right: 1rem;
-            transition: 0.2s;
-          }
-          &:hover {
-            background-color: #002d5633;
-            color: #ffffff;
-            & svg {
-              fill: #ffffff;
-            }
-          }
-        }
-      }
-      & .div3 {
-        width: 100%;
-        display: flex;
-        height: max-content;
-        & button {
-          font-size: 1.6rem;
-          width: 100%;
-          padding: 1.8rem;
-          display: flex;
-          justify-content: flex-start;
-          color: #002d56aa;
-          transition: 0.2s;
-          cursor: pointer;
-          & svg {
-            width: 2rem;
-            height: max-content;
-            fill: #002d56aa;
-            margin-right: 1rem;
-            transition: 0.2s;
-          }
-          &:hover {
-            background-color: #002d5633;
-            color: #ffffff;
-            & svg {
-              fill: #ffffff;
-            }
-          }
-        }
+      fill: #002d56aa;
+      margin-right: 1rem;
+      transition: 0.2s;
+    }
+    &:hover {
+      background-color: #002d5633;
+      color: #ffffff;
+      & svg {
+        fill: #ffffff;
       }
     }
   }
-  & .headerNav{
-    background-color: #c4cee4;
-    height: 30%;
+}
+
+.header .headerNav{
+  background-color: #c4cee4;
+  height: 30%;
+  width: 100%;
+  display: flex;
+  border-bottom: .5rem solid #7A97CC;
+  & ul{
     width: 100%;
+    height: 100%;
     display: flex;
-    border-bottom: .5rem solid #7A97CC;
-    & ul{
-      width: 100%;
+    padding-left: 3rem;
+    justify-content: flex-start;
+    & li{
+      width: max-content;
       height: 100%;
       display: flex;
-      padding-left: 3rem;
-      justify-content: flex-start;
-      & li{
-        width: max-content;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 1.4rem;
-        &:last-child{
-          margin-right: 0;
-        }
-        & a{
-          font-size: 1.6rem;
-          font-weight: 600;
-          color: #183a6d;
-        }
+      align-items: center;
+      justify-content: center;
+      margin-right: 1.4rem;
+      &:last-child{
+        margin-right: 0;
+      }
+      & a{
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #183a6d;
       }
     }
   }

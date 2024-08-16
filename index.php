@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -111,7 +110,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Inicio BizClub</title>
-        <link rel="stylesheet" href="estilos/index.scss">
+        <link rel="stylesheet" href="estilos/index.css">
     </head>
     <body class="body">
         <?php echo $htmlHeaderIniciado; ?>
@@ -465,6 +464,3 @@
         </footer>        
     </body>
 </html>
-
-
->>>>>>> c0f0eb050c40ff493f01653c3df5f021d9518d1b
