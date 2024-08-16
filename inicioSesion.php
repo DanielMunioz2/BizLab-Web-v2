@@ -19,7 +19,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Inicia Sesión</title>
-        <link rel="stylesheet" href="estilos\inicioSesion.scss">
+        <link rel="stylesheet" href="estilos/inicioSesion.css">
     </head>
     <body class="body">
         <main class="main">
