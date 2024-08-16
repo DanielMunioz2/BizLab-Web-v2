@@ -9,7 +9,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registrar Persona</title>
-        <link rel="stylesheet" href="estilos\registro.scss">
+        <link rel="stylesheet" href="estilos/registro.css">
     </head>
     <body class="body">
         <main class="main">

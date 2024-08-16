@@ -257,7 +257,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php echo $crear?></title>
-        <link rel="stylesheet" href="estilos\crearProd.scss">
+        <link rel="stylesheet" href="estilos/crearProd.css">
     </head>
     <body class="body">
         <header class="header">

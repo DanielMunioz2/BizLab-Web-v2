@@ -92,7 +92,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Membresías BizClub</title>
-    <link rel="stylesheet" href="estilos\membresiasCliente.scss">
+    <link rel="stylesheet" href="estilos/membresiasCliente.css">
 </head>
 <body class="body">
     <header class="header"> 

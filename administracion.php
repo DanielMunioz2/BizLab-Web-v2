@@ -26,7 +26,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BizClub Administración</title>
-        <link rel="stylesheet" href="estilos\administracion.scss">
+        <link rel="stylesheet" href="estilos/administracion.css">
 
         <input type="hidden" value="<?php echo($datosString); ?>" id="arrayNombresInput" name="arrayNombresInput">
         <input type="hidden" value="<?php echo $_SESSION["stdProd"];?>" class="stdProd">

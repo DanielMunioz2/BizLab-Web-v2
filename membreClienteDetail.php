@@ -839,7 +839,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $resultMembresia["membre_nombre"].' - Detalles'; ?></title>
-    <link rel="stylesheet" href="estilos\membreClienteDetail.scss">
+    <link rel="stylesheet" href="estilos/membreClienteDetail.css">
     
     <input class="ivaMembre" type="hidden" value="<?php echo $resultMembresia["membre_iva"]; ?>">
     <input class="descuMembre" type="hidden" value="<?php echo $resultMembresia["membre_descuento"]; ?>">

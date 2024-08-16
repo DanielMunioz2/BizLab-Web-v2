@@ -29,7 +29,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar Nuevo Miembro</title>
-    <link rel="stylesheet" href="estilos\confirmarNuevoMiembro.scss">
+    <link rel="stylesheet" href="estilos/confirmarNuevoMiembro.css">
     <input type="text" value="<?php echo $nombreM?>" class="inputNom">
     <input type="text" value="<?php echo $apellidoM?>" class="inputApe">
     <input type="text" value="<?php echo $documentoM?>" class="inputDocu">

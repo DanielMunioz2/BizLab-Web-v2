@@ -32,7 +32,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Nueva Contraseña</title>
-        <link rel="stylesheet" href="estilos\recuperarContraseña2.scss">
+        <link rel="stylesheet" href="estilos/recuperarContraseña2.css">
     </head>
     <body class="body">
         <main class="main">

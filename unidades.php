@@ -40,7 +40,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servicios</title>
-    <link rel="stylesheet" href="estilos/reservas.scss">
+    <link rel="stylesheet" href="estilos/reservas.css">
     <style>
         body {
             margin: 0;

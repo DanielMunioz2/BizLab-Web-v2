@@ -29,7 +29,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservas BizClub</title>
-    <link rel="stylesheet" href="estilos\reservas.scss">
+    <link rel="stylesheet" href="estilos/reservas.css">
 
     <!-- Datos Usuario -->
     <input type="hidden" id="idUserIniciado" value="<?php echo $resultadoUser["id_usuario"]; ?>">

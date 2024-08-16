@@ -84,7 +84,7 @@ if(isset($_SESSION["iniciado"])){
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Nueva Reserva BizClub</title>
-        <link rel="stylesheet" href="estilos\productosClientes.scss">
+        <link rel="stylesheet" href="estilos/realizaReseCliente.css">
         <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
 
         <!-- Datos del usuario iniciado -->

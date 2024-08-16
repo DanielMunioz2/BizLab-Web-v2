@@ -37,7 +37,7 @@
     <title>Informacion Usuario</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilos/miembros.scss">
+    <link rel="stylesheet" href="estilos/miembros.css">
 </head>
 <body>
 <header class="header">

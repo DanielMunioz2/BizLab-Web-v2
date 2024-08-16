@@ -356,7 +356,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura de Compra - Nueva Reserva</title>
-    <link rel="stylesheet" href="estilos\factuCompraRese.scss">
+    <link rel="stylesheet" href="estilos/factuCompraRese.css">
 </head>
 <body class="body">
     <main class="main">

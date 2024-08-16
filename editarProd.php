@@ -550,7 +550,7 @@
         <input type="hidden" value="<?php echo $tipo?>" name="tipoEditEli">
         <input type="hidden" value="<?php echo $imagen?>" name="imagen">
     </form>
-    <link rel="stylesheet" href="estilos\editarProd.scss">
+    <link rel="stylesheet" href="estilos/editarProd.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>

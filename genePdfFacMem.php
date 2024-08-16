@@ -224,7 +224,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Compra Exitosa</title>
-        <link rel="stylesheet" href="estilos\genePdfFacMem.scss">
+        <link rel="stylesheet" href="estilos/genePdfFacMem.css">
 
         <!-- Form Descargar Factura -->
         <form
