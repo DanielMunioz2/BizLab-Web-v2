@@ -13,7 +13,7 @@
         $contraseña = isset($_POST["contraseñaUser"]) ? $conn->real_escape_string($_POST["contraseñaUser"]) : null;
 
         if($correo!==null && $contraseña!==null){
-            $queryUser = "SELECT * FROM `bizlab`.`usuarios` 
+            $queryUser = "SELECT * FROM `bizlabDB`.`usuarios` 
             WHERE `usuarios`.`user_correo` = '".$correo."';";
 
             $resultadoUser = $conn->query($queryUser);
@@ -52,8 +52,8 @@
         
         if($documento!=null){
             $queryDocumento = 
-            "SELECT `user_documento` FROM `bizlab`.`usuarios`
-            WHERE `bizlab`.`usuarios`.`user_documento` = ".$documento.";";
+            "SELECT `user_documento` FROM `bizlabDB`.`usuarios`
+            WHERE `bizlabDB`.`usuarios`.`user_documento` = ".$documento.";";
 
             $resultadoDocumento = $conn->query($queryDocumento);
 
@@ -75,8 +75,8 @@
     
         if($telef!=null){
             $queryTelefonoExi = 
-            "SELECT `user_telefono` FROM `bizlab`.`usuarios`
-            WHERE `bizlab`.`usuarios`.`user_telefono` = ".$telef.";";
+            "SELECT `user_telefono` FROM `bizlabDB`.`usuarios`
+            WHERE `bizlabDB`.`usuarios`.`user_telefono` = ".$telef.";";
 
             $resultadoTelefono = $conn->query($queryTelefonoExi);
 
@@ -97,8 +97,8 @@
     
         if($correoMiembroExi!=null){
             $queryCorreoExi = 
-            "SELECT `user_correo` FROM `bizlab`.`usuarios`
-            WHERE `bizlab`.`usuarios`.`user_correo` = '".$correoMiembroExi."';";
+            "SELECT `user_correo` FROM `bizlabDB`.`usuarios`
+            WHERE `bizlabDB`.`usuarios`.`user_correo` = '".$correoMiembroExi."';";
 
             $resultadoCorreo = $conn->query($queryCorreoExi);
 
@@ -119,8 +119,8 @@
     
         if($correoMiembroExi!=null){
             $queryCorreoExi = 
-            "SELECT `user_correo` FROM `bizlab`.`usuarios`
-            WHERE `bizlab`.`usuarios`.`user_correo` = '".$correoMiembroExi."';";
+            "SELECT `user_correo` FROM `bizlabDB`.`usuarios`
+            WHERE `bizlabDB`.`usuarios`.`user_correo` = '".$correoMiembroExi."';";
 
             $resultadoCorreo = $conn->query($queryCorreoExi);
 
@@ -141,8 +141,8 @@
     
         if($correoMiembroExi!=null){
             $queryCorreoExi = 
-            "SELECT `user_correo` FROM `bizlab`.`usuarios`
-            WHERE `bizlab`.`usuarios`.`user_correo` = '".$correoMiembroExi."';";
+            "SELECT `user_correo` FROM `bizlabDB`.`usuarios`
+            WHERE `bizlabDB`.`usuarios`.`user_correo` = '".$correoMiembroExi."';";
 
             $resultadoCorreo = $conn->query($queryCorreoExi);
 
@@ -193,7 +193,7 @@
         $row = "";
 
         if($codigoAcce!=null){
-            $queryCodAdmi = "SELECT * FROM `bizlab`.`codigoadmin` 
+            $queryCodAdmi = "SELECT * FROM `bizlabDB`.`codigoadmin` 
             WHERE `codigoadmin`.`codigoAdmin` = '".$codigoAcce."';";
 
             $resultadoAdmiCode = $conn->query($queryCodAdmi);
@@ -242,7 +242,7 @@
         $fechaYHoraU = $fechaActual." ".$horaActual;
 
         $queryRegisMiembro =
-        "INSERT INTO `bizlab`.`usuarios`(
+        "INSERT INTO `bizlabDB`.`usuarios`(
             `user_nombre`, 
             `user_apellido`, 
             `user_correo`, 
