@@ -216,17 +216,20 @@ img {
   padding-top: 1.4rem;
   padding-left: 2rem;
   padding-bottom: 1.4rem;
-  & svg {
+}
+
+.headerDiv1 .cuadroOPerfil2 .div1 div svg {
     width: 2rem;
     height: max-content;
     fill: #002d5699;
-  }
-  & span {
-    font-size: 1.6rem;
-    margin-left: 1rem;
-    color: #002d56aa;
-  }
 }
+
+.headerDiv1 .cuadroOPerfil2 .div1 div span {
+  font-size: 1.6rem;
+  margin-left: 1rem;
+  color: #002d56aa;
+}
+
 .headerDiv1 .cuadroOPerfil2 .div1 button {
   width: 100%;
   display: flex;
@@ -299,6 +302,7 @@ img {
 }
 
 .headerDiv1 .cuadroOPerfil2 .div3 button {
+<<<<<<< HEAD
   font-size: 1.6rem;
   width: 100%;
   padding: 1.8rem;
@@ -315,6 +319,24 @@ img {
   fill: #002d56aa;
   margin-right: 1rem;
   transition: 0.2s;
+=======
+    font-size: 1.6rem;
+    width: 100%;
+    padding: 1.8rem;
+    display: flex;
+    justify-content: flex-start;
+    color: #002d56aa;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.headerDiv1 .cuadroOPerfil2 .div3 button svg {
+      width: 2rem;
+      height: max-content;
+      fill: #002d56aa;
+      margin-right: 1rem;
+      transition: 0.2s;
+>>>>>>> f309a9b624976a45758aa2bfc3620faf95166ca3
 }
 
 .headerDiv1 .cuadroOPerfil2 .div3 button:hover {
@@ -323,7 +345,11 @@ img {
 }
 
 .headerDiv1 .cuadroOPerfil2 .div3 button:hover svg {
+<<<<<<< HEAD
   fill: #ffffff;
+=======
+    fill: #ffffff;
+>>>>>>> f309a9b624976a45758aa2bfc3620faf95166ca3
 }
 
 .header .headerNav{
@@ -335,6 +361,7 @@ img {
 }
 
 .header .headerNav ul{
+<<<<<<< HEAD
   width: 100%;
   height: 100%;
   display: flex;
@@ -349,6 +376,22 @@ img {
   align-items: center;
   justify-content: center;
   margin-right: 1.4rem;
+=======
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding-left: 3rem;
+    justify-content: flex-start;
+}
+
+.header .headerNav ul li{
+      width: max-content;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1.4rem;
+>>>>>>> f309a9b624976a45758aa2bfc3620faf95166ca3
 }
 
 .header .headerNav ul li:last-child{
@@ -372,8 +415,13 @@ img {
 }
 
 .body::-webkit-scrollbar {
+<<<<<<< HEAD
   -webkit-appearance: none;
   width: 1rem;
+=======
+    -webkit-appearance: none;
+    width: 1rem;
+>>>>>>> f309a9b624976a45758aa2bfc3620faf95166ca3
 }
 
 .body::-webkit-scrollbar-thumb {
@@ -389,12 +437,21 @@ img {
   justify-content: end;
   position: absolute;
   bottom: 0;
+<<<<<<< HEAD
   align-items: center;
 }
 
 .footer .red {
   padding: 2rem;
   padding-bottom: 2rem;
+=======
+  align-items: center;  
+}
+
+.footer .red {
+    padding: 2rem;
+    padding-bottom: 2rem;
+>>>>>>> f309a9b624976a45758aa2bfc3620faf95166ca3
 }
 
 .main {
@@ -494,15 +551,16 @@ a img {
   justify-content: center;
   background-color: #bdbdbd;
   padding: 2rem;
-  padding-top: 0rem;
-  & .contenedor_servicios{
+  padding-top: 0rem; 
+}
+
+.content_serviciosTodo .contenedor_servicios{
     position: relative;
     width: 100%; 
     max-width: 300px;
     height: 400px;
     max-height: 500px;
     margin: 0.5rem; 
-  }
 }
 
 .flex,  .contenedor_principal {
