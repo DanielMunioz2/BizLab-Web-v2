@@ -493,15 +493,16 @@ a img {
   justify-content: center;
   background-color: #bdbdbd;
   padding: 2rem;
-  padding-top: 0rem;
-  & .contenedor_servicios{
+  padding-top: 0rem; 
+}
+
+.content_serviciosTodo .contenedor_servicios{
     position: relative;
     width: 100%; 
     max-width: 300px;
     height: 400px;
     max-height: 500px;
     margin: 0.5rem; 
-  }
 }
 
 .flex,  .contenedor_principal {
