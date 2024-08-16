@@ -36,7 +36,7 @@
   align-items: center;
   overflow: hidden;
   position: absolute;
-  background-color: #c49146;
+  background-color: #004f78;
   bottom: 0;
   & .footer_contenido {
     width: 100%;
@@ -84,18 +84,18 @@
       top: 4rem;
       left: 6rem;
       cursor: pointer;
-      fill: #5c5c5c;
+      fill: #414141aa;
     }
     & .registroSpan {
       font-size: 3.2rem;
       font-weight: 700;
       margin-top: 22rem;
       margin-left: 6rem;
-      color: #5c5c5c;
+      color: #414141aa;
     }
     & .registroSpan2 {
       font-size: 2.8rem;
-      color: #5c5c5c;
+      color: #414141aa;
       margin-top: 1rem;
       margin-left: 6rem;
       margin-bottom: 2.6rem;
@@ -182,7 +182,7 @@
             margin-left: 6rem;
             margin-top: 8rem;
             margin-bottom: 20rem;
-            & .btnCancelar {
+            & .btnCancelarF1-1 {
               width: 20%;
               height: max-content;
               padding: 1rem 2rem;
@@ -192,12 +192,13 @@
               background-color: #a57168;
               color: #eee;
               cursor: pointer;
+              transition: 0.3s;
               &:hover {
                 background-color: #ca978a;
                 color: #422a27;
               }
             }
-            & .btnSigueF1 {
+            & .btnSigue-1 {
               width: 20%;
               height: max-content;
               padding: 1rem 2rem;
@@ -212,7 +213,7 @@
                 color: #272e42;
               }
             }
-            & .btnSigueF2 {
+            & .btnSigue-2 {
               width: 20%;
               height: max-content;
               padding: 1rem 2rem;
@@ -220,6 +221,7 @@
               font-size: 2.2rem;
               background-color: #a7a7a7;
               color: #eee;
+              transition: 0.3s;
             }
           }
           & span {
@@ -302,7 +304,7 @@
           margin-bottom: 10rem;
           margin-left: 6rem;
         }
-        & .btnCancelar1 {
+        & .btnCancelarFM-1 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -312,12 +314,13 @@
           background-color: #a57168;
           color: #eee;
           cursor: pointer;
+          transition: 0.3s;
           &:hover {
             background-color: #ca978a;
             color: #422a27;
           }
         }
-        & .btnCancelar2 {
+        & .btnCancelarFM-2 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -326,8 +329,9 @@
           font-size: 2.2rem;
           background-color: #a7a7a7;
           color: #eee;
+          transition: 0.3s;
         }
-        & .btnAtras1 {
+        & .btnAtrasFM-1 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -337,22 +341,24 @@
           background-color: #a1a1a1;
           color: #eee;
           cursor: pointer;
+          transition: 0.3s;
           &:hover {
             background-color: #cecece;
             color: #3f3f3f;
           }
         }
-        & .btnAtras2 {
+        & .btnAtrasFM-2 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
           border-radius: 1rem;
           margin-right: 2rem;
           font-size: 2.2rem;
-          background-color: #a1a1a1;
+          background-color: #a7a7a7;
           color: #eee;
+          transition: 0.3s;
         }
-        & .btnRegistrar1 {
+        & .btnRegistrarFM-1 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -367,7 +373,7 @@
             color: #272e42;
           }
         }
-        & .btnRegistrar2 {
+        & .btnRegistrarFM-2 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -375,6 +381,7 @@
           font-size: 2.2rem;
           background-color: #a7a7a7;
           color: #eee;
+          transition: 0.3s;
         }
       }
       & .formRegisF3 {
@@ -406,7 +413,7 @@
         & .ojoIconC2Admi {
           display: none;
         }
-        & .btnRegistrarA1 {
+        & .btnRegistrarFA-1 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -421,7 +428,7 @@
             color: #422727;
           }
         }
-        & .btnRegistrarA2 {
+        & .btnRegistrarFA-2 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -429,6 +436,7 @@
           font-size: 2.2rem;
           background-color: #a7a7a7;
           color: #eee;
+          transition: 0.3s;
         }
         & .regisContraDiv {
           position: relative;
@@ -492,7 +500,7 @@
           margin-bottom: 10rem;
           margin-left: 6rem;
         }
-        & .btnCancelarA1 {
+        & .btnCancelarFA-1 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -502,12 +510,13 @@
           background-color: #a57168;
           color: #eee;
           cursor: pointer;
+          transition: 0.3s;
           &:hover {
             background-color: #ca978a;
             color: #422a27;
           }
         }
-        & .btnCancelarA2 {
+        & .btnCancelarFA-2 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -516,8 +525,9 @@
           font-size: 2.2rem;
           background-color: #a7a7a7;
           color: #eee;
+          transition: 0.3s;
         }
-        & .btnAtrasA1 {
+        & .btnAtrasFA-1 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
@@ -527,20 +537,22 @@
           background-color: #a1a1a1;
           color: #eee;
           cursor: pointer;
+          transition: 0.3s;
           &:hover {
             background-color: #cecece;
             color: #3f3f3f;
           }
         }
-        & .btnAtrasA2 {
+        & .btnAtrasFA-2 {
           width: 20%;
           height: max-content;
           padding: 1rem 2rem;
           border-radius: 1rem;
           margin-right: 2rem;
           font-size: 2.2rem;
-          background-color: #a1a1a1;
+          background-color: #a7a7a7;
           color: #eee;
+          transition: 0.3s;
         }
         & .btnRegistrar1 {
           width: 20%;

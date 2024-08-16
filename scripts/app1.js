@@ -1,8 +1,114 @@
-//
-//
-//<<-- Inicio Sesion COMIENZO -->>
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------
+// Funciones y Variables Globales - INICIO
+//------------------------------------------
 
-if (document.querySelector("#iniSesionHTML") !== null) {
+  //-----------------------------------------------------------------------------------------------------------------------------
+  // VARIABLES
+
+  var urlInfoClienteDB = "http://localhost/BizLab/consultarInfoCliente.php";
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+  // FUNCIONES
+  
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------
+// Funciones y Variables Globales - FIN
+//------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------
+// <<-- Index - INICIO -->>
+//---------------------------
+
+if(document.querySelector("#indexHTML") != null){
+
+  //---------------------------------------------------------------------------------------------------------------------------
+  // Tomando elementos del DOM
+
+    // CONTENEDORES
+    const cuadroOPerfil = document.querySelector(".cuadroPOculto");
+    const divPerfilFotoBtn = document.querySelector(".divPerfil");
+    const ajustesCuentaBtn = document.querySelector("#ajustesCuentaBtn"); 
+    const btnCerrarSesion = document.querySelector(".btnCerrar");
+
+  // Tomando elementos del DOM
+  //---------------------------------------------------------------------------------------------------------------------------
+
+  //---------------------------------------------------------------------------------------------------------------------------
+  // FUNCIONES
+
+  // FUNCIONES
+  //---------------------------------------------------------------------------------------------------------------------------
+
+  //---------------------------------------------------------------------------------------------------------------------------
+  // EVENTOS
+
+    // (Click fuera) ocultar cuadro perfil opciones
+    if(document.querySelector("#cuadroPOculto") != null){
+
+      window.addEventListener('click', function mostrarCuadroPerfil(e) {
+
+        if (document.getElementById('divPerfil').contains(e.target)) {
+            
+
+        } else {
+                
+            document.querySelector("#cuadroPOculto").classList.replace("cuadroOPerfil2", "cuadroOPerfil1");
+
+        }
+
+      });
+
+    }
+
+    // Foto Perfil Botón
+    divPerfilFotoBtn.addEventListener("click", () => {
+      if (cuadroOPerfil.classList.contains("cuadroOPerfil1")) {
+          cuadroOPerfil.classList.replace("cuadroOPerfil1", "cuadroOPerfil2");
+      } else {
+          if (cuadroOPerfil.classList.contains("cuadroOPerfil2")) {
+          cuadroOPerfil.classList.replace("cuadroOPerfil2", "cuadroOPerfil1");
+          }
+      }
+    });
+
+    // Botón Ajustes de la Cuenta
+    ajustesCuentaBtn.addEventListener("click", (e) => {
+      
+      e.preventDefault();
+      window.location.href = "usuarioPerfil.php";
+
+    })
+    
+    // Botón Cerrar Sesión
+    btnCerrarSesion.addEventListener("click", (e) => {
+
+      window.location.href = "cerrar.php";
+
+    });
+
+  // EVENTOS
+  //---------------------------------------------------------------------------------------------------------------------------
+  
+
+}
+
+//-------------------------
+// <<-- Index - FIN -->>
+//-------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------
+// <<-- Inicio Sesión - INICIO -->>
+//------------------------------------
+
+if(document.querySelector("#iniSesionHTML") !== null) {
   const inputCorreo = document.querySelector(".inputCorreo");
   const inputContraseña = document.querySelector(".inputContraseña");
   const spanCorreoErr = document.querySelector(".spanErrCorreo");
@@ -14,6 +120,18 @@ if (document.querySelector("#iniSesionHTML") !== null) {
   const ojoIconoC = document.querySelector(".ojoCerrado");
 
   //Comprobando que los inputs no esten vacios antes de iniciar sesion
+  inputCorreo.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
+  inputContraseña.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
   inputCorreo.addEventListener("focus", () => {
     if (!inputCorreo.getAttribute("maxlength")) {
       inputCorreo.setAttribute("maxlength", "50");
@@ -37,7 +155,7 @@ if (document.querySelector("#iniSesionHTML") !== null) {
     if (inputCorreo.value !== "" && inputContraseña.value !== "") {
       let correo = inputCorreo.value;
       let contraseña = inputContraseña.value;
-      let url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+      let url = "http://localhost/BizLab/consultarUsuario.php";
 
       let formUserLogin = new FormData();
 
@@ -51,24 +169,33 @@ if (document.querySelector("#iniSesionHTML") !== null) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          if (data == "No Existe el Usuario") {
+          console.log(data[0]);
+          console.log(data[1]);
+          if (data[0] == 3) {
             spanErrorEntrada.innerHTML = `<span style="color: #f20; font-size:2rem">El usuario que ingresó NO Existe</span>`;
             spanCorreoErr.textContent = "";
             spanContraseñaErr.textContent = "";
           }
-          if (data == "El usuario existe y la contraseña es Incorrecta") {
+          if (data[0] == 2) {
             spanErrorEntrada.innerHTML = `<span style="color: #f20; font-size:2rem">La contraseña es Incorrecta</span>`;
             spanCorreoErr.textContent = "";
             spanContraseñaErr.textContent = "";
           }
-          if (data == "El usuario existe y la contraseña es Correcta") {
+          if (data[0] == 1) {
             spanErrorEntrada.innerHTML = `<span style="color: green; font-size:2rem">Ingresando...</span>`;
             spanCorreoErr.textContent = "";
             spanContraseñaErr.textContent = "";
-            setTimeout(() => {
-              formEntrar.submit();
-            }, 1200);
+            if (data[1] == 1) {
+              setTimeout(() => {
+                window.location.href = "administracion.php";
+              }, 1200);
+            } else {
+              if (data[1] == 2) {
+                setTimeout(() => {
+                  window.location.href = "index.php";
+                }, 1200);
+              }
+            }
           }
         })
         .catch((err) => console.log(err));
@@ -99,6 +226,7 @@ if (document.querySelector("#iniSesionHTML") !== null) {
       inputContraseña.setAttribute("type", "text");
     }
   });
+  
   ojoIconoC.addEventListener("click", (e) => {
     if (ojoIconoC.classList.contains("ojoIconC")) {
       ojoIconoA.classList.replace("ojoIconA2", "ojoIconA");
@@ -110,38 +238,21 @@ if (document.querySelector("#iniSesionHTML") !== null) {
   //Boton mostrar/ocultar contraseña
 }
 
-//<<-- Inicio Sesion FIN -->>
-//
-//
+//-------------------------------
+// <<-- Inicio Sesión - FIN -->>
+//-------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
-//
-//
-//
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//
-//
-
-//
-//
-//<<-- Registro Inicio -->>
-//
-//
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------
+// <<-- Registro - INICIO -->>
+//-----------------------------
 
 if (document.querySelector(".registroHTML") !== null) {
-  //
-  //--------------------------------------------------------------------------
-  //
-
-  //SELECCIONES DEL DOM (REGISTRO.PHP) - INICIO
-
-  //
-  //--------------------------------------------------------------------------
-  //
+  //SELECCIONANDO OBJETOS DEL DOM (REGISTRO.PHP) - INICIO
 
   //INPUTS
-  console.log("registro");
+
   const nombreRegisInput = document.querySelector(".nombreRegisInput");
   const apellidoRegisInput = document.querySelector(".apellidoRegisInput");
   const documentoInput = document.querySelector(".documentoInput");
@@ -163,52 +274,59 @@ if (document.querySelector(".registroHTML") !== null) {
   const inputNit = document.querySelector(".inputNIT");
   const inputCodigoAcce = document.querySelector(".inputCodigoAcce");
 
-  //
-  //--------------------------------------------------------------------------
-  //
+  //FORM INPUTS REGISTRO
+  const inputNomM = document.querySelector(".nomM");
+  const inputApeM = document.querySelector(".apeM");
+  const inputDocuM = document.querySelector(".docuM");
+  const inputFechaM = document.querySelector(".fechaM");
+  const inputTelefM = document.querySelector(".telefM");
+  const inputDireccM = document.querySelector(".dirrecM");
+  const inputRolM = document.querySelector(".rolM");
+  const inputCorreoM = document.querySelector(".correoM");
+  const inputContraM = document.querySelector(".contraM");
+  const inputEmpreM = document.querySelector(".empreM");
+  const inputNitM = document.querySelector(".nitM");
+  const inputCorreoA = document.querySelector(".correoA");
+  const inputContraA = document.querySelector(".contraA");
+  //----------------------------
 
   //BOTONES
 
-  const btnSiguienteF1 = document.querySelector(".btnSiguienteF1");
+  const btnSiguiente = document.querySelector(".btnSiguiente-1");
 
-  const btnAtras = document.querySelector(".btnAtrasRegis");
-  const btnAtrasA = document.querySelector(".btnAtrasRegisA");
+  const btnAtrasM = document.querySelector(".btnAtrasRegisFM");
+  const btnAtrasA = document.querySelector(".btnAtrasRegisFA");
 
-  const btnCancelarRegis = document.querySelector(".btnCancelarRegis");
-  const btnCancelarRegis2 = document.querySelector(".btnCancelRegisF2");
-  const btnCancelarRegisM = document.querySelector(".btnCancelRegisM");
+  const btnCancelarRegis1 = document.querySelector(".btnCancelRegisF1");
+  const btnCancelarRegisM = document.querySelector(".btnCancelRegisFM");
+  const btnCancelarRegisA = document.querySelector(".btnCancelRegisFA");
 
-  const btnRegistrarse = document.querySelector(".btnRegistrarse");
-  const btnRegistrarseA = document.querySelector(".btnRegistrarseAdmin");
+  const btnRegistrarseM = document.querySelector(".btnRegistrarseFM");
+  const btnRegistrarseA = document.querySelector(".btnRegistrarseFA");
 
   const ojoIconoA = document.querySelector(".ojoAbierto");
   const ojoIconoC = document.querySelector(".ojoCerrado");
 
-  const ojoIconoAadmi = document.querySelector(".ojoAbiertoAdmi");
-  const ojoIconoCadmi = document.querySelector(".ojoCerradoAdmi");
-
-  //
-  //--------------------------------------------------------------------------
-  //
+  const ojoIconoA_A = document.querySelector(".ojoAbiertoA");
+  const ojoIconoC_A = document.querySelector(".ojoCerradoA");
 
   //FORMULARIOS
 
   const formRegisF1 = document.querySelector(".formRe1");
   const formRegisF2 = document.querySelector(".formRe2");
   const formRegisF3 = document.querySelector(".formRe3");
-
-  //
-  //----------------------------------------------------------------------------
-  //
+  const formRegistrarseM = document.querySelector("#formRegisMiembro");
 
   //SPAN
 
   const spanRegisPer = document.querySelector(".registroSpan2");
+
   const spanErrNombre = document.querySelector(".sparErrNombre");
   const spanErrApellido = document.querySelector(".sparErrApellido");
   const spanErrDocumento = document.querySelector(".sparErrDocumento");
   const spanErrNacimiento = document.querySelector(".sparErrNacimiento");
   const spanErrTelefono = document.querySelector(".sparErrTelefono");
+  const spanErrDirecc = document.querySelector(".sparErrDireccion");
   const sparErrTipoUser = document.querySelector(".sparErrTipoUser");
   const spanErrCorreoMiembro = document.querySelector(".sparErrCorreo");
   const spanErrNit = document.querySelector(".spanErrNit");
@@ -218,11 +336,7 @@ if (document.querySelector(".registroHTML") !== null) {
   const contraNoCoincide = document.querySelector(".contraNoCoincide");
   const contraNoCoincideA = document.querySelector(".contraNoCoincide2");
 
-  //
-  //----------------------------------------------------------------------------
-  //
-
-  //SELECCIONES DEL DOM (REGISTRO.PHP) - FIN
+  //SELECCIONANDO OBJETOS DEL DOM (REGISTRO.PHP) - FIN
 
   //
   //------------------------------------------------------------------------------
@@ -230,22 +344,15 @@ if (document.querySelector(".registroHTML") !== null) {
 
   //VARIABLES GLOBALES
 
-  var posicionFormRegis = 1;
-  var numeros = "0123456789";
-  var numeros2 = "1234567890+";
-  var numEstado = false;
+  var numeros = "0123456789 ";
+  var numeros2 = "1234567890+ ";
+  var numeros3 = "1234567890- ";
   var arroba = "@";
   var letras = "abcdefghijklmnñopqrstuvwxyz";
-  var estadoInputs1 = true;
 
-  //Array para verificar que los inputs tengan datos correctos (0=true, 1=false);
-  var erroneos = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-  //Array que guardara temporalmente los datos digitados por el usuario
-  var datosUsuario = ["", "", 0, "", 0, "", "", "", "", "", 0];
-
-  var estadoBtn = true;
-  var bloqueadoBoton = null;
+  //Array para verificar que los inputs tengan datos correctos (0=TRUE, 1=FALSE).
+  //Si es FALSE, se desactivarán algunos botones.
+  var erroneos = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   //
   //-----------------------------------------------------------------------------------------
@@ -253,67 +360,76 @@ if (document.querySelector(".registroHTML") !== null) {
 
   //FUNCIONES
 
+  //Funcion para bloquear botones "Registrarse", "Atras" y "Siguiente" basado
+  //en la cantidad de errores representados como 1 en erroneos[]
   const desbloqBloqBoton = () => {
     let suma = 0;
-    console.log(erroneos.length);
+    var estadoInputs = null;
+
     for (let i = 0; i < erroneos.length; i++) {
       suma = suma + erroneos[i];
     }
+
     if (suma != 0) {
-      estadoBtn = false;
+      estadoInputs = false;
     } else {
       if (suma == 0) {
-        estadoBtn = true;
+        estadoInputs = true;
       }
     }
-    if (estadoBtn == false) {
-      btnSiguienteF1.setAttribute("disabled", "");
-      btnSiguienteF1.classList.replace("btnSigueF1", "btnSigueF2");
 
-      btnRegistrarse.setAttribute("disabled", "");
-      btnRegistrarse.classList.replace("btnRegistrar1", "btnRegistrar2");
+    if (estadoInputs == false) {
+      btnSiguiente.setAttribute("disabled", "");
+      btnSiguiente.classList.replace("btnSigue-1", "btnSigue-2");
+
+      btnRegistrarseM.setAttribute("disabled", "");
+      btnRegistrarseM.classList.replace("btnRegistrarFM-1", "btnRegistrarFM-2");
 
       btnRegistrarseA.setAttribute("disabled", "");
-      btnRegistrarseA.classList.replace("btnRegistrarA1", "btnRegistrarA2");
+      btnRegistrarseA.classList.replace("btnRegistrarFA-1", "btnRegistrarFA-2");
 
-      btnAtras.setAttribute("disabled", "");
-      btnAtras.classList.replace("btnAtras1", "btnAtras2");
+      btnAtrasM.setAttribute("disabled", "");
+      btnAtrasM.classList.replace("btnAtrasFM-1", "btnAtrasFM-2");
 
       btnAtrasA.setAttribute("disabled", "");
-      btnAtrasA.classList.replace("btnAtrasA1", "btnAtrasA2");
-
-      bloqueadoBoton = "disabled";
+      btnAtrasA.classList.replace("btnAtrasFA-1", "btnAtrasFA-2");
     } else {
-      if (estadoBtn == true) {
-        if (btnSiguienteF1.getAttribute("disabled") != null) {
-          btnSiguienteF1.removeAttribute("disabled");
-          btnSiguienteF1.classList.replace("btnSigueF2", "btnSigueF1");
-
-          bloqueadoBoton = null;
+      if (estadoInputs == true) {
+        if (btnSiguiente.getAttribute("disabled") != null) {
+          btnSiguiente.removeAttribute("disabled");
+          btnSiguiente.classList.replace("btnSigue-2", "btnSigue-1");
         }
 
-        if (btnAtras.getAttribute("disabled") != null) {
-          btnAtras.removeAttribute("disabled");
-          btnAtras.classList.replace("btnAtras2", "btnAtras1");
+        if (btnAtrasM.getAttribute("disabled") != null) {
+          btnAtrasM.removeAttribute("disabled");
+          btnAtrasM.classList.replace("btnAtrasFM-2", "btnAtrasFM-1");
         }
 
         if (btnAtrasA.getAttribute("disabled") != null) {
           btnAtrasA.removeAttribute("disabled");
-          btnAtrasA.classList.replace("btnAtrasA2", "btnAtrasA1");
+          btnAtrasA.classList.replace("btnAtrasFA-2", "btnAtrasFA-1");
         }
 
-        if (btnRegistrarse.getAttribute("disabled") != null) {
-          btnRegistrarse.removeAttribute("disabled");
-          btnRegistrarse.classList.replace("btnRegistrar2", "btnRegistrar1");
+        if (btnRegistrarseM.getAttribute("disabled") != null) {
+          btnRegistrarseM.removeAttribute("disabled");
+          btnRegistrarseM.classList.replace(
+            "btnRegistrarFM-2",
+            "btnRegistrarFM-1"
+          );
+        }
 
+        if (btnRegistrarseA.getAttribute("disabled") != null) {
           btnRegistrarseA.removeAttribute("disabled");
-          btnRegistrarseA.classList.replace("btnRegistrarA2", "btnRegistrarA1");
-
-          bloqueadoBoton = null;
+          btnRegistrarseA.classList.replace(
+            "btnRegistrarFA-2",
+            "btnRegistrarFA-1"
+          );
         }
       }
     }
+
     console.log(erroneos);
+    return estadoInputs;
   };
 
   const verificarErroneos = (indice, numero) => {
@@ -339,98 +455,102 @@ if (document.querySelector(".registroHTML") !== null) {
 
   //EVENTOS
 
-  //NOMBRE INPUT EVENTO (Registro.php) - INICIO
+  //
+  //NOMBRE INPUT (Registro.php)
+  nombreRegisInput.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
   nombreRegisInput.addEventListener("input", () => {
     let nombre = nombreRegisInput.value;
+    let estNombre = null;
 
     if (nombre.length == 0) {
-      desbloqBloqBoton();
+      spanErrNombre.textContent = "#";
+      spanErrNombre.style.opacity = "0";
+
+      verificarErroneos(0, 0);
     }
-    for1: for (let i = 0; i < nombre.length; i++) {
-      let letraActual = nombre.charAt(i).toLowerCase();
-      for2: for (let e = 0; e < letras.length; e++) {
-        if (letraActual == letras.charAt(e)) {
-          estadoInputs1 = true;
-          break for2;
-        } else {
-          estadoInputs1 = false;
+    if (nombre.length != 0) {
+      for1: for (let i = 0; i < nombre.length; i++) {
+        let letraActual = nombre.charAt(i).toLowerCase();
+        for2: for (let e = 0; e < letras.length; e++) {
+          if (letraActual == letras.charAt(e)) {
+            estNombre = true;
+            break for2;
+          } else {
+            estNombre = false;
+          }
+        }
+        if (estNombre == false) {
+          break for1;
         }
       }
-      if (estadoInputs1 == false) {
-        break for1;
-      }
-    }
-    if (estadoInputs1 == false) {
-      if (nombreRegisInput.value.length == 0) {
-        spanErrNombre.textContent = "#";
-        spanErrNombre.style.opacity = "0";
-        verificarErroneos(0, 0);
-      } else {
-        spanErrNombre.textContent = "No use números ni caracteres especiales";
+
+      if (estNombre == false) {
+        spanErrNombre.textContent =
+          "No utilice números ni caracteres especiales";
         spanErrNombre.style.opacity = "1";
+
         verificarErroneos(0, 1);
-      }
-    } else {
-      if (estadoInputs1 == true) {
-        if (nombreRegisInput.value.length == 0) {
+      } else {
+        if (estNombre == true) {
           spanErrNombre.textContent = "#";
           spanErrNombre.style.opacity = "0";
-          verificarErroneos(0, 0);
-        } else {
-          spanErrNombre.textContent = "#";
-          spanErrNombre.style.opacity = "0";
+
           verificarErroneos(0, 0);
         }
       }
     }
   });
-  //NOMBRE INPUT EVENTO (Registro.php) - FIN
 
-  //APELLIDO INPUT EVENTO (Registro.php) - INICIO
+  //
+  //APELLIDO INPUT (Registro.php)
+  apellidoRegisInput.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
   apellidoRegisInput.addEventListener("input", (e) => {
-    let nombre = apellidoRegisInput.value;
+    let apellido = apellidoRegisInput.value;
+    let estApellido = null;
 
-    if (nombre.length == 0) {
-      desbloqBloqBoton();
+    if (apellido.length == 0) {
+      spanErrApellido.textContent = "#";
+      spanErrApellido.style.opacity = "0";
+
+      verificarErroneos(1, 0);
     }
 
-    for1: for (let i = 0; i < nombre.length; i++) {
-      let letraActual = nombre.charAt(i).toLowerCase();
+    if (apellido.length != 0) {
+      for1: for (let i = 0; i < apellido.length; i++) {
+        let letraActual = apellido.charAt(i).toLowerCase();
 
-      for2: for (let e = 0; e < letras.length; e++) {
-        if (letraActual == letras.charAt(e)) {
-          estadoInputs1 = true;
-          break for2;
-        } else {
-          estadoInputs1 = false;
+        for2: for (let e = 0; e < letras.length; e++) {
+          if (letraActual == letras.charAt(e)) {
+            estApellido = true;
+            break for2;
+          } else {
+            estApellido = false;
+          }
+        }
+
+        if (estApellido == false) {
+          break for1;
         }
       }
 
-      if (estadoInputs1 == false) {
-        break for1;
-      }
-    }
-
-    if (estadoInputs1 == false) {
-      if (apellidoRegisInput.value.length == 0) {
-        spanErrApellido.textContent = "#";
-        spanErrApellido.style.opacity = "0";
-
-        verificarErroneos(1, 0);
-      } else {
-        spanErrApellido.textContent = "No use números ni caracteres especiales";
+      if (estApellido == false) {
+        spanErrApellido.textContent =
+          "No utilice números ni caracteres especiales";
         spanErrApellido.style.opacity = "1";
 
         verificarErroneos(1, 1);
-      }
-    } else {
-      if (estadoInputs1 == true) {
-        if (apellidoRegisInput.value.length == 0) {
-          spanErrApellido.textContent = "#";
-          spanErrApellido.style.opacity = "0";
-
-          verificarErroneos(1, 0);
-        } else {
+      } else {
+        if (estApellido == true) {
           spanErrApellido.textContent = "#";
           spanErrApellido.style.opacity = "0";
 
@@ -439,20 +559,83 @@ if (document.querySelector(".registroHTML") !== null) {
       }
     }
   });
-  //APELLIDO INPUT EVENTO (Registro.php) - FIN
 
-  //DOCUMENTO INPUT EVENTO (Registro.php) - INICIO
-  documentoInput.addEventListener("input", () => {
+  //
+  //DOCUMENTO INPUT (Registro.php)
+  documentoInput.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
+  //Verificar errores (Sin letras ni caracteres especiales)
+  documentoInput.addEventListener("input", (e) => {
+    let documento = documentoInput.value.trim();
+    let estDocumento = null;
+
+    if (documento.length == 0) {
+      spanErrDocumento.textContent = "#";
+      spanErrDocumento.style.opacity = "0";
+
+      verificarErroneos(2, 0);
+    }
+
+    if (documento.length != 0) {
+      if (documento.length < 7 || documento.length > 11) {
+        spanErrDocumento.textContent = "Número de Documento inválido";
+        spanErrDocumento.style.opacity = "1";
+
+        verificarErroneos(2, 1);
+      } else {
+        for1: for (let i = 0; i < documento.length; i++) {
+          let letraActual = documento.charAt(i).toLowerCase();
+
+          for2: for (let e = 0; e < numeros.length; e++) {
+            if (letraActual == numeros.charAt(e)) {
+              estDocumento = true;
+              break for2;
+            } else {
+              estDocumento = false;
+            }
+          }
+
+          if (estDocumento == false) {
+            break for1;
+          }
+        }
+
+        if (estDocumento == false) {
+          spanErrDocumento.textContent =
+            "No utilice letras ni caracteres especiales";
+          spanErrDocumento.style.opacity = "1";
+
+          verificarErroneos(2, 1);
+        } else {
+          if (estDocumento == true) {
+            spanErrDocumento.textContent = "#";
+            spanErrDocumento.style.opacity = "0";
+
+            verificarErroneos(2, 0);
+          }
+        }
+      }
+    }
+  });
+
+  //Comprobamos si existe un Documento similar en la base de datos
+  //si es así, bloquear boton "Siguiente"
+  documentoInput.addEventListener("input", (e) => {
     if (documentoInput.value.length != 0 && erroneos[2] == 0) {
       let documentTamanio = documentoInput.value;
+
       if (
-        documentTamanio.length > 4 &&
+        documentTamanio.length > 6 &&
         documentTamanio.length <= 11 &&
         documentTamanio.length != 0
       ) {
         let documentoComprobar = documentoInput.value;
 
-        let url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+        let url = "http://localhost/BizLab/consultarUsuario.php";
 
         let formDocumentoVerificar = new FormData();
 
@@ -471,12 +654,12 @@ if (document.querySelector(".registroHTML") !== null) {
             if (data == true) {
               spanErrDocumento.textContent = "El documento ya está registrado";
               spanErrDocumento.style.opacity = "1";
-              verificarErroneos(10, 1);
+              verificarErroneos(3, 1);
             } else {
               if (data == false) {
                 spanErrDocumento.textContent = "#";
                 spanErrDocumento.style.opacity = "0";
-                verificarErroneos(10, 0);
+                verificarErroneos(3, 0);
               }
             }
           })
@@ -485,72 +668,15 @@ if (document.querySelector(".registroHTML") !== null) {
     }
   });
 
-  documentoInput.addEventListener("input", (e) => {
-    let nombre = documentoInput.value.trim();
-
-    if (nombre.length == 0) {
-      desbloqBloqBoton();
-    }
-
-    if ((nombre.length < 5 || nombre.length > 11) && nombre.length != 0) {
-      spanErrDocumento.textContent =
-        "Número de Documento inválido (10 dígitos solamente)";
-      spanErrDocumento.style.opacity = "1";
-
-      verificarErroneos(2, 1);
-    } else {
-      verificarErroneos(2, 0);
-
-      for1: for (let i = 0; i < nombre.length; i++) {
-        let letraActual = nombre.charAt(i).toLowerCase();
-
-        for2: for (let e = 0; e < numeros.length; e++) {
-          if (letraActual == numeros.charAt(e)) {
-            estadoInputs1 = true;
-            break for2;
-          } else {
-            estadoInputs1 = false;
-          }
-        }
-
-        if (estadoInputs1 == false) {
-          break for1;
-        }
-      }
-
-      if (estadoInputs1 == false) {
-        if (documentoInput.value.length == 0) {
-          spanErrDocumento.textContent = "#";
-          spanErrDocumento.style.opacity = "0";
-
-          verificarErroneos(2, 0);
-        } else {
-          spanErrDocumento.textContent =
-            "No use letras ni caracteres especiales";
-          spanErrDocumento.style.opacity = "1";
-
-          verificarErroneos(2, 1);
-        }
-      } else {
-        if (estadoInputs1 == true) {
-          if (documentoInput.value.length == 0) {
-            spanErrDocumento.textContent = "#";
-            spanErrDocumento.style.opacity = "0";
-
-            verificarErroneos(2, 0);
-          } else {
-            spanErrDocumento.textContent = "#";
-            spanErrDocumento.style.opacity = "0";
-
-            verificarErroneos(2, 0);
-          }
-        }
-      }
+  //
+  //FECHA NACIMIENTO INPUT (Registro.php)
+  fechaNInputRegis.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
     }
   });
-  //DOCUMENTO INPUT EVENTO (Registro.php) - FIN
 
-  //FECHA NACIMIENTO INPUT EVENTO (Registro.php) - INICIO
+  //Verfificamos que la fecha de nacimiento sea lógica
   fechaNInputRegis.addEventListener("input", () => {
     let fecha = null;
 
@@ -558,7 +684,7 @@ if (document.querySelector(".registroHTML") !== null) {
       fecha = fechaNInputRegis.value.trim();
     }
 
-    let url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+    let url = "http://localhost/BizLab/consultarUsuario.php";
 
     let formFechaVerificar = new FormData();
 
@@ -572,29 +698,83 @@ if (document.querySelector(".registroHTML") !== null) {
       .then((response) => response.json())
       .then((data) => {
         if (data == false) {
-          spanErrNacimiento.textContent = "Introduzca una fecha válida";
+          spanErrNacimiento.textContent = "Digite su fecha de nacimiento";
           spanErrNacimiento.style.opacity = "1";
 
-          verificarErroneos(3, 1);
+          verificarErroneos(4, 1);
         } else {
           if (data == true) {
             spanErrNacimiento.textContent = "#";
             spanErrNacimiento.style.opacity = "0";
 
-            verificarErroneos(3, 0);
+            verificarErroneos(4, 0);
           }
         }
       })
       .catch((err) => console.log(err));
   });
-  //FECHA NACIMIENTO INPUT EVENTO (Registro.php) - FIN
 
+  //
   //TELEFONO INPUT EVENTO (Registro.php) - INICIO
+  telefonoInputRegis.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
   telefonoInputRegis.addEventListener("input", (e) => {
-    if (erroneos[4] == 0 && telefonoInputRegis.value.length != 0) {
+    let telefono = telefonoInputRegis.value.trim();
+    let estTelefono = null;
+
+    if (telefono.length == 0) {
+      spanErrTelefono.textContent = "#";
+      spanErrTelefono.style.opacity = "0";
+
+      verificarErroneos(5, 0);
+    }
+
+    if (telefono.length != 0) {
+      for1: for (let i = 0; i < telefono.length; i++) {
+        let letraActual = telefono.charAt(i);
+
+        for2: for (let e = 0; e < numeros2.length; e++) {
+          if (letraActual == numeros2.charAt(e)) {
+            estTelefono = true;
+            break for2;
+          } else {
+            estTelefono = false;
+          }
+        }
+
+        if (estTelefono == false) {
+          break for1;
+        }
+      }
+
+      if (estTelefono == false) {
+        spanErrTelefono.textContent =
+          "No utilice letras ni caracteres especiales";
+        spanErrTelefono.style.opacity = "1";
+
+        verificarErroneos(5, 1);
+      } else {
+        if (estTelefono == true) {
+          spanErrTelefono.textContent = "#";
+          spanErrTelefono.style.opacity = "0";
+
+          verificarErroneos(5, 0);
+        }
+      }
+    }
+  });
+
+  //Comprobamos si existe un número de teléfono similar en la base de datos
+  //si es así, bloquear boton "Siguiente"
+  telefonoInputRegis.addEventListener("input", (e) => {
+    if (erroneos[5] == 0 && telefonoInputRegis.value.length != 0) {
       let telefonoExistente = telefonoInputRegis.value;
 
-      let url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+      let url = "http://localhost/BizLab/consultarUsuario.php";
 
       let formTelefVerificar = new FormData();
 
@@ -610,12 +790,12 @@ if (document.querySelector(".registroHTML") !== null) {
           if (data == true) {
             spanErrTelefono.textContent = "Este número ya está registrado";
             spanErrTelefono.style.opacity = "1";
-            verificarErroneos(11, 1);
+            verificarErroneos(6, 1);
           } else {
             if (data == false) {
               spanErrTelefono.textContent = "#";
               spanErrTelefono.style.opacity = "0";
-              verificarErroneos(11, 0);
+              verificarErroneos(6, 0);
             }
           }
         })
@@ -623,89 +803,115 @@ if (document.querySelector(".registroHTML") !== null) {
     }
   });
 
-  telefonoInputRegis.addEventListener("input", (e) => {
-    let nombre = telefonoInputRegis.value.toLowerCase().trim();
-
-    if (nombre.length == 0) {
-      desbloqBloqBoton();
+  //
+  //DIRECCIÓN INPUT (Registro.php)
+  direccInputRegis.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
     }
+  });
 
-    for1: for (let i = 0; i < nombre.length; i++) {
-      let letraActual = nombre.charAt(i);
+  direccInputRegis.addEventListener("input", (e) => {
+    let direccion = direccInputRegis.value;
 
-      for2: for (let e = 0; e < numeros2.length; e++) {
-        if (letraActual == numeros2.charAt(e)) {
-          estadoInputs1 = true;
-          break for2;
-        } else {
-          estadoInputs1 = false;
-        }
-      }
+    if (direccion.length == 0) {
+      spanErrDirecc.textContent = "#";
+      spanErrDirecc.style.opacity = "0";
 
-      if (estadoInputs1 == false) {
-        break for1;
-      }
-    }
-
-    if (estadoInputs1 == false) {
-      if (telefonoInputRegis.value.length == 0) {
-        spanErrTelefono.textContent = "#";
-        spanErrTelefono.style.opacity = "0";
-
-        verificarErroneos(4, 0);
-      } else {
-        spanErrTelefono.textContent = "No use letras ni caracteres especiales";
-        spanErrTelefono.style.opacity = "1";
-
-        verificarErroneos(4, 1);
-      }
+      verificarErroneos(7, 0);
     } else {
-      if (estadoInputs1 == true) {
-        if (telefonoInputRegis.value.length == 0) {
-          spanErrTelefono.textContent = "#";
-          spanErrTelefono.style.opacity = "0";
+      if (direccion.length < 10) {
+        spanErrDirecc.textContent = "La dirección es muy corta";
+        spanErrDirecc.style.opacity = "1";
 
-          verificarErroneos(4, 0);
-        } else {
-          spanErrTelefono.textContent = "#";
-          spanErrTelefono.style.opacity = "0";
+        verificarErroneos(7, 1);
+      } else {
+        if (direccion.length > 10) {
+          spanErrDirecc.textContent = "#";
+          spanErrDirecc.style.opacity = "0";
 
-          verificarErroneos(4, 0);
+          verificarErroneos(7, 0);
         }
       }
     }
   });
-  //TELEFONO INPUT EVENTO (Registro.php) - FIN
 
-  //TIPO MIEMBRO SELECT (Registro.php) - INICIO
+  //
+  //TIPO MIEMBRO SELECT (Registro.php)
+  inputSelectRol.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
   inputSelectRol.addEventListener("input", () => {
     let seleccion = inputSelectRol.options[inputSelectRol.selectedIndex].text;
 
     if (seleccion == "Miembro Común" || seleccion == "Administrador") {
-      verificarErroneos(9, 0);
+      verificarErroneos(8, 0);
       sparErrTipoUser.style.opacity = "0";
       sparErrTipoUser.textContent = "#";
     } else {
-      verificarErroneos(9, 1);
+      verificarErroneos(8, 1);
       sparErrTipoUser.textContent = "Rol inválido";
       sparErrTipoUser.style.opacity = "1";
     }
   });
-  //TIPO MIEMBRO SELECT (Registro.php) - FIN
 
   //
-  //
-  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  //
-  //
-  //-- INPUTS CORREO (REGISTRO.PHP) - INICIO -- -----------------------------------------------------------------
+  //MIEMBRO INPUT CORREO (Registro.php)
+  inputCorreo.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
 
-  //MIEMBRO INPUT CORREO (REGISTRO.PHP) - INICIO
+  inputCorreo.addEventListener("input", (e) => {
+    let correo = inputCorreo.value;
+    let arrobaNumber = 0;
+    let estCorreo = null;
+
+    if (correo.length == 0) {
+      spanErrCorreoMiembro.textContent = "#";
+      spanErrCorreoMiembro.style.opacity = "0";
+
+      verificarErroneos(9, 0);
+    }
+
+    if (correo.length != 0) {
+      for (let i = 0; i < correo.length; i++) {
+        if (correo.charAt(i) == "@") {
+          arrobaNumber++;
+        }
+      }
+
+      if (arrobaNumber != 1) {
+        estCorreo = false;
+      } else {
+        estCorreo = true;
+      }
+
+      if (estCorreo == false) {
+        spanErrCorreoMiembro.textContent = "El correo es inválido";
+        spanErrCorreoMiembro.style.opacity = "1";
+
+        verificarErroneos(9, 1);
+      } else {
+        if (estCorreo == true) {
+          spanErrCorreoMiembro.textContent = "#";
+          spanErrCorreoMiembro.style.opacity = "0";
+
+          verificarErroneos(9, 0);
+        }
+      }
+    }
+  });
+
   inputCorreo.addEventListener("input", () => {
-    if (erroneos[5] == 0 && inputCorreo.value.length != 0) {
+    if (erroneos[9] == 0 && inputCorreo.value.length != 0) {
       let correoExistente = inputCorreo.value;
 
-      let url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+      let url = "http://localhost/BizLab/consultarUsuario.php";
 
       let formCorreoVerificar = new FormData();
 
@@ -721,12 +927,12 @@ if (document.querySelector(".registroHTML") !== null) {
           if (data == true) {
             spanErrCorreoMiembro.textContent = "Este correo ya está en uso";
             spanErrCorreoMiembro.style.opacity = "1";
-            verificarErroneos(5, 1);
+            verificarErroneos(10, 1);
           } else {
             if (data == false) {
               spanErrCorreoMiembro.textContent = "#";
               spanErrCorreoMiembro.style.opacity = "0";
-              verificarErroneos(5, 0);
+              verificarErroneos(10, 0);
             }
           }
         })
@@ -734,66 +940,62 @@ if (document.querySelector(".registroHTML") !== null) {
     }
   });
 
-  inputCorreo.addEventListener("input", (e) => {
-    let nombre = inputCorreo.value;
-    let arrobaNumber = 0;
+  //
+  //ADMIN INPUT CORREO (Registro.php)
+  correoAdminInput.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
 
-    if (nombre.length == 0) {
+  correoAdminInput.addEventListener("input", (e) => {
+    let correoA = correoAdminInput.value;
+    let arrobaNumber = 0;
+    let estCorreoA = null;
+
+    if (correoA.length == 0) {
+      spanErrCorreoAdmi.textContent = "#";
+      spanErrCorreoAdmi.style.opacity = "0";
+
       desbloqBloqBoton();
     }
 
-    for (let i = 0; i < nombre.length; i++) {
-      if (nombre.charAt(i) == "@") {
-        arrobaNumber++;
+    if (correoA.length != 0) {
+      for (let i = 0; i < correoA.length; i++) {
+        if (correoA.charAt(i) == "@") {
+          arrobaNumber += 1;
+        }
       }
-    }
 
-    if (arrobaNumber == 2) {
-      estadoInputs1 = false;
-    } else {
-      if (arrobaNumber == 0) {
-        estadoInputs1 = false;
+      if (arrobaNumber != 1) {
+        estCorreoA = false;
       } else {
-        estadoInputs1 = true;
+        estCorreoA = true;
       }
-    }
 
-    if (estadoInputs1 == false) {
-      if (inputCorreo.value.length == 0) {
-        spanErrCorreoMiembro.textContent = "#";
-        spanErrCorreoMiembro.style.opacity = "0";
+      if (estCorreoA == false) {
+        spanErrCorreoAdmi.textContent = "El correo es inválido";
+        spanErrCorreoAdmi.style.opacity = "1";
 
-        verificarErroneos(5, 0);
+        verificarErroneos(11, 1);
       } else {
-        spanErrCorreoMiembro.textContent = "El correo es inválido";
-        spanErrCorreoMiembro.style.opacity = "1";
+        if (estCorreoA == true) {
+          spanErrCorreoAdmi.textContent = "#";
+          spanErrCorreoAdmi.style.opacity = "0";
 
-        verificarErroneos(5, 1);
-      }
-    } else {
-      if (estadoInputs1 == true) {
-        if (inputCorreo.value.length == 0) {
-          spanErrCorreoMiembro.textContent = "#";
-          spanErrCorreoMiembro.style.opacity = "0";
-
-          verificarErroneos(5, 0);
-        } else {
-          spanErrCorreoMiembro.textContent = "#";
-          spanErrCorreoMiembro.style.opacity = "0";
-
-          verificarErroneos(5, 0);
+          verificarErroneos(11, 0);
         }
       }
     }
   });
-  //MIEMBRO INPUT CORREO (REGISTRO.PHP) - FIN
 
-  //ADMIN INPUT CORREO (REGISTRO.PHP) - INICIO
+  //Comprobamos si existe un correo similar en la base de datos
+  //si es así, bloquear boton "Siguiente"
   correoAdminInput.addEventListener("input", () => {
-    if (erroneos[5] == 0 && correoAdminInput.value.length != 0) {
+    if (erroneos[11] == 0 && correoAdminInput.value.length != 0) {
       let correoAdminExis = correoAdminInput.value;
 
-      let url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+      let url = "http://localhost/BizLab/consultarUsuario.php";
 
       let formCorreoAVerifi = new FormData();
 
@@ -809,12 +1011,12 @@ if (document.querySelector(".registroHTML") !== null) {
           if (data == true) {
             spanErrCorreoAdmi.textContent = "Este correo ya está en uso";
             spanErrCorreoAdmi.style.opacity = "1";
-            verificarErroneos(5, 1);
+            verificarErroneos(12, 1);
           } else {
             if (data == false) {
               spanErrCorreoAdmi.textContent = "#";
               spanErrCorreoAdmi.style.opacity = "0";
-              verificarErroneos(5, 0);
+              verificarErroneos(12, 0);
             }
           }
         })
@@ -822,76 +1024,21 @@ if (document.querySelector(".registroHTML") !== null) {
     }
   });
 
-  correoAdminInput.addEventListener("input", (e) => {
-    let nombre = correoAdminInput.value;
-    let arrobaNumber = 0;
-
-    if (nombre.length == 0) {
-      desbloqBloqBoton();
-    }
-
-    for (let i = 0; i < nombre.length; i++) {
-      if (nombre.charAt(i) == "@") {
-        arrobaNumber++;
-      }
-    }
-
-    if (arrobaNumber == 2) {
-      estadoInputs1 = false;
-    } else {
-      if (arrobaNumber == 0) {
-        estadoInputs1 = false;
-      } else {
-        estadoInputs1 = true;
-      }
-    }
-
-    if (estadoInputs1 == false) {
-      if (correoAdminInput.value.length == 0) {
-        spanErrCorreoAdmi.textContent = "#";
-        spanErrCorreoAdmi.style.opacity = "0";
-
-        verificarErroneos(5, 0);
-      } else {
-        spanErrCorreoAdmi.textContent = "El correo es inválido";
-        spanErrCorreoAdmi.style.opacity = "1";
-
-        verificarErroneos(5, 1);
-      }
-    } else {
-      if (estadoInputs1 == true) {
-        if (correoAdminInput.value.length == 0) {
-          spanErrCorreoAdmi.textContent = "#";
-          spanErrCorreoAdmi.style.opacity = "0";
-
-          verificarErroneos(5, 0);
-        } else {
-          spanErrCorreoAdmi.textContent = "#";
-          spanErrCorreoAdmi.style.opacity = "0";
-
-          verificarErroneos(5, 0);
-        }
-      }
+  //
+  //INPUT CONTRASEÑA (Registro.php)
+  inputContraseña.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
     }
   });
-  //ADMIN INPUT CORREO (REGISTRO.PHP) - FIN
 
-  //-- INPUTS CORREO (REGISTRO.PHP) - FIN -- -----------------------------------------------------------------
-  //
-  //
-  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  //
-  //
-  //-- INPUTS CONTRASEÑA (REGISTRO.PHP) - INICIO -- ----------------------------------------------------------------------------
-
-  //MIEMBRO INPUT CONTRASEÑA (REGISTRO.PHP) - INICIO
   inputContraseña.addEventListener("input", () => {
     let valor1 = inputContraseña.value.trim();
     let valor2 = inputContraConfir.value.trim();
 
     if (valor1 == "" && valor2 == "") {
-      verificarErroneos(6, 0);
-      verificarErroneos(7, 0);
+      verificarErroneos(13, 0);
+      verificarErroneos(14, 0);
 
       contraNoCoincide.textContent = "#";
       contraNoCoincide.style.opacity = "0";
@@ -901,24 +1048,30 @@ if (document.querySelector(".registroHTML") !== null) {
       contraNoCoincide.textContent = "Las contraseñas NO coinciden";
       contraNoCoincide.style.opacity = "1";
 
-      verificarErroneos(6, 1);
-      verificarErroneos(7, 1);
+      verificarErroneos(13, 1);
+      verificarErroneos(14, 1);
     } else {
       if (valor1 != valor2 && valor1.length < 9) {
         contraNoCoincide.textContent = "La contraseña es muy corta";
         contraNoCoincide.style.opacity = "1";
 
-        verificarErroneos(6, 1);
-        verificarErroneos(7, 1);
+        verificarErroneos(13, 1);
+        verificarErroneos(14, 1);
       } else {
         if (valor1 == valor2 && valor1.length >= 9) {
           contraNoCoincide.textContent = "#";
           contraNoCoincide.style.opacity = "0";
 
-          verificarErroneos(6, 0);
-          verificarErroneos(7, 0);
+          verificarErroneos(13, 0);
+          verificarErroneos(14, 0);
         }
       }
+    }
+  });
+
+  inputContraConfir.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
     }
   });
 
@@ -927,8 +1080,8 @@ if (document.querySelector(".registroHTML") !== null) {
     let valor2 = inputContraConfir.value.trim();
 
     if (valor1 == "" && valor2 == "") {
-      verificarErroneos(6, 0);
-      verificarErroneos(7, 0);
+      verificarErroneos(13, 0);
+      verificarErroneos(14, 0);
 
       contraNoCoincide.textContent = "#";
       contraNoCoincide.style.opacity = "0";
@@ -938,36 +1091,42 @@ if (document.querySelector(".registroHTML") !== null) {
       contraNoCoincide.textContent = "Las contraseñas NO coinciden";
       contraNoCoincide.style.opacity = "1";
 
-      verificarErroneos(6, 1);
-      verificarErroneos(7, 1);
+      verificarErroneos(13, 1);
+      verificarErroneos(14, 1);
     } else {
       if (valor1 != valor2 && valor1.length < 9) {
         contraNoCoincide.textContent = "La contraseña es muy corta";
         contraNoCoincide.style.opacity = "1";
 
-        verificarErroneos(6, 1);
-        verificarErroneos(7, 1);
+        verificarErroneos(13, 1);
+        verificarErroneos(14, 1);
       } else {
         if (valor1 == valor2 && valor1.length >= 9) {
           contraNoCoincide.textContent = "#";
           contraNoCoincide.style.opacity = "0";
 
-          verificarErroneos(6, 0);
-          verificarErroneos(7, 0);
+          verificarErroneos(13, 0);
+          verificarErroneos(14, 0);
         }
       }
     }
   });
-  //MIEMBRO INPUT CONTRASEÑA (REGISTRO.PHP) - FIN
 
-  //ADMIN INPUT CONTRASEÑA (REGISTRO.PHP) - INICIO
+  //
+  //INPUT CONTRASEÑA ADMIN (Registro.php)
+  inputContraseña2.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
   inputContraseña2.addEventListener("input", () => {
     let valor1 = inputContraseña2.value.trim();
     let valor2 = inputContraConfir2.value.trim();
 
     if (valor1 == "" && valor2 == "") {
-      verificarErroneos(6, 0);
-      verificarErroneos(7, 0);
+      verificarErroneos(15, 0);
+      verificarErroneos(16, 0);
 
       contraNoCoincide.textContent = "#";
       contraNoCoincide.style.opacity = "0";
@@ -977,24 +1136,30 @@ if (document.querySelector(".registroHTML") !== null) {
       contraNoCoincideA.textContent = "Las contraseñas NO coinciden";
       contraNoCoincideA.style.opacity = "1";
 
-      verificarErroneos(6, 1);
-      verificarErroneos(7, 1);
+      verificarErroneos(15, 1);
+      verificarErroneos(16, 1);
     } else {
       if (valor1 != valor2 && valor1.length < 9) {
         contraNoCoincideA.textContent = "La contraseña es muy corta";
         contraNoCoincideA.style.opacity = "1";
 
-        verificarErroneos(6, 1);
-        verificarErroneos(7, 1);
+        verificarErroneos(15, 1);
+        verificarErroneos(16, 1);
       } else {
         if (valor1 == valor2 && valor1.length >= 9) {
           contraNoCoincideA.textContent = "#";
           contraNoCoincideA.style.opacity = "0";
 
-          verificarErroneos(6, 0);
-          verificarErroneos(7, 0);
+          verificarErroneos(15, 0);
+          verificarErroneos(16, 0);
         }
       }
+    }
+  });
+
+  inputContraConfir2.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
     }
   });
 
@@ -1003,106 +1168,116 @@ if (document.querySelector(".registroHTML") !== null) {
     let valor2 = inputContraConfir2.value.trim();
 
     if (valor1 == "" && valor2 == "") {
-      verificarErroneos(6, 0);
-      verificarErroneos(7, 0);
+      verificarErroneos(15, 0);
+      verificarErroneos(16, 0);
 
       contraNoCoincide.textContent = "#";
       contraNoCoincide.style.opacity = "0";
     }
 
-    if (valor1 != valor2 && valor1.length >= 9) {
-      contraNoCoincideA.textContent = "Las contraseñas NO coinciden";
-      contraNoCoincideA.style.opacity = "1";
-
-      verificarErroneos(6, 1);
-      verificarErroneos(7, 1);
-    } else {
-      if (valor1 != valor2 && valor1.length < 9) {
-        contraNoCoincideA.textContent = "La contraseña es muy corta";
+    if (valor1 != "" && valor2 != "") {
+      if (valor1 != valor2 && valor1.length >= 9) {
+        contraNoCoincideA.textContent = "Las contraseñas NO coinciden";
         contraNoCoincideA.style.opacity = "1";
 
-        verificarErroneos(6, 1);
-        verificarErroneos(7, 1);
+        verificarErroneos(15, 1);
+        verificarErroneos(16, 1);
       } else {
-        if (valor1 == valor2 && valor1.length >= 9) {
-          contraNoCoincideA.textContent = "#";
-          contraNoCoincideA.style.opacity = "0";
+        if (valor1 != valor2 && valor1.length < 9) {
+          contraNoCoincideA.textContent = "La contraseña es muy corta";
+          contraNoCoincideA.style.opacity = "1";
 
-          verificarErroneos(6, 0);
-          verificarErroneos(7, 0);
+          verificarErroneos(15, 1);
+          verificarErroneos(16, 1);
+        } else {
+          if (valor1 == valor2 && valor1.length >= 9) {
+            contraNoCoincideA.textContent = "#";
+            contraNoCoincideA.style.opacity = "0";
+
+            verificarErroneos(15, 0);
+            verificarErroneos(16, 0);
+          }
         }
       }
     }
   });
-  //ADMIN INPUT CONTRASEÑA (REGISTRO.PHP) - FIN
 
-  //-- INPUTS CONTRASEÑA (REGISTRO.PHP) - FIN -- ---------------------------------------------------------------------------------
   //
-  //
-  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //INPUT EMPRESA
+  empresaInput.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
 
-  //NIT INPUT (REGISTRO.PHP) - INICIO
+  //
+  //INPUT NIT (Registro.php)
+  inputNit.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
+
   inputNit.addEventListener("input", (e) => {
-    let nombre = inputNit.value.trim();
+    let nit = inputNit.value.trim();
+    let estNit = null;
 
-    if (nombre.length == 0) {
-      desbloqBloqBoton();
+    if (nit.length == 0) {
+      spanErrNit.textContent = "#";
+      spanErrNit.style.opacity = "0";
+
+      verificarErroneos(17, 0);
     }
 
-    for1: for (let i = 0; i < nombre.length; i++) {
-      let letraActual = nombre.charAt(i);
+    if (nit.length != 0) {
+      for1: for (let i = 0; i < nit.length; i++) {
+        let letraActual = nit.charAt(i);
 
-      for2: for (let e = 0; e < numeros.length; e++) {
-        if (letraActual == numeros.charAt(e)) {
-          estadoInputs1 = true;
-          break for2;
-        } else {
-          estadoInputs1 = false;
+        for2: for (let e = 0; e < numeros3.length; e++) {
+          if (letraActual == numeros3.charAt(e)) {
+            estNit = true;
+            break for2;
+          } else {
+            estNit = false;
+          }
+        }
+
+        if (estNit == false) {
+          break for1;
         }
       }
 
-      if (estadoInputs1 == false) {
-        break for1;
-      }
-    }
-
-    if (estadoInputs1 == false) {
-      if (inputNit.value.length == 0) {
-        spanErrNit.textContent = "#";
-        spanErrNit.style.opacity = "0";
-
-        verificarErroneos(8, 0);
-      } else {
+      if (estNit == false) {
         spanErrNit.textContent = "No use letras ni caracteres especiales";
         spanErrNit.style.opacity = "1";
 
-        verificarErroneos(8, 1);
-      }
-    } else {
-      if (estadoInputs1 == true) {
-        if (inputNit.value.length == 0) {
+        verificarErroneos(17, 1);
+      } else {
+        if (estNit == true) {
           spanErrNit.textContent = "#";
           spanErrNit.style.opacity = "0";
 
-          verificarErroneos(8, 0);
-        } else {
-          spanErrNit.textContent = "#";
-          spanErrNit.style.opacity = "0";
-
-          verificarErroneos(8, 0);
+          verificarErroneos(17, 0);
         }
       }
     }
   });
-  //NIT INPUT (REGISTRO.PHP) - FIN
+
+  //
+  //INPUT CODIGO DE ACCESO (Registro.php)
+  inputCodigoAcce.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+    }
+  });
 
   //
   //--------------------------------------------------------------------------
   //
 
-  btnSiguienteF1.addEventListener("click", (e) => {
+  btnSiguiente.addEventListener("click", (e) => {
     console.log("Boton Siguiente Tocado");
-
+    e.preventDefault();
     if (
       nombreRegisInput.value == "" ||
       nombreRegisInput.value == null ||
@@ -1121,7 +1296,6 @@ if (document.querySelector(".registroHTML") !== null) {
         inputSelectRol.options[inputSelectRol.selectedIndex].text !=
           "Administrador")
     ) {
-      e.preventDefault();
       sparErrTipoUser.textContent = "Debe llenar los campos";
       sparErrTipoUser.style.opacity = "1";
       console.log("Boton Siguiente Vacios Bloqueados");
@@ -1130,99 +1304,93 @@ if (document.querySelector(".registroHTML") !== null) {
         sparErrTipoUser.textContent = "#";
         sparErrTipoUser.style.opacity = "0";
       }
-      if (bloqueadoBoton == "disabled") {
-        console.log("Boton Siguiente Bloqueado");
-        e.preventDefault();
-        btnSiguienteF1.setAttribute("disabled", "");
-      } else {
-        if (
-          nombreRegisInput.value != "" &&
-          apellidoRegisInput.value != "" &&
-          documentoInput.value !== "" &&
-          fechaNInputRegis.value !== "" &&
-          telefonoInputRegis.value !== "" &&
-          direccInputRegis.value !== "" &&
-          inputSelectRol.options[inputSelectRol.selectedIndex].text ==
-            "Miembro Común"
-        ) {
-          e.preventDefault();
-          if (formRegisF1.classList.contains("formRegisF1")) {
-            formRegisF1.classList.replace("formRegisF1", "formRegisF1B");
-            if (!formRegisF2.classList.contains("formRegisF2")) {
-              formRegisF2.classList.replace("formRegisF2B", "formRegisF2");
-            }
-            posicionFormRegis = 2;
-            cambiarSpanRegistro(posicionFormRegis);
-            window.scroll({
-              top: 0,
-              left: 0,
-              behavior: "smooth",
-            });
+      if (
+        nombreRegisInput.value != "" &&
+        apellidoRegisInput.value != "" &&
+        documentoInput.value !== "" &&
+        fechaNInputRegis.value !== "" &&
+        telefonoInputRegis.value !== "" &&
+        direccInputRegis.value !== "" &&
+        inputSelectRol.options[inputSelectRol.selectedIndex].text ==
+          "Miembro Común"
+      ) {
+        if (formRegisF1.classList.contains("formRegisF1")) {
+          formRegisF1.classList.replace("formRegisF1", "formRegisF1B");
+          if (!formRegisF2.classList.contains("formRegisF2")) {
+            formRegisF2.classList.replace("formRegisF2B", "formRegisF2");
           }
-          btnAtras.addEventListener("click", (e) => {
-            e.preventDefault();
-            posicionFormRegis = 1;
-            cambiarSpanRegistro(posicionFormRegis);
-            if (formRegisF1.classList.contains("formRegisF1B")) {
-              formRegisF1.classList.replace("formRegisF1B", "formRegisF1");
-              if (!formRegisF2.classList.contains("formRegisF2B")) {
-                formRegisF2.classList.replace("formRegisF2", "formRegisF2B");
-              }
-            }
-          });
-          btnAtrasA.addEventListener("click", (e) => {
-            e.preventDefault();
-            posicionFormRegis = 1;
-            cambiarSpanRegistro(posicionFormRegis);
-            if (formRegisF1.classList.contains("formRegisF1B")) {
-              formRegisF1.classList.replace("formRegisF1B", "formRegisF1");
-              if (!formRegisF3.classList.contains("formRegisF3B")) {
-                formRegisF3.classList.replace("formRegisF3", "formRegisF3B");
-              }
-            }
+          posicionFormRegis = 2;
+          cambiarSpanRegistro(posicionFormRegis);
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
           });
         }
-        if (
-          nombreRegisInput.value != "" &&
-          apellidoRegisInput.value != "" &&
-          documentoInput.value !== "" &&
-          fechaNInputRegis.value !== "" &&
-          telefonoInputRegis.value !== "" &&
-          direccInputRegis.value !== "" &&
-          inputSelectRol.options[inputSelectRol.selectedIndex].text ==
-            "Administrador"
-        ) {
+        btnAtrasM.addEventListener("click", (e) => {
           e.preventDefault();
-          if (formRegisF1.classList.contains("formRegisF1")) {
-            formRegisF1.classList.replace("formRegisF1", "formRegisF1B");
-            if (!formRegisF3.classList.contains("formRegisF3")) {
-              formRegisF3.classList.replace("formRegisF3B", "formRegisF3");
+          posicionFormRegis = 1;
+          cambiarSpanRegistro(posicionFormRegis);
+          if (formRegisF1.classList.contains("formRegisF1B")) {
+            formRegisF1.classList.replace("formRegisF1B", "formRegisF1");
+            if (!formRegisF2.classList.contains("formRegisF2B")) {
+              formRegisF2.classList.replace("formRegisF2", "formRegisF2B");
             }
-            posicionFormRegis = 3;
-            cambiarSpanRegistro(posicionFormRegis);
-            window.scroll({
-              top: 0,
-              left: 0,
-              behavior: "smooth",
-            });
           }
-          btnAtrasA.addEventListener("click", (e) => {
-            e.preventDefault();
-            posicionFormRegis = 1;
-            cambiarSpanRegistro(posicionFormRegis);
-            if (formRegisF1.classList.contains("formRegisF1B")) {
-              formRegisF1.classList.replace("formRegisF1B", "formRegisF1");
-              if (!formRegisF3.classList.contains("formRegisF3B")) {
-                formRegisF3.classList.replace("formRegisF3", "formRegisF3B");
-              }
+        });
+        btnAtrasA.addEventListener("click", (e) => {
+          e.preventDefault();
+          posicionFormRegis = 1;
+          cambiarSpanRegistro(posicionFormRegis);
+          if (formRegisF1.classList.contains("formRegisF1B")) {
+            formRegisF1.classList.replace("formRegisF1B", "formRegisF1");
+            if (!formRegisF3.classList.contains("formRegisF3B")) {
+              formRegisF3.classList.replace("formRegisF3", "formRegisF3B");
             }
+          }
+        });
+      }
+      if (
+        nombreRegisInput.value != "" &&
+        apellidoRegisInput.value != "" &&
+        documentoInput.value !== "" &&
+        fechaNInputRegis.value !== "" &&
+        telefonoInputRegis.value !== "" &&
+        direccInputRegis.value !== "" &&
+        inputSelectRol.options[inputSelectRol.selectedIndex].text ==
+          "Administrador"
+      ) {
+        if (formRegisF1.classList.contains("formRegisF1")) {
+          formRegisF1.classList.replace("formRegisF1", "formRegisF1B");
+          if (!formRegisF3.classList.contains("formRegisF3")) {
+            formRegisF3.classList.replace("formRegisF3B", "formRegisF3");
+          }
+          posicionFormRegis = 3;
+          cambiarSpanRegistro(posicionFormRegis);
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
           });
         }
+        btnAtrasA.addEventListener("click", (e) => {
+          e.preventDefault();
+          posicionFormRegis = 1;
+          cambiarSpanRegistro(posicionFormRegis);
+          if (formRegisF1.classList.contains("formRegisF1B")) {
+            formRegisF1.classList.replace("formRegisF1B", "formRegisF1");
+            if (!formRegisF3.classList.contains("formRegisF3B")) {
+              formRegisF3.classList.replace("formRegisF3", "formRegisF3B");
+            }
+          }
+        });
       }
     }
   });
 
-  btnRegistrarse.addEventListener("click", (e) => {
+  btnRegistrarseM.addEventListener("click", (e) => {
+    e.preventDefault();
+    var estadoBTN = desbloqBloqBoton();
     if (
       inputCorreo.value == "" ||
       inputCorreo.value == null ||
@@ -1235,97 +1403,58 @@ if (document.querySelector(".registroHTML") !== null) {
       inputNit.value == "" ||
       inputNit.value == null
     ) {
-      e.preventDefault();
       spanErrNit.textContent = "Debe llenar los campos";
       spanErrNit.style.opacity = "1";
       console.log("Boton Registrarse Vacios Bloqueados");
     } else {
       console.log("Boton Registrarse Tocado");
-      if (bloqueadoBoton == "disabled") {
-        console.log("Boton Registrarse Bloqueado");
-        e.preventDefault();
-        btnRegistrarse.setAttribute("disabled", "");
-      } else {
-        e.preventDefault();
-
-        spanErrNit.textContent = "Registrando...";
+      if (estadoBTN != false) {
+        console.log(estadoBTN);
+        spanErrNit.textContent = "Redireccionando...";
         spanErrNit.classList.replace("spanErr", "spanRegisAdminExito");
         spanErrNit.style.opacity = "1";
 
-        let nombre = nombreRegisInput.value;
-        let apellidos = apellidoRegisInput.value;
-        let documento = documentoInput.value;
-        let fechaNacimiento = fechaNInputRegis.value;
-        let telefono = telefonoInputRegis.value;
-        let direccion = direccInputRegis.value;
-        let rol = inputSelectRol.options[inputSelectRol.selectedIndex].text;
-        let correo = inputCorreo.value;
-        let contrasenia = inputContraseña.value;
-        let empresa = empresaInput.value;
-        let nit = inputNit.value;
-        var ultimoMiembroRegistrado = 0;
+        inputNomM.value = nombreRegisInput.value;
+        inputApeM.value = apellidoRegisInput.value;
+        inputDocuM.value = documentoInput.value;
+        inputFechaM.value = fechaNInputRegis.value;
+        inputTelefM.value = telefonoInputRegis.value;
+        inputDireccM.value = direccInputRegis.value;
+        inputRolM.value =
+          inputSelectRol.options[inputSelectRol.selectedIndex].text;
+        inputCorreoM.value = inputCorreo.value;
+        inputContraM.value = inputContraseña.value;
+        inputEmpreM.value = empresaInput.value;
+        inputNitM.value = inputNit.value;
+        inputCorreoA.value = correoAdminInput.value;
+        inputContraA.value = inputContraseña2.value;
 
-        let formRegisMiembro = new FormData();
+        nombreRegisInput.value = "";
+        apellidoRegisInput.value = "";
+        documentoInput.value = "";
+        fechaNInputRegis.value = "";
+        telefonoInputRegis.value = "";
+        direccInputRegis.value = "";
+        inputSelectRol.value = "";
+        inputCorreo.value = "";
+        correoAdminInput.value = "";
+        empresaInput.value = "";
+        inputContraseña.value = "";
+        inputContraConfir.value = "";
+        inputContraseña2.value = "";
+        inputContraConfir2.value = "";
+        inputNit.value = "";
+        inputCodigoAcce.value = "";
+        correoAdminInput.value = "";
+        inputContraseña2.value = "";
 
-        formRegisMiembro.append("nombreMiembro", nombre);
-        formRegisMiembro.append("apellidoMiembro", apellidos);
-        formRegisMiembro.append("documentoMiembro", documento);
-        formRegisMiembro.append("fechaNMiembro", fechaNacimiento);
-        formRegisMiembro.append("telefonoMiembro", telefono);
-        formRegisMiembro.append("direccMiembro", direccion);
-        formRegisMiembro.append("rolMiembro", rol);
-        formRegisMiembro.append("correoMiembro", correo);
-        formRegisMiembro.append("contraseniaMiembro", contrasenia);
-        formRegisMiembro.append("empresaMiembro", empresa);
-        formRegisMiembro.append("nitMiembro", nit);
-        formRegisMiembro.append("userVerifi", true);
-
-        fetch("http://localhost/BizLab-Web-v2/consultarUsuario.php", {
-          method: "POST",
-          body: formRegisMiembro,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            ultimoMiembroRegistrado = data;
-
-            btnRegistrarse.setAttribute("disabled", "");
-            btnRegistrarse.classList.replace("btnRegistrar1", "btnRegistrar2");
-
-            btnAtras.setAttribute("disabled", "");
-            btnAtras.classList.replace("btnAtras1", "btnAtras2");
-
-            btnCancelarRegisM.setAttribute("disabled", "");
-            btnCancelarRegisM.classList.replace("btnCancelar1", "btnCancelar2");
-
-            nombreRegisInput.value = "";
-            apellidoRegisInput.value = "";
-            documentoInput.value = "";
-            fechaNInputRegis.value = "";
-            telefonoInputRegis.value = "";
-            direccInputRegis.value = "";
-            inputSelectRol.value = "";
-            inputCorreo.value = "";
-            correoAdminInput.value = "";
-            empresaInput.value = "";
-            inputContraseña.value = "";
-            inputContraConfir.value = "";
-            inputContraseña2.value = "";
-            inputContraConfir2.value = "";
-            inputNit.value = "";
-            inputCodigoAcce.value = "";
-
-            setTimeout(() => {
-              window.location.href = "index.php";
-            }, 1200);
-          })
-          .catch((err) => console.log(err));
+        formRegistrarseM.submit();
       }
     }
   });
 
   btnRegistrarseA.addEventListener("click", (e) => {
     e.preventDefault();
-    console.log("adminRegistrar");
     if (
       correoAdminInput.value == "" ||
       correoAdminInput.value == null ||
@@ -1336,20 +1465,16 @@ if (document.querySelector(".registroHTML") !== null) {
       inputCodigoAcce.value == "" ||
       inputCodigoAcce.value == null
     ) {
-      e.preventDefault();
       spanErrCodigoAcc.textContent = "Debe llenar los campos";
       spanErrCodigoAcc.style.opacity = "1";
       console.log("Boton Registrarse Admin Vacios Bloqueados");
     } else {
       console.log("Boton Registrarse Admin Tocado");
-      if (bloqueadoBoton == "disabled") {
-        console.log("Boton Registrarse Bloqueado");
-        e.preventDefault();
-        btnRegistrarseA.setAttribute("disabled", "");
-      } else {
-        e.preventDefault();
+      estadoBTNA = desbloqBloqBoton();
+
+      if (estadoBTNA != false) {
         let codAcceso = inputCodigoAcce.value.trim();
-        let url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+        let url = "http://localhost/BizLab/consultarUsuario.php";
 
         let formRegisAdmin = new FormData();
 
@@ -1371,86 +1496,122 @@ if (document.querySelector(".registroHTML") !== null) {
               if (data != null) {
                 e.preventDefault();
 
-                let nombre = nombreRegisInput.value;
-                let apellidos = apellidoRegisInput.value;
-                let documento = documentoInput.value;
-                let fechaNacimiento = fechaNInputRegis.value;
-                let telefono = telefonoInputRegis.value;
-                let direccion = direccInputRegis.value;
-                let rol =
+                inputNomM.value = nombreRegisInput.value;
+                inputApeM.value = apellidoRegisInput.value;
+                inputDocuM.value = documentoInput.value;
+                inputFechaM.value = fechaNInputRegis.value;
+                inputTelefM.value = telefonoInputRegis.value;
+                inputDireccM.value = direccInputRegis.value;
+                inputRolM.value =
                   inputSelectRol.options[inputSelectRol.selectedIndex].text;
-                let correo = correoAdminInput.value;
-                let contrasenia = inputContraseña2.value;
-                var ultimoAdminRegistrado = 0;
+                inputCorreoM.value = inputCorreo.value;
+                inputContraM.value = inputContraseña.value;
+                inputEmpreM.value = empresaInput.value;
+                inputNitM.value = inputNit.value;
+                inputCorreoA.value = correoAdminInput.value;
+                inputContraA.value = inputContraseña2.value;
 
-                let formRegisAdmin = new FormData();
+                nombreRegisInput.value = "";
+                apellidoRegisInput.value = "";
+                documentoInput.value = "";
+                fechaNInputRegis.value = "";
+                telefonoInputRegis.value = "";
+                direccInputRegis.value = "";
+                inputSelectRol.value = "";
+                inputCorreo.value = "";
+                correoAdminInput.value = "";
+                empresaInput.value = "";
+                inputContraseña.value = "";
+                inputContraConfir.value = "";
+                inputContraseña2.value = "";
+                inputContraConfir2.value = "";
+                inputNit.value = "";
+                inputCodigoAcce.value = "";
+                correoAdminInput.value = "";
+                inputContraseña2.value = "";
 
-                formRegisAdmin.append("nombreAdmin", nombre);
-                formRegisAdmin.append("apellidoAdmin", apellidos);
-                formRegisAdmin.append("documentoAdmin", documento);
-                formRegisAdmin.append("fechaNAdmin", fechaNacimiento);
-                formRegisAdmin.append("telefonoAdmin", telefono);
-                formRegisAdmin.append("direccAdmin", direccion);
-                formRegisAdmin.append("rolAdmin", rol);
-                formRegisAdmin.append("correoAdmin", correo);
-                formRegisAdmin.append("contraseniaAdmin", contrasenia);
-                formRegisAdmin.append("empresaAdmin", "");
-                formRegisAdmin.append("nitAdmin", 0);
-                formRegisAdmin.append("userVerifi", true);
+                formRegistrarseM.submit();
 
-                fetch("http://localhost/BizLab-Web-v2/consultarUsuario.php", {
-                  method: "POST",
-                  body: formRegisAdmin,
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    ultimoAdminRegistrado = data;
-                    console.log(ultimoAdminRegistrado);
+                // let nombre = nombreRegisInput.value;
+                // let apellidos = apellidoRegisInput.value;
+                // let documento = documentoInput.value;
+                // let fechaNacimiento = fechaNInputRegis.value;
+                // let telefono = telefonoInputRegis.value;
+                // let direccion = direccInputRegis.value;
+                // let rol =
+                //   inputSelectRol.options[inputSelectRol.selectedIndex].text;
+                // let correo = correoAdminInput.value;
+                // let contrasenia = inputContraseña2.value;
+                // var ultimoAdminRegistrado = 0;
 
-                    btnRegistrarseA.setAttribute("disabled", "");
-                    btnRegistrarseA.classList.replace(
-                      "btnRegistrarA1",
-                      "btnRegistrarA2"
-                    );
+                // let formRegisAdmin = new FormData();
 
-                    btnAtrasA.setAttribute("disabled", "");
-                    btnAtrasA.classList.replace("btnAtrasA1", "btnAtrasA2");
+                // formRegisAdmin.append("nombreAdmin", nombre);
+                // formRegisAdmin.append("apellidoAdmin", apellidos);
+                // formRegisAdmin.append("documentoAdmin", documento);
+                // formRegisAdmin.append("fechaNAdmin", fechaNacimiento);
+                // formRegisAdmin.append("telefonoAdmin", telefono);
+                // formRegisAdmin.append("direccAdmin", direccion);
+                // formRegisAdmin.append("rolAdmin", rol);
+                // formRegisAdmin.append("correoAdmin", correo);
+                // formRegisAdmin.append("contraseniaAdmin", contrasenia);
+                // formRegisAdmin.append("empresaAdmin", "");
+                // formRegisAdmin.append("nitAdmin", 0);
+                // formRegisAdmin.append("userVerifi", true);
 
-                    document
-                      .querySelector(".btnCancelA")
-                      .setAttribute("disabled", "");
-                    document
-                      .querySelector(".btnCancelA")
-                      .classList.replace("btnCancelarA1", "btnCancelarA2");
+                // fetch("http://localhost/BizLab/consultarUsuario.php", {
+                //   method: "POST",
+                //   body: formRegisAdmin,
+                // })
+                //   .then((response) => response.json())
+                //   .then((data) => {
+                //     ultimoAdminRegistrado = data;
+                //     console.log(ultimoAdminRegistrado);
 
-                    nombreRegisInput.value = "";
-                    apellidoRegisInput.value = "";
-                    documentoInput.value = "";
-                    fechaNInputRegis.value = "";
-                    telefonoInputRegis.value = "";
-                    direccInputRegis.value = "";
-                    inputSelectRol.value = "";
-                    inputCorreo.value = "";
-                    correoAdminInput.value = "";
-                    empresaInput.value = "";
-                    inputContraseña.value = "";
-                    inputContraConfir.value = "";
-                    inputContraseña2.value = "";
-                    inputContraConfir2.value = "";
-                    inputNit.value = "";
-                    inputCodigoAcce.value = "";
+                //     btnRegistrarseA.setAttribute("disabled", "");
+                //     btnRegistrarseA.classList.replace(
+                //       "btnRegistrarFA-1",
+                //       "btnRegistrarFA-2"
+                //     );
 
-                    setTimeout(() => {
-                      window.location.href = "index.php";
-                    }, 1200);
-                  })
-                  .catch((err) => console.log(err));
+                //     btnAtrasA.setAttribute("disabled", "");
+                //     btnAtrasA.classList.replace("btnAtrasFA-1", "btnAtrasFA-2");
 
-                spanErrCodigoAcc.textContent = "Registrando...";
-                spanErrCodigoAcc.classList.replace(
-                  "spanErr",
-                  "spanRegisAdminExito"
-                );
+                //     document
+                //       .querySelector(".btnCancelRegisFA")
+                //       .setAttribute("disabled", "");
+                //     document
+                //       .querySelector(".btnCancelRegisFA")
+                //       .classList.replace("btnCancelarFA-1", "btnCancelarFA-2");
+
+                //     nombreRegisInput.value = "";
+                //     apellidoRegisInput.value = "";
+                //     documentoInput.value = "";
+                //     fechaNInputRegis.value = "";
+                //     telefonoInputRegis.value = "";
+                //     direccInputRegis.value = "";
+                //     inputSelectRol.value = "";
+                //     inputCorreo.value = "";
+                //     correoAdminInput.value = "";
+                //     empresaInput.value = "";
+                //     inputContraseña.value = "";
+                //     inputContraConfir.value = "";
+                //     inputContraseña2.value = "";
+                //     inputContraConfir2.value = "";
+                //     inputNit.value = "";
+                //     inputCodigoAcce.value = "";
+
+                //     setTimeout(() => {
+                //       window.location.href = "index.php";
+                //     }, 1200);
+                //   })
+                //   .catch((err) => console.log(err));
+
+                // spanErrCodigoAcc.textContent = "Registrando...";
+                // spanErrCodigoAcc.classList.replace(
+                //   "spanErr",
+                //   "spanRegisAdminExito"
+                // );
               }
             }
           })
@@ -1459,18 +1620,66 @@ if (document.querySelector(".registroHTML") !== null) {
     }
   });
 
-  btnCancelarRegis.addEventListener("click", (e) => {
+  btnCancelarRegis1.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = "index.php";
-  });
-
-  btnCancelarRegis2.addEventListener("click", (e) => {
-    e.preventDefault();
+    nombreRegisInput.value = "";
+    apellidoRegisInput.value = "";
+    documentoInput.value = "";
+    fechaNInputRegis.value = "";
+    telefonoInputRegis.value = "";
+    direccInputRegis.value = "";
+    inputSelectRol.value = "";
+    inputCorreo.value = "";
+    correoAdminInput.value = "";
+    inputContraseña.value = "";
+    inputContraConfir.value = "";
+    inputContraseña2.value = "";
+    inputContraConfir2.value = "";
+    empresaInput.value = "";
+    inputNit.value = "";
+    inputCodigoAcce.value = "";
     window.location.href = "index.php";
   });
 
   btnCancelarRegisM.addEventListener("click", (e) => {
     e.preventDefault();
+    nombreRegisInput.value = "";
+    apellidoRegisInput.value = "";
+    documentoInput.value = "";
+    fechaNInputRegis.value = "";
+    telefonoInputRegis.value = "";
+    direccInputRegis.value = "";
+    inputSelectRol.value = "";
+    inputCorreo.value = "";
+    correoAdminInput.value = "";
+    inputContraseña.value = "";
+    inputContraConfir.value = "";
+    inputContraseña2.value = "";
+    inputContraConfir2.value = "";
+    empresaInput.value = "";
+    inputNit.value = "";
+    inputCodigoAcce.value = "";
+    window.location.href = "index.php";
+  });
+
+  btnCancelarRegisA.addEventListener("click", (e) => {
+    e.preventDefault();
+    nombreRegisInput.value = "";
+    apellidoRegisInput.value = "";
+    documentoInput.value = "";
+    fechaNInputRegis.value = "";
+    telefonoInputRegis.value = "";
+    direccInputRegis.value = "";
+    inputSelectRol.value = "";
+    inputCorreo.value = "";
+    correoAdminInput.value = "";
+    inputContraseña.value = "";
+    inputContraConfir.value = "";
+    inputContraseña2.value = "";
+    inputContraConfir2.value = "";
+    empresaInput.value = "";
+    inputNit.value = "";
+    inputCodigoAcce.value = "";
     window.location.href = "index.php";
   });
 
@@ -1500,10 +1709,10 @@ if (document.querySelector(".registroHTML") !== null) {
     }
   });
 
-  ojoIconoAadmi.addEventListener("click", (e) => {
-    if (ojoIconoAadmi.classList.contains("ojoIconAAdmi")) {
-      ojoIconoAadmi.classList.replace("ojoIconAAdmi", "ojoIconA2Admi");
-      ojoIconoCadmi.classList.replace("ojoIconC2Admi", "ojoIconCAdmi");
+  ojoIconoA_A.addEventListener("click", (e) => {
+    if (ojoIconoA_A.classList.contains("ojoIconAAdmi")) {
+      ojoIconoA_A.classList.replace("ojoIconAAdmi", "ojoIconA2Admi");
+      ojoIconoC_A.classList.replace("ojoIconC2Admi", "ojoIconCAdmi");
       inputContraseña2.removeAttribute("type");
       inputContraseña2.setAttribute("type", "text");
       inputContraConfir2.removeAttribute("type");
@@ -1511,10 +1720,10 @@ if (document.querySelector(".registroHTML") !== null) {
     }
   });
 
-  ojoIconoCadmi.addEventListener("click", (e) => {
-    if (ojoIconoCadmi.classList.contains("ojoIconCAdmi")) {
-      ojoIconoAadmi.classList.replace("ojoIconA2Admi", "ojoIconAAdmi");
-      ojoIconoCadmi.classList.replace("ojoIconCAdmi", "ojoIconC2Admi");
+  ojoIconoC_A.addEventListener("click", (e) => {
+    if (ojoIconoC_A.classList.contains("ojoIconCAdmi")) {
+      ojoIconoA_A.classList.replace("ojoIconA2Admi", "ojoIconAAdmi");
+      ojoIconoC_A.classList.replace("ojoIconCAdmi", "ojoIconC2Admi");
       inputContraseña2.removeAttribute("type");
       inputContraseña2.setAttribute("type", "password");
       inputContraConfir2.removeAttribute("type");
@@ -1527,26 +1736,15 @@ if (document.querySelector(".registroHTML") !== null) {
   //
 }
 
-//
-//
-//<<-- Registro Fin -->>
-//
-//
+//---------------------------
+// <<-- Registro - FIN -->>
+//---------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
-//
-//
-//
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//
-//
-
-//
-//
-//<<-- recuperarContraseña.php INICIO -->>
-//
-//
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------
+// <<-- recuperarContraseña.php - INICIO -->>
+//--------------------------------------------
 
 if (document.querySelector(".recuvaContraHTML") !== null) {
   //SELECION OBJETOS DEL DOM
@@ -1584,7 +1782,7 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
 
   correoInput.addEventListener("input", (e) => {
     var correo = correoInput.value;
-    var url = "http://localhost/BizLab-Web-v2/consultarUsuario.php";
+    var url = "http://localhost/BizLab/consultarUsuario.php";
 
     if (correo.length != 0) {
       let formCorreoRecuContra = new FormData();
@@ -1639,7 +1837,7 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
       btnCancelar.classList.replace("btnCan1", "btnCan2");
 
       let correo = correoInput.value.trim();
-      let url = "http://localhost/BizLab-Web-v2/enviarContraRecu.php";
+      let url = "http://localhost/BizLab/enviarContraRecu.php";
       var cod = "";
 
       let formRecuContra = new FormData();
@@ -1653,6 +1851,7 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
       })
         .then((response) => response.json())
         .then((data) => {
+          
           cod = data;
           btnVerifCodi.addEventListener(
             "click",
@@ -1686,7 +1885,7 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
             console.log("boton codigo REENVIAR tocado");
             btnVerifCodi.setAttribute("disabled", "");
             let correo = correoInput.value.trim();
-            let url = "http://localhost/BizLab-Web-v2/enviarContraRecu.php";
+            let url = "http://localhost/BizLab/enviarContraRecu.php";
 
             let formRecuContraRe = new FormData();
 
@@ -1741,6 +1940,7 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
           codigoInput.style.cursor = "text";
 
           aReenviarCodigo.style.cursor = "pointer";
+
         })
         .catch((err) => console.log(err));
     }
@@ -1755,26 +1955,15 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
   //EVENTOS
 }
 
-//
-//
-//<<-- recuperarContraseña.php FIN -->>
-//
-//
+//------------------------------------------
+// <<-- recuperarContraseña.php - FIN -->>
+//------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
-//
-//
-//
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//
-//
-
-//
-//
-//<<-- recuperarContraseña2.php INICIO -->>
-//
-//
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------
+// <<-- recuperarContraseña2.php - INICIO -->>
+//----------------------------------------------
 
 if (document.querySelector(".recuvaContra2HTML") !== null) {
   //INPUTS
@@ -1914,8 +2103,263 @@ if (document.querySelector(".recuvaContra2HTML") !== null) {
   });
 }
 
-//
-//
-//<<-- recuperarContraseña2.php FIN -->>
-//
-//
+//-------------------------------------------
+// <<-- recuperarContraseña2.php - FIN -->>
+//-------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------
+// <<-- confirmarNuevoMiembro.php - INICIO -->>
+//-----------------------------------------------
+
+if (document.querySelector(".confirmarCorreoHTML") != null) {
+  //TOMANDO OBJETOS DEL DOM
+
+  //INPUTS
+  const inputCodigo = document.querySelector(".correoMCodigo");
+
+  const inputNomM = document.querySelector(".inputNom");
+  const inputApeM = document.querySelector(".inputApe");
+  const inputDocuM = document.querySelector(".inputDocu");
+  const inputFechaM = document.querySelector(".inputFecha");
+  const inputTelefM = document.querySelector(".inputTelef");
+  const inputDireccM = document.querySelector(".inputDirecc");
+  const inputRolM = document.querySelector(".inputRol");
+  const inputCorreoM = document.querySelector(".inputCorreo");
+  const inputContraM = document.querySelector(".inputContra");
+  const inputEmpresaM = document.querySelector(".inputEmpre");
+  const inputNitM = document.querySelector(".inputNit");
+  const inputCorreoA = document.querySelector(".correoAdmin");
+  const inputContraA = document.querySelector(".contraAdmin");
+
+  //BOTONES
+  const btnConfirmar = document.querySelector(".btnRegistrarM");
+  const btnCancelar = document.querySelector(".btnCancelarM");
+
+  //SPAN
+  const spanErrCodigo = document.querySelector(".spanErrCodigo");
+
+  //VARIABLES GLOBALES
+  var datos = ["", "", "", "", "", "", "", "", "", "", "", "", ""];
+
+  window.addEventListener("load", () => {
+    datos[0] = inputNomM.value;
+    datos[1] = inputApeM.value;
+    datos[2] = inputDocuM.value;
+    datos[3] = inputFechaM.value;
+    datos[4] = inputTelefM.value;
+    datos[5] = inputDireccM.value;
+    datos[6] = inputRolM.value;
+    datos[7] = inputCorreoM.value;
+    datos[8] = inputContraM.value;
+    datos[9] = inputEmpresaM.value;
+    datos[10] = inputNitM.value;
+    datos[11] = inputCorreoA.value;
+    datos[12] = inputContraA.value;
+
+    console.log(datos);
+    let correo = "";
+
+    if (inputCorreoM.value != "") {
+      correo = inputCorreoM.value;
+    } else {
+      if (inputCorreoA.value != "") {
+        correo = inputCorreoA.value;
+      }
+    }
+
+    let url = "http://localhost/BizLab/enviarContraRecu.php";
+
+    let formCorreoCodigo = new FormData();
+
+    formCorreoCodigo.append("correoUser", correo);
+    formCorreoCodigo.append("send2Correo", true);
+
+    fetch(url, {
+      method: "POST",
+      body: formCorreoCodigo,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (datos[10] != "") {
+          btnConfirmar.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            console.log("correcto1");
+
+            if (
+              inputNomM.value == datos[0] &&
+              inputApeM.value == datos[1] &&
+              inputDocuM.value == datos[2] &&
+              inputFechaM.value == datos[3] &&
+              inputTelefM.value == datos[4] &&
+              inputDireccM.value == datos[5] &&
+              inputRolM.value == datos[6] &&
+              inputCorreoM.value == datos[7] &&
+              inputContraM.value == datos[8] &&
+              inputEmpresaM.value == datos[9] &&
+              inputNitM.value == datos[10]
+            ) {
+              console.log("correcto2");
+
+              if (data == inputCodigo.value) {
+                var ultimoMiembroRegistrado = 0;
+
+                let formRegisMiembro = new FormData();
+
+                formRegisMiembro.append("nombreMiembroR", inputNomM.value);
+                formRegisMiembro.append("apellidoMiembro", inputApeM.value);
+                formRegisMiembro.append("documentoMiembro", inputDocuM.value);
+                formRegisMiembro.append("fechaNMiembro", inputFechaM.value);
+                formRegisMiembro.append("telefonoMiembro", inputTelefM.value);
+                formRegisMiembro.append("direccMiembro", inputDireccM.value);
+                formRegisMiembro.append("rolMiembro", inputRolM.value);
+                formRegisMiembro.append("correoMiembro", inputCorreoM.value);
+                formRegisMiembro.append(
+                  "contraseniaMiembro",
+                  inputContraM.value
+                );
+                formRegisMiembro.append("empresaMiembro", inputEmpresaM.value);
+                formRegisMiembro.append("nitMiembro", inputNitM.value);
+                formRegisMiembro.append("userVerifi", true);
+
+                fetch("http://localhost/BizLab/consultarUsuario.php", {
+                  method: "POST",
+                  body: formRegisMiembro,
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    ultimoMiembroRegistrado = data;
+
+                    btnConfirmar.setAttribute("disabled", "");
+                    btnConfirmar.classList.replace(
+                      "btnRegistrarM",
+                      "btnRegistrarM2"
+                    );
+
+                    btnCancelar.setAttribute("disabled", "");
+                    btnCancelar.classList.replace(
+                      "btnCancelarM",
+                      "btnCancelarM2"
+                    );
+
+                    setTimeout(() => {
+                      window.location.href = "inicioSesion.php";
+                    }, 1200);
+                  })
+                  .catch((err) => console.log(err));
+              } else {
+                spanErrCodigo.textContent =
+                  "El código es incorrecto. Intente de nuevo";
+                spanErrCodigo.style.opacity = "1";
+              }
+            }
+          });
+        } else {
+          if (datos[10] == "") {
+            btnConfirmar.addEventListener("click", (e) => {
+              e.preventDefault();
+
+              console.log("correcto1");
+
+              if (
+                inputNomM.value == datos[0] &&
+                inputApeM.value == datos[1] &&
+                inputDocuM.value == datos[2] &&
+                inputFechaM.value == datos[3] &&
+                inputTelefM.value == datos[4] &&
+                inputDireccM.value == datos[5] &&
+                inputRolM.value == datos[6] &&
+                inputCorreoA.value == datos[11] &&
+                inputContraA.value == datos[12]
+              ) {
+                console.log("correcto2");
+
+                if (data == inputCodigo.value) {
+                  var ultimoMiembroRegistrado = 0;
+
+                  let formRegisMiembro = new FormData();
+
+                  formRegisMiembro.append("nombreMiembroR", inputNomM.value);
+                  formRegisMiembro.append("apellidoMiembro", inputApeM.value);
+                  formRegisMiembro.append("documentoMiembro", inputDocuM.value);
+                  formRegisMiembro.append("fechaNMiembro", inputFechaM.value);
+                  formRegisMiembro.append("telefonoMiembro", inputTelefM.value);
+                  formRegisMiembro.append("direccMiembro", inputDireccM.value);
+                  formRegisMiembro.append("rolMiembro", inputRolM.value);
+                  formRegisMiembro.append("correoMiembro", inputCorreoA.value);
+                  formRegisMiembro.append(
+                    "contraseniaMiembro",
+                    inputContraA.value
+                  );
+                  formRegisMiembro.append("userVerifi", true);
+
+                  fetch("http://localhost/BizLab/consultarUsuario.php", {
+                    method: "POST",
+                    body: formRegisMiembro,
+                  })
+                    .then((response) => response.json())
+                    .then((data) => {
+                      ultimoMiembroRegistrado = data;
+
+                      btnConfirmar.setAttribute("disabled", "");
+                      btnConfirmar.classList.replace(
+                        "btnRegistrarM",
+                        "btnRegistrarM2"
+                      );
+
+                      btnCancelar.setAttribute("disabled", "");
+                      btnCancelar.classList.replace(
+                        "btnCancelarM",
+                        "btnCancelarM2"
+                      );
+
+                      setTimeout(() => {
+                        window.location.href = "inicioSesion.php";
+                      }, 1200);
+                    })
+                    .catch((err) => console.log(err));
+                } else {
+                  spanErrCodigo.textContent =
+                    "El código es incorrecto. Intente de nuevo";
+                  spanErrCodigo.style.opacity = "1";
+                }
+              }
+            });
+          }
+        }
+      })
+      .catch((err) => console.log(err));
+  });
+
+  //
+  //EVENTO
+  inputCodigo.addEventListener("input", (e) => {
+    if (inputCodigo.value == "") {
+      spanErrCodigo.textContent = "#";
+      spanErrCodigo.style.opacity = "0";
+    }
+  });
+
+  btnCancelar.addEventListener("click", (e) => {
+    e.preventDefault();
+    inputNomM.value = "";
+    inputApeM.value = "";
+    inputDocuM.value = "";
+    inputFechaM.value = "";
+    inputTelefM.value = "";
+    inputDireccM.value = "";
+    inputRolM.value = "";
+    inputCorreoM.value = "";
+    inputContraM.value = "";
+    inputEmpresaM.value = "";
+    inputNitM.value = "";
+    window.location.href = "inicioSesion.php";
+  });
+}
+
+//--------------------------------------------
+// <<-- confirmarNuevoMiembro.php - FIN -->>
+//--------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------

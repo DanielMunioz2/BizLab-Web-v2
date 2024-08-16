@@ -20,19 +20,29 @@
 
             $row = $resultadoUser -> fetch_assoc();
 
+            $datos = [0,0];
+
             if($row!==null){
                 if($row["user_contrasenia"]==$contraseña){
-                    $_SESSION['iniciado']=$row['Id_usuario'];
+                    $_SESSION['iniciado']=$row['id_usuario'];
                     $_SESSION['tipoUsuario']=$row['user_rol'];
-                    $regreso = "El usuario existe y la contraseña es Correcta";
+                    $_SESSION["stdProd"]=0;
+                    $datos[0] = 1; // El usuario existe y la contraseña es Correcta
+                    if($row['user_rol']=="Administrador"){
+                        $datos[1] = 1;
+                    }else{
+                        if($row['user_rol']=="Usuario" || $row['user_rol']=="Miembro"){
+                            $datos[1] = 2;
+                        }
+                    }
                 }else{
-                    $regreso = "El usuario existe y la contraseña es Incorrecta";
+                    $datos[0] = 2; //El usuario existe y la contraseña es Incorrecta
                 };
             }else{
-                $regreso = "No Existe el Usuario";
+                $datos[0] = 3; //El usuario no existe
             }
         
-            echo json_encode($regreso, JSON_UNESCAPED_UNICODE);
+            echo json_encode($datos, JSON_UNESCAPED_UNICODE);
 
         }
     }
@@ -201,20 +211,31 @@
         echo json_encode($dato, JSON_UNESCAPED_UNICODE);
     }
 
-    if(isset($_POST["nombreMiembro"])){
+    
+
+    if(isset($_POST["nombreMiembroR"])){
         date_default_timezone_set('America/Bogota');
 
-        $nombre = $_POST["nombreMiembro"];
+        $nombre = $_POST["nombreMiembroR"];
         $apellido = $_POST["apellidoMiembro"];
         $documento = $_POST["documentoMiembro"];
         $fechaNacimi = $_POST["fechaNMiembro"];
         $telefonoMiembro = $_POST["telefonoMiembro"];
         $direccMiembro = $_POST["direccMiembro"];
         $rolMiembro = $_POST["rolMiembro"];
+
+        if($rolMiembro == "Administrador"){
+            $empresaMiembro = "";
+            $nitMiembro = "";
+        }else{
+            if($rolMiembro == "Usuario"){
+                $empresaMiembro = $_POST["empresaMiembro"];
+                $nitMiembro = $_POST["nitMiembro"];
+            }
+        }
         $correoMiembro = $_POST["correoMiembro"];
         $contraseniaMiembro = $_POST["contraseniaMiembro"];
-        $empresaMiembro = $_POST["empresaMiembro"];
-        $nitMiembro = $_POST["nitMiembro"];
+        
 
         $fechaActual = date("Y-m-d");
         $horaActual = date("h:i:s");
@@ -249,61 +270,6 @@
             '$nitMiembro');";
 
         $conn->query($queryRegisMiembro);
-
-        $row =  $conn->insert_id;
-
-        echo json_encode($row, JSON_UNESCAPED_UNICODE);
-
-    }
-
-    if(isset($_POST["nombreAdmin"])){
-        date_default_timezone_set('America/Bogota');
-
-        $nombre = $_POST["nombreAdmin"];
-        $apellido = $_POST["apellidoAdmin"];
-        $documento = $_POST["documentoAdmin"];
-        $fechaNacimi = $_POST["fechaNAdmin"];
-        $telefonoAdmin = $_POST["telefonoAdmin"];
-        $direccAdmin = $_POST["direccAdmin"];
-        $rolAdmin = $_POST["rolAdmin"];
-        $correoAdmin = $_POST["correoAdmin"];
-        $contraseniaAdmin = $_POST["contraseniaAdmin"];
-        $empresaAdmin = $_POST["empresaAdmin"];
-        $nitAdmin = $_POST["nitAdmin"];
-
-        $fechaActual = date("Y-m-d");
-        $horaActual = date("h:i:s");
-        $fechaYHoraU = $fechaActual." ".$horaActual;
-
-        $queryRegisAdmin =
-        "INSERT INTO `bizlab`.`usuarios`(
-            `user_nombre`, 
-            `user_apellido`, 
-            `user_correo`, 
-            `user_contrasenia`, 
-            `user_telefono`, 
-            `user_documento`, 
-            `user_fNacimiento`, 
-            `user_direc`, 
-            `user_rol`, 
-            `user_fechaHoraU`, 
-            `user_empresa`, 
-            `user_empresaNit`)
-        VALUES (
-            '$nombre', 
-            '$apellido',
-            '$correoAdmin',
-            '$contraseniaAdmin', 
-            '$telefonoAdmin', 
-            '$documento', 
-            '$fechaNacimi', 
-            '$direccAdmin', 
-            '$rolAdmin',
-            '$fechaYHoraU',
-            '$empresaAdmin', 
-            '$nitAdmin');";
-
-        $conn->query($queryRegisAdmin);
 
         $row =  $conn->insert_id;
 

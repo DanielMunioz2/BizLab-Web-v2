@@ -42,7 +42,7 @@
                     </form>
                 </div>
             </div>
-            <div></div>
+            <div class="divImg"><div></div></div>
         </main>
         <footer class="footer">
             <div class="footer_contenido">
