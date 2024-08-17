@@ -72,7 +72,7 @@
       </div>
     </div>
   </div>
-  <form method="post" action="http://localhost/BizLab/registroReseFacNewRese.php" id="indexRegistroFacRese" name="indexRegistroFacRese">
+  <form method="post" action="http://165.22.176.119/BizLab/registroReseFacNewRese.php" id="indexRegistroFacRese" name="indexRegistroFacRese">
 
     <input type="hidden" name="tituloRese" id="tituloRese" value="">
     <input type="hidden" name="activiRese" id="activiRese" value="">

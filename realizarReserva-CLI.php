@@ -16,7 +16,7 @@ if(isset($_SESSION["iniciado"])){
     // Obteniendo datos del USUARIO INICIADO
 
         $resultadoUser = $conn->query(
-            "SELECT * FROM `bizlab`.`usuarios` 
+            "SELECT * FROM `bizlabDB`.`usuarios` 
             WHERE `usuarios`.`id_usuario` = ".$_SESSION["iniciado"].";");
         
         $resultadoUser = $resultadoUser->fetch_assoc();
@@ -26,7 +26,7 @@ if(isset($_SESSION["iniciado"])){
     //---------------------------------------------------------------------------------------------------------------------------
     // Obteniendo datos de las MEMBRESÍAS
 
-        $resultadoMembre = $conn->query("SELECT * FROM `bizlab`.`membresias`;");
+        $resultadoMembre = $conn->query("SELECT * FROM `bizlabDB`.`membresias`;");
         $membreNumRows = $resultadoMembre->num_rows;
 
         $arrayMembreGene = [];

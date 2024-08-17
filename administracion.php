@@ -8,7 +8,7 @@
 
         $userId = $_SESSION["iniciado"];
         $resultUserIni = $conn->query(
-            "SELECT * FROM `bizlab`.`usuarios` 
+            "SELECT * FROM `bizlabDB`.`usuarios` 
             WHERE `usuarios`.`id_usuario` = $userId;"
         );
         $numRowsUserI = $resultUserIni->num_rows;

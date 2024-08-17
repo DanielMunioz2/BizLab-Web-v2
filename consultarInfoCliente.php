@@ -51,7 +51,7 @@
 
                 $resultadoReservas = 
                 $conn->query(
-                    "SELECT * FROM `bizlab`.`reservas`
+                    "SELECT * FROM `bizlabDB`.`reservas`
                     WHERE `reservas`.`serieReserva` = '".$fecha."'
                     AND `reservas`.`estadoReserva` = 'Pendiente'
                     $idProducto
@@ -63,7 +63,7 @@
 
                 $resultadoReservas = 
                 $conn->query(
-                    "SELECT * FROM `bizlab`.`reservas`
+                    "SELECT * FROM `bizlabDB`.`reservas`
                     WHERE `reservas`.`estadoReserva` = 'Pendiente'
                     $idProducto;");
 
@@ -93,7 +93,7 @@
             $nombre = $_POST["pdtSelectReseNew"];
 
             $resultadoPdt = $conn->query(
-                "SELECT * FROM `bizlab`.`productos` 
+                "SELECT * FROM `bizlabDB`.`productos` 
                 WHERE `productos`.`produNombre` 
                 LIKE '%".$nombre."%'");
 
@@ -139,7 +139,7 @@
             if($idPdt != null && is_numeric($idPdt)){
 
                 $resultPdtSele = $conn->query(
-                    "SELECT * FROM `bizlab`.`productos` 
+                    "SELECT * FROM `bizlabDB`.`productos` 
                     WHERE `productos`.`id_producto` = $idPdt");
     
                 $numRowsPdtSele = $resultPdtSele->num_rows;
@@ -223,7 +223,7 @@
             $nomMiembro = $_POST["miemSelectReseNew"];
 
             $resultadoMiem = $conn->query(
-                "SELECT * FROM `bizlab`.`usuarios` 
+                "SELECT * FROM `bizlabDB`.`usuarios` 
                 WHERE `usuarios`.`user_nombre` 
                 LIKE '%".$nomMiembro."%'
                 OR `usuarios`.`user_apellido`
@@ -272,7 +272,7 @@
             if($idMiem != null && is_numeric($idMiem)){
 
                 $resultMiemSele = $conn->query(
-                    "SELECT * FROM `bizlab`.`usuarios` 
+                    "SELECT * FROM `bizlabDB`.`usuarios` 
                     WHERE `usuarios`.`id_usuario` = $idMiem");
     
                 $numRowsMiemSele = $resultMiemSele->num_rows;
@@ -319,7 +319,7 @@
             if($idUnid != null && is_numeric($idUnid)){
 
                 $resultUnidSele = $conn->query(
-                    "SELECT * FROM `bizlab`.`unidades` 
+                    "SELECT * FROM `bizlabDB`.`unidades` 
                     WHERE `unidades`.`id_unidad` = $idUnid");
 
                 $numRowsUnidSele = $resultUnidSele->num_rows;
@@ -363,7 +363,7 @@
             // Reserva por Día
             $resultadoReser = 
                 $conn->query(
-                    "SELECT * FROM `bizlab`.`reservas`
+                    "SELECT * FROM `bizlabDB`.`reservas`
                     WHERE `reservas`.`reserDiaFechas` LIKE '%".$fechaRese."%';");
             
             $numRowsRese = $resultadoReser->num_rows;
@@ -381,7 +381,7 @@
             // Reservas por Semana
             $resultadoReser = 
                 $conn->query(
-                    "SELECT * FROM `bizlab`.`reservas`
+                    "SELECT * FROM `bizlabDB`.`reservas`
                     WHERE `reservas`.`reserSemanaFechas` LIKE '%".$fechaRese."%';");
             
             $numRowsRese = $resultadoReser->num_rows;
@@ -399,7 +399,7 @@
             // Reserva por hora
             $resultadoReser = 
                 $conn->query(
-                    "SELECT * FROM `bizlab`.`reservas`
+                    "SELECT * FROM `bizlabDB`.`reservas`
                     WHERE `reservas`.`fechaReserva` = '".$fechaRese."'
                     AND `reservas`.`reserTipo` = 'hora';");
             
@@ -432,7 +432,7 @@
 
                 $resultadoUnidDispo = 
                     $conn->query(
-                        "SELECT * FROM `bizlab`.`unidades`
+                        "SELECT * FROM `bizlabDB`.`unidades`
                         WHERE `unidades`.`id_unidad` IN ($unidDispo);"
                     );
 
@@ -475,7 +475,7 @@
 
                     // Reservas por HORA
                     $resultadoHora = $conn->query(
-                        "SELECT * FROM `bizlab`.`reservas`
+                        "SELECT * FROM `bizlabDB`.`reservas`
                         WHERE `reservas`.`reserTipo` = 'hora'
                         AND `reservas`.`fechaReserva` = '".$fechaReseXHora."';"
                     );
@@ -495,7 +495,7 @@
 
                     // Reservas por DÍA
                     $resultadoDia = $conn->query(
-                        "SELECT * FROM `bizlab`.`reservas`
+                        "SELECT * FROM `bizlabDB`.`reservas`
                         WHERE `reservas`.`reserDiaFechas` LIKE '%".$fechaReseXHora."%';"
                     );
 
@@ -514,7 +514,7 @@
 
                     // Reservas por SEMANA
                     $resultadoSema = $conn->query(
-                        "SELECT * FROM `bizlab`.`reservas`
+                        "SELECT * FROM `bizlabDB`.`reservas`
                         WHERE `reservas`.`reserSemanaFechas` LIKE '%".$fechaReseXHora."%';"
                     );
 
@@ -580,7 +580,7 @@
                         // Reservs por Semana
 
                         $resultadoHora = $conn->query(
-                            "SELECT * FROM `bizlab`.`reservas`
+                            "SELECT * FROM `bizlabDB`.`reservas`
                             WHERE `reservas`.`reserTipo` = 'semana'
                             AND ".$likeWhereSema.";"
                         );
@@ -602,7 +602,7 @@
                         // Reservas por Día
 
                         $resultadoHora = $conn->query(
-                            "SELECT * FROM `bizlab`.`reservas`
+                            "SELECT * FROM `bizlabDB`.`reservas`
                             WHERE ".$likeWhereDia.";"
                         );
 
@@ -623,7 +623,7 @@
                         // Reservas por Hora
 
                         $resultadoHora = $conn->query(
-                            "SELECT * FROM `bizlab`.`reservas`
+                            "SELECT * FROM `bizlabDB`.`reservas`
                             WHERE `reservas`.`reserTipo` = 'hora'
                             AND `reservas`.`fechaReserva` IN (".$likeWhereDia2.");"
                         );
@@ -712,7 +712,7 @@
                 // Reservas por Hora
 
                     $resultadoHora = $conn->query(
-                        "SELECT * FROM `bizlab`.`reservas`
+                        "SELECT * FROM `bizlabDB`.`reservas`
                         WHERE `reservas`.`reserTipo` = 'hora'
                         AND `reservas`.`fechaReserva` IN (".$fechaCompletaDiaHora.");"
                     );
@@ -734,7 +734,7 @@
                 // Reservas por Día
 
                     $resultadoHora = $conn->query(
-                        "SELECT * FROM `bizlab`.`reservas`
+                        "SELECT * FROM `bizlabDB`.`reservas`
                         WHERE ".$likeWhereDia.";"
                     );
 
@@ -755,7 +755,7 @@
                 // Reservs por Semana
 
                     $resultadoHora = $conn->query(
-                        "SELECT * FROM `bizlab`.`reservas`
+                        "SELECT * FROM `bizlabDB`.`reservas`
                         WHERE ".$likeWhereSema.";"
                     );
 

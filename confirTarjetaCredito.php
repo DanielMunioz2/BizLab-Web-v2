@@ -31,7 +31,7 @@
             $resultUser = "";
 
             $resultUser = $conn->query(
-                "SELECT * FROM `bizlab`.`usuarios`
+                "SELECT * FROM `bizlabDB`.`usuarios`
                 WHERE `usuarios`.`id_usuario` = ".$_SESSION['iniciado'].";"
             );
 
@@ -42,7 +42,7 @@
             $resultadoTarjetas = "";
 
             $resultadoTarjetas = $conn->query(
-                "SELECT * FROM `bizlab`.`tarjetascredito`
+                "SELECT * FROM `bizlabDB`.`tarjetascredito`
                 WHERE `tarjetascredito`.`tarje_numero` = '".$numTarje."'"
             );
 
@@ -79,7 +79,7 @@
                     $estadoT = $token->{"data"};
                     $maskCard = $token->{"card"}->{"mask"};
 
-                    $conn->query("INSERT INTO `bizlab`.`tarjetascredito` (`tarje_mask`, `tarje_tokenEpayco`, `tarje_numero`, `tarje_cvc`) VALUES ('$maskCard', '$idTarjeta', '$numTarje', '$cvcTarje');"); 
+                    $conn->query("INSERT INTO `bizlabDB`.`tarjetascredito` (`tarje_mask`, `tarje_tokenEpayco`, `tarje_numero`, `tarje_cvc`) VALUES ('$maskCard', '$idTarjeta', '$numTarje', '$cvcTarje');"); 
                     
                 }else{
 
@@ -106,7 +106,7 @@
                 $estadoT = $token->{"data"};
                 $maskCard = $token->{"card"}->{"mask"};
 
-                $conn->query("UPDATE `bizlab`.`tarjetascredito` SET `tarjetascredito`.`tarje_tokenEpayco` = '$idTarjeta', `tarjetascredito`.`tarje_mask` = '$maskCard' WHERE (`tarjetascredito`.`id_tarjetaCre` = '".$resultadoTarjetas["id_tarjetaCre"]."');");
+                $conn->query("UPDATE `bizlabDB`.`tarjetascredito` SET `tarjetascredito`.`tarje_tokenEpayco` = '$idTarjeta', `tarjetascredito`.`tarje_mask` = '$maskCard' WHERE (`tarjetascredito`.`id_tarjetaCre` = '".$resultadoTarjetas["id_tarjetaCre"]."');");
 
             }
             //---------------------------------------------------------------

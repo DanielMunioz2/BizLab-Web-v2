@@ -18,7 +18,7 @@
             //Consulta 1: Facturas 
 
             $resultadoFactuas = $conn->query(
-                "SELECT * FROM `bizlab`.`facturas`;"
+                "SELECT * FROM `bizlabDB`.`facturas`;"
             );
 
             $numRowsFactu = $resultadoFactuas->num_rows;
@@ -38,7 +38,7 @@
             //Consulta 2: Miembros
 
             $resultadoMiembros = $conn->query(
-                "SELECT * FROM `bizlab`.`usuarios`
+                "SELECT * FROM `bizlabDB`.`usuarios`
                 WHERE `usuarios`.`user_rol` = 'Miembro';"
             );
 
@@ -59,7 +59,7 @@
             //Consulta 3: Reservas
 
             $resultadoReservas = $conn->query(
-                "SELECT * FROM `bizlab`.`reservas`
+                "SELECT * FROM `bizlabDB`.`reservas`
                 WHERE `reservas`.`estadoReserva` = 'Pendiente' 
                 OR `reservas`.`estadoReserva` = 'En Proceso';"
             );
@@ -81,7 +81,7 @@
             //Consulta 4: Mensajes
 
             $resultadoMensajes = $conn->query(
-                "SELECT * FROM `bizlab`.`mensajes`
+                "SELECT * FROM `bizlabDB`.`mensajes`
                 WHERE `mensajes`.`tipoMensaje` = 'Problema'
                 AND `mensajes`.`estadoMensaje` = 'Sin Respuesta';"
             );
@@ -108,7 +108,7 @@
         if(isset($_POST["formReseActuGene"])){
 
             $resultReseActuGene = $conn->query(
-                "SELECT * FROM `bizlab`.`reservas`
+                "SELECT * FROM `bizlabDB`.`reservas`
                 WHERE `reservas`.`estadoReserva` = 'Pendiente'
                 OR `reservas`.`estadoReserva` = 'En Proceso';"
             );
@@ -136,7 +136,7 @@
             $idRese = $_POST["idReseEstado"];
             
             $resultReseEstado = $conn->query(
-                "SELECT `estadoReserva` FROM `bizlab`.`reservas`
+                "SELECT `estadoReserva` FROM `bizlabDB`.`reservas`
                 WHERE `reservas`.`id_reserva` = ".intval($idRese).";"
             );
 
@@ -169,7 +169,7 @@
                 move_uploaded_file($ImagenPrinTemp, "imagesUser/".$ImagenPrin);
 
                 $resultUpdateUser = $conn->query(
-                    "UPDATE `bizlab`.`usuarios` 
+                    "UPDATE `bizlabDB`.`usuarios` 
                     SET 
                     `user_correo` = '".$email."',
                     `user_celular` = ".intval($celular).",
@@ -183,7 +183,7 @@
             }else{
 
                 $resultUpdateUser = $conn->query(
-                    "UPDATE `bizlab`.`usuarios` 
+                    "UPDATE `bizlabDB`.`usuarios` 
                     SET 
                     `user_correo` = '".$email."',
                     `user_celular` = ".intval($celular).",
@@ -209,7 +209,7 @@
             $arrayReseOMiembros = [];
 
             $resultOtrosM = $conn->query(
-                "SELECT * FROM `bizlab`.`usuarios`
+                "SELECT * FROM `bizlabDB`.`usuarios`
                 WHERE `usuarios`.`id_usuario` IN (".$idOtrosM.");"
             );
 
@@ -239,7 +239,7 @@
             $estado = $_POST["actuReseEstado"];
 
             $resultadoReseActu = $conn->query(
-                "UPDATE `bizlab`.`reservas` SET `estadoReserva` = '".$estado."' WHERE (`id_reserva` = '".$idRese."');"
+                "UPDATE `bizlabDB`.`reservas` SET `estadoReserva` = '".$estado."' WHERE (`id_reserva` = '".$idRese."');"
             );
 
             echo json_encode("Reserva Actualizada", JSON_UNESCAPED_UNICODE);
@@ -253,12 +253,12 @@
             $fecha = $_POST["fechaDia"];
 
             $resultado = $conn->query(
-                "SELECT * FROM `bizlab`.`reservas` 
-                JOIN `bizlab`.`usuarios` ON
+                "SELECT * FROM `bizlabDB`.`reservas` 
+                JOIN `bizlabDB`.`usuarios` ON
                 `usuarios`.`id_usuario` = `reservas`.`id_usuario`
-                JOIN `bizlab`.`unidades` ON
+                JOIN `bizlabDB`.`unidades` ON
                 `unidades`.`id_unidad` = `reservas`.`id_unidad`
-                JOIN `bizlab`.`productos` ON
+                JOIN `bizlabDB`.`productos` ON
                 `productos`.`id_producto` = `reservas`.`id_producto`
                 WHERE (`reservas`.`fechaReserva` = '".$fecha."' 
                 AND `reservas`.`estadoReserva` = 'Pendiente')
@@ -333,8 +333,8 @@
                 $fecha4 = $mesP."-".$fechaAño;
             }
 
-            $queryMesReservas = "SELECT * FROM `bizlab`.`reservas`
-            INNER JOIN `bizlab`.`usuarios` 
+            $queryMesReservas = "SELECT * FROM `bizlabDB`.`reservas`
+            INNER JOIN `bizlabDB`.`usuarios` 
             ON `usuarios`.`id_usuario` = `reservas`.`id_usuario`
             WHERE `reservas`.`serieReserva` = '".$fecha2."'
             OR `reservas`.`serieReserva` = '".$fecha3."'
@@ -427,7 +427,7 @@
             $ImagenPrinTemp = $_FILES["prodImg"]['tmp_name'];
             move_uploaded_file($ImagenPrinTemp, "images/productosImages/".$ImagenPrin);
             
-            $query = "UPDATE `bizlab`.`productos` SET 
+            $query = "UPDATE `bizlabDB`.`productos` SET 
             `productos`.`produNombre` = '$prodNom', 
             `productos`.`produCategoria` = '$prodCatego',
             `productos`.`produTipo` = '$prodTipo', 
@@ -437,7 +437,7 @@
             `productos`.`precioXSemana` = $prodPreXSema,
             `productos`.`produDescri` = '$prodDescrip',
             `productos`.`productoImgPrin` = '$ImagenPrin'
-            WHERE `bizlab`.`productos`.`id_producto` = $prodId;";
+            WHERE `bizlabDB`.`productos`.`id_producto` = $prodId;";
 
             $resultado = $conn->query($query);
 
@@ -474,13 +474,13 @@
             $ImagenPrinTemp = $_FILES["prodImg"]['tmp_name'];
             move_uploaded_file($ImagenPrinTemp, "images/productosImages/".$ImagenPrin);
             
-            $query = "UPDATE `bizlab`.`unidades` SET 
+            $query = "UPDATE `bizlabDB`.`unidades` SET 
             `unidades`.`unidad_nombre` = '$prodNom',
             `unidades`.`unidad_precios` = '$precios',
             `unidades`.`unidad_descrip` = '$prodDescrip',
             `unidades`.`unidad_imagen` = '$ImagenPrin',
             `unidades`.`unidad_caracte` = '$prodCaracteris'
-            WHERE `bizlab`.`unidades`.`id_unidad` = $prodId;";
+            WHERE `bizlabDB`.`unidades`.`id_unidad` = $prodId;";
 
             $resultado = $conn->query($query);
 
@@ -500,7 +500,7 @@
 
             $nombre = $_POST["BEspeMiembro"];
 
-            $queryMiembro = "SELECT * FROM `bizlab`.`usuarios` WHERE `usuarios`.`user_nombre` LIKE '%".$nombre."%'";
+            $queryMiembro = "SELECT * FROM `bizlabDB`.`usuarios` WHERE `usuarios`.`user_nombre` LIKE '%".$nombre."%'";
 
             $resultMiembro = $conn->query($queryMiembro);
 
@@ -574,7 +574,7 @@
             }
 
             $resultFactu = $conn->query(
-                "SELECT * FROM `bizlab`.`facturas`
+                "SELECT * FROM `bizlabDB`.`facturas`
                 WHERE `facturas`.`fechaFactura` IN ($cadenaMesActu);"
             );
 
@@ -591,7 +591,7 @@
             };
 
             $resultFactu = $conn->query(
-                "SELECT * FROM `bizlab`.`facturas`
+                "SELECT * FROM `bizlabDB`.`facturas`
                 WHERE `facturas`.`fechaFactura` IN ($cadenaMesAnte);"
             );
 
@@ -619,7 +619,7 @@
 
             $nombre = $_POST["BEspeOMiembro"];
 
-            $queryMiembro = "SELECT * FROM `bizlab`.`usuarios` WHERE `usuarios`.`user_nombre` LIKE '%".$nombre."%'";
+            $queryMiembro = "SELECT * FROM `bizlabDB`.`usuarios` WHERE `usuarios`.`user_nombre` LIKE '%".$nombre."%'";
 
             $resultMiembro = $conn->query($queryMiembro);
 
@@ -658,7 +658,7 @@
 
             $nomProd = $_POST["prodNomNewRese"];
 
-            $queryProd = "SELECT * FROM `bizlab`.`productos` WHERE `productos`.`produNombre` LIKE '%".$nomProd."%' AND `productos`.`produCategoria` = 'Individuales'";
+            $queryProd = "SELECT * FROM `bizlabDB`.`productos` WHERE `productos`.`produNombre` LIKE '%".$nomProd."%' AND `productos`.`produCategoria` = 'Individuales'";
 
             $resultProd = $conn->query($queryProd);
 
@@ -703,7 +703,7 @@
             
             $unidadNom = $_POST["unidNomNewRese"];
 
-            $queryUnid = "SELECT * FROM `bizlab`.`unidades` WHERE `unidades`.`unidad_nombre` LIKE '%".$unidadNom."%'";
+            $queryUnid = "SELECT * FROM `bizlabDB`.`unidades` WHERE `unidades`.`unidad_nombre` LIKE '%".$unidadNom."%'";
 
             $resultUnid = $conn->query($queryUnid);
 
@@ -753,7 +753,7 @@
 
             $idUser = $_POST["idUserIni"];
 
-            // $resultado = $conn->query("SELECT * FROM `bizlab`.`usuarios` WHERE `usuarios`.`id_usuario` = ".$idUser.";");
+            // $resultado = $conn->query("SELECT * FROM `bizlabDB`.`usuarios` WHERE `usuarios`.`id_usuario` = ".$idUser.";");
             
             // $resultado = $resultado->fetch_assoc();
 
@@ -773,22 +773,22 @@
             $fechaAnte = $_POST["fechaActualAnte"];
 
             $resultadoHistorial = $conn->query(
-                "SELECT * FROM `bizlab`.`historial`
-                JOIN `bizlab`.`reservas` ON 
+                "SELECT * FROM `bizlabDB`.`historial`
+                JOIN `bizlabDB`.`reservas` ON 
                 `reservas`.`id_reserva` = `historial`.`tarea_reserva`
-                JOIN `bizlab`.`usuarios` ON 
+                JOIN `bizlabDB`.`usuarios` ON 
                 `usuarios`.`id_usuario` = `historial`.`tarea_usuario`
-                JOIN `bizlab`.`unidades` ON 
+                JOIN `bizlabDB`.`unidades` ON 
                 `unidades`.`id_unidad` = `historial`.`tarea_unidad`
-                JOIN `bizlab`.`productos` ON 
+                JOIN `bizlabDB`.`productos` ON 
                 `productos`.`id_producto` = `historial`.`tarea_producto`
-                JOIN `bizlab`.`facturas` ON 
+                JOIN `bizlabDB`.`facturas` ON 
                 `facturas`.`id_Factura` = `historial`.`tarea_factura`
-                JOIN `bizlab`.`membresiauser` ON 
+                JOIN `bizlabDB`.`membresiauser` ON 
                 `membresiauser`.`id_membreUser` = `historial`.`tarea_membresiaUser`
-                JOIN `bizlab`.`membresias` ON 
+                JOIN `bizlabDB`.`membresias` ON 
                 `membresias`.`id_membresia` = `historial`.`tarea_membresia`
-                JOIN `bizlab`.`mensajes` ON 
+                JOIN `bizlabDB`.`mensajes` ON 
                 `mensajes`.`id_mensaje` = `historial`.`tarea_mensaje`
                 WHERE `historial`.`tarea_fOrigen` = '".$fecha."'
                 OR `historial`.`tarea_fOrigen` = '".$fechaAnte."'
@@ -821,7 +821,7 @@
             $arrayReservasAdmin = [];
 
             $resultReservas = $conn->query(
-                "SELECT * FROM `bizlab`.`reservas` ".$where." ORDER BY `reservas`.`id_reserva` DESC;"
+                "SELECT * FROM `bizlabDB`.`reservas` ".$where." ORDER BY `reservas`.`id_reserva` DESC;"
             );
 
             $rowsReservas = $resultReservas->num_rows;
@@ -851,15 +851,15 @@
             $arrayReservasAdmin = [];
 
             $resultadoRese = $conn->query(
-                "SELECT * FROM `bizlab`.`reservas` 
-                JOIN `bizlab`.`unidades` 
-                ON `bizlab`.`reservas`.`id_unidad` = `bizlab`.`unidades`.`id_unidad` 
-                JOIN `bizlab`.`usuarios` 
-                ON `bizlab`.`reservas`.`id_usuario` = `bizlab`.`usuarios`.`id_usuario` 
-                JOIN `bizlab`.`productos` 
-                ON `bizlab`.`reservas`.`id_producto` = `bizlab`.`productos`.`id_producto`
-                JOIN `bizlab`.`facturas`
-                ON `bizlab`.`facturas`.`id_reserva` = `bizlab`.`reservas`.`id_reserva`
+                "SELECT * FROM `bizlabDB`.`reservas` 
+                JOIN `bizlabDB`.`unidades` 
+                ON `bizlabDB`.`reservas`.`id_unidad` = `bizlabDB`.`unidades`.`id_unidad` 
+                JOIN `bizlabDB`.`usuarios` 
+                ON `bizlabDB`.`reservas`.`id_usuario` = `bizlabDB`.`usuarios`.`id_usuario` 
+                JOIN `bizlabDB`.`productos` 
+                ON `bizlabDB`.`reservas`.`id_producto` = `bizlabDB`.`productos`.`id_producto`
+                JOIN `bizlabDB`.`facturas`
+                ON `bizlabDB`.`facturas`.`id_reserva` = `bizlabDB`.`reservas`.`id_reserva`
                 WHERE `reservas`.`id_reserva` = $idRese;");
 
             $row = $resultadoRese->fetch_assoc();
@@ -881,7 +881,7 @@
             $arrayOtrosMimebros = [];
 
             $resultadoOtros = $conn->query(
-                "SELECT * FROM `bizlab`.`usuarios`
+                "SELECT * FROM `bizlabDB`.`usuarios`
                 WHERE `usuarios`.`id_usuario` IN ($idOtrosMiembros);"
             );
 
@@ -910,7 +910,7 @@
             $arrayReservasGene = [];
 
             $resultReseGene = $conn->query(
-                "SELECT * FROM `bizlab`.`reservas`
+                "SELECT * FROM `bizlabDB`.`reservas`
                 WHERE `reservas`.`estadoReserva` = 'Pendiente'
                 OR `reservas`.`estadoReserva` = 'En Proceso';"
             );
@@ -942,7 +942,7 @@
             $idRese = $_POST["idCancelarRese"];
 
             $resultadoResCancel = $conn->query(
-                "SELECT * FROM `bizlab`.`reservas`
+                "SELECT * FROM `bizlabDB`.`reservas`
                 WHERE `reservas`.`id_reserva` = $idRese;"
             );
 
@@ -970,7 +970,7 @@
                 $fechaCancelaRese = $_POST["fechaCancelaRese"];
 
                 $resultadoReseActuCancel = $conn->query(
-                    "UPDATE `bizlab`.`reservas` 
+                    "UPDATE `bizlabDB`.`reservas` 
                     SET 
                     `estadoReserva` = 'Cancelada', 
                     `reservaCancel24H` = ".intval($horasRestantes).",
@@ -982,7 +982,7 @@
                 );
 
                 $resultadoDeudaNueva = $conn->query(
-                    "INSERT INTO `bizlab`.`deudas` 
+                    "INSERT INTO `bizlabDB`.`deudas` 
                     (`tipoDeuda`, `estadoDeuda`, `precioDeuda`, `id_user`)
                     VALUES
                     ('".$tipoDeuda."', 'Pendiente', ".intval($cargoAdicional).", ".intval($idUserRese).");"
@@ -999,7 +999,7 @@
                 $motivoCancel = $_POST["motivoCancelacion"];
 
                 $resultadoReseActuCancel = $conn->query(
-                    "UPDATE `bizlab`.`reservas` 
+                    "UPDATE `bizlabDB`.`reservas` 
                     SET 
                     `estadoReserva` = 'Cancelada',
                     `reservaCancel24H` = ".intval($horasRestantes).",

@@ -169,7 +169,7 @@
             $ImagenPrinTemp = $_FILES["subirImagenBtn"]['tmp_name'];
             move_uploaded_file($ImagenPrinTemp, "images/productosImages/".$ImagenPrin);
 
-            $query = "INSERT INTO `bizlab`.`productos` 
+            $query = "INSERT INTO `bizlabDB`.`productos` 
             (produNombre, 
             produCategoria, 
             produPrecio, 
@@ -221,7 +221,7 @@
                 $ImagenPrinTemp = $_FILES["subirImagenBtn"]['tmp_name'];
                 move_uploaded_file($ImagenPrinTemp, "images/productosImages/".$ImagenPrin);
 
-                $query = "INSERT INTO `bizlab`.`unidades` 
+                $query = "INSERT INTO `bizlabDB`.`unidades` 
                 (unidad_nombre, 
                 unidad_descrip, 
                 unidad_imagen, 

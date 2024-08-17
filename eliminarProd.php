@@ -14,7 +14,7 @@
 
         if($tipo=="producto"){
 
-            $queryElimiProd="DELETE FROM `bizlab`.`productos` WHERE `productos`.`id_producto` = $id;";
+            $queryElimiProd="DELETE FROM `bizlabDB`.`productos` WHERE `productos`.`id_producto` = $id;";
 
             $resultado = $conn->query($queryElimiProd);
 
@@ -26,7 +26,7 @@
         }else{
             if($tipo=="unidad"){
 
-                $queryElimiUni="DELETE FROM `bizlab`.`unidades` WHERE `unidades`.`id_unidad` = $id;";
+                $queryElimiUni="DELETE FROM `bizlabDB`.`unidades` WHERE `unidades`.`id_unidad` = $id;";
 
                 $resultado = $conn->query($queryElimiUni);
 
@@ -51,7 +51,7 @@
 
         if($tipo=="producto"){
 
-            $queryElimiProd="DELETE FROM `bizlab`.`productos` WHERE `productos`.`id_producto` = $id;";
+            $queryElimiProd="DELETE FROM `bizlabDB`.`productos` WHERE `productos`.`id_producto` = $id;";
 
             $resultado = $conn->query($queryElimiProd);
 
@@ -64,7 +64,7 @@
 
             if($tipo=="unidad"){
 
-                $queryElimiUni="DELETE FROM `bizlab`.`unidades` WHERE `unidades`.`id_unidad` = $id;";
+                $queryElimiUni="DELETE FROM `bizlabDB`.`unidades` WHERE `unidades`.`id_unidad` = $id;";
 
                 $resultado = $conn->query($queryElimiUni);
 

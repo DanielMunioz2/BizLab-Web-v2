@@ -13,7 +13,7 @@
     if(isset($_SESSION["iniciado"])){
 
         $resultUsuario = $conn->query(
-            "SELECT * FROM `bizlab`.`usuarios`
+            "SELECT * FROM `bizlabDB`.`usuarios`
             WHERE `usuarios`.`id_usuario` = ".$_SESSION["iniciado"].";"
         );
 

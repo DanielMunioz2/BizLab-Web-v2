@@ -6,7 +6,7 @@
 
     // Datos USUARIO INICIADO 
     $resultUsuario = $conn->query(
-        "SELECT * FROM `bizlab`.`usuarios` 
+        "SELECT * FROM `bizlabDB`.`usuarios` 
         WHERE `usuarios`.`id_usuario` = ".$_SESSION["iniciado"].";");
     $resultUsuario = $resultUsuario->fetch_assoc();
     //-----------------------------------------------------------------------------
@@ -14,7 +14,7 @@
     //
 
     // Buscando las membresías en la base de datos
-    $resultMembresias = $conn->query("SELECT * FROM `bizlab`.`membresias`;");
+    $resultMembresias = $conn->query("SELECT * FROM `bizlabDB`.`membresias`;");
     $MembreNumRows = $resultMembresias->num_rows;
 
     $arrayMembresiasGene = [];

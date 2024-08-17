@@ -106,7 +106,7 @@
             if($tipoRese == "hora"){
 
                 $resultado = $conn->query(
-                    "INSERT INTO `bizlab`.`reservas`
+                    "INSERT INTO `bizlabDB`.`reservas`
                     (`codigoReserva`, `serieReserva`, `estadoReserva`, `fechaCompraReser`, 
                     `horaCompraReser`, `reserTipo`, `fechaReserva`, 
                     `horaEntradaR`, `horaSalidaR`, 
@@ -137,7 +137,7 @@
                 for($i = 0; $i < count($dias); $i++){
 
                     $resultado = $conn->query(
-                        "INSERT INTO `bizlab`.`reservas`
+                        "INSERT INTO `bizlabDB`.`reservas`
                         (`codigoReserva`, `serieReserva`, `estadoReserva`, `fechaCompraReser`, 
                         `horaCompraReser`, `reserTipo`, `fechaReserva`, 
                         `horaEntradaR`, `horaSalidaR`, 
@@ -170,7 +170,7 @@
                 for($i = 0; $i < count($dias); $i++){
 
                     $resultado = $conn->query(
-                        "INSERT INTO `bizlab`.`reservas`
+                        "INSERT INTO `bizlabDB`.`reservas`
                         (`codigoReserva`, `serieReserva`, `estadoReserva`, `fechaCompraReser`, 
                         `horaCompraReser`, `reserTipo`, `fechaReserva`, 
                         `horaEntradaR`, `horaSalidaR`, 
@@ -204,7 +204,7 @@
         // Insertando FACTURA en la Base de Datos
 
             $resultado2 = $conn->query(
-                "INSERT INTO `bizlab`.`facturas`
+                "INSERT INTO `bizlabDB`.`facturas`
                 (`refEpayco`, `epaycoRespuesta`, `epaycoMotivo`, 
                 `facturaCodigo`, `facturaSerie`, `fechaFactura`, 
                 `horaFactura`, `fechaFacturaV`, `estadoFactura`, `precioFactura`, 
@@ -228,7 +228,7 @@
         // Insertando HISTORIAL en la Base de Datos
 
             $resultado3 = $conn->query(
-                "INSERT INTO `bizlab`.`historial`
+                "INSERT INTO `bizlabDB`.`historial`
                 (`tarea_fOrigen`, `tarea_hOrigen`, `tarea_fechaEje`, `tarea_fechaFEje`, 
                 `tarea_horaEje`, `tarea_horaFEje`, `tarea_tipo`, `tarea_estado`, `tarea_usuario`, 
                 `tarea_producto`, `tarea_factura`, `tarea_reserva`, `tarea_unidad`)
@@ -249,7 +249,7 @@
 
             $resultadoUser = 
             $conn->query(
-                "SELECT * FROM `bizlab`.`usuarios` 
+                "SELECT * FROM `bizlabDB`.`usuarios` 
                 WHERE `usuarios`.`id_usuario` = ".$_SESSION["iniciado"]."");
         
             $resultadoUser = $resultadoUser->fetch_assoc();

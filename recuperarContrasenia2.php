@@ -9,7 +9,7 @@
             $contra1 = $_POST["contra1"];
             $correo = $_POST["correo"];
     
-            $conn->query("UPDATE `bizlab`.`usuarios` SET `usuarios`.`user_contrasenia` = '".$contra1."' WHERE `bizlab`.`usuarios`.`user_correo` = '".$correo."';");
+            $conn->query("UPDATE `bizlabDB`.`usuarios` SET `usuarios`.`user_contrasenia` = '".$contra1."' WHERE `bizlabDB`.`usuarios`.`user_correo` = '".$correo."';");
     
             $row =  $conn->insert_id;
 

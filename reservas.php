@@ -9,7 +9,7 @@
         $idUser = $_SESSION["iniciado"];
 
         $resultadoUser = $conn->query(
-            "SELECT * FROM `bizlab`.`usuarios`
+            "SELECT * FROM `bizlabDB`.`usuarios`
             WHERE `usuarios`.`id_usuario` = $idUser;"
         ); 
         

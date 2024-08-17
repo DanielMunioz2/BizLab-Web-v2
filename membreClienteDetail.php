@@ -46,7 +46,7 @@
             
                 // Obteniendo info de la base de datos
                 $resultMembresia = $conn->query(
-                    "SELECT * FROM `bizlab`.`membresias`
+                    "SELECT * FROM `bizlabDB`.`membresias`
                     WHERE `membresias`.`id_membresia` = ".$_SESSION["membresia"].";");
 
                 $resultMembresia = $resultMembresia->fetch_assoc();
@@ -60,7 +60,7 @@
 
                 // Obteniendo info de la base de datos 
                 $resultUser = $conn->query(
-                    "SELECT * FROM `bizlab`.`usuarios`
+                    "SELECT * FROM `bizlabDB`.`usuarios`
                     WHERE `usuarios`.`id_usuario` = $idUsuario");
 
                 $resultUser = $resultUser->fetch_assoc();
@@ -443,7 +443,7 @@
             
                 // Obteniendo info de la base de datos
                 $resultMembresia = $conn->query(
-                    "SELECT * FROM `bizlab`.`membresias`
+                    "SELECT * FROM `bizlabDB`.`membresias`
                     WHERE `membresias`.`id_membresia` = ".$_SESSION["membresia"].";");
 
                 $resultMembresia = $resultMembresia->fetch_assoc();
@@ -457,7 +457,7 @@
 
                 // Obteniendo info de la base de datos 
                 $resultUser = $conn->query(
-                    "SELECT * FROM `bizlab`.`usuarios`
+                    "SELECT * FROM `bizlabDB`.`usuarios`
                     WHERE `usuarios`.`id_usuario` = $idUsuario");
 
                 $resultUser = $resultUser->fetch_assoc();

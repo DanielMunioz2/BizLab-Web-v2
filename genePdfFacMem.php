@@ -18,7 +18,7 @@
 
         $resultadoUser = 
             $conn->query(
-                "SELECT * FROM `bizlab`.`usuarios` 
+                "SELECT * FROM `bizlabDB`.`usuarios` 
                 WHERE `usuarios`.`id_usuario` = ".$_SESSION["iniciado"]."");
         
         $resultadoUser = $resultadoUser->fetch_assoc();

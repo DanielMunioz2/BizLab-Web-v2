@@ -13,7 +13,7 @@
             $idUser = $_POST["idUserGuardaToken"];
     
             $resultado = $conn->query(
-                "UPDATE `bizlab`.`usuarios` 
+                "UPDATE `bizlabDB`.`usuarios` 
                 SET `user_tokenTarjeta` = '$tokenTarjeta', `user_codigoEpayco` = '$tokenTUser'
                 WHERE (`id_usuario` = '$idUser');");
     
