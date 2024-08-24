@@ -697,19 +697,20 @@
         position: relative;
         background: linear-gradient(0deg, #0c79b4 0%, #086496 100%);;
         & .divLogo{
-        width: max-content;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        padding-left: 3rem;
-        position: absolute;
-        top: 0;
-        left: 0;
-        & svg{
-            width: 6rem;
-            height: max-content;
-        }
+            width: max-content;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 3rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            & svg{
+                width: 24rem;
+                height: max-content;
+                fill: #ffffff;
+            }
         }
         & .divPerfilGene{
         width: max-content;

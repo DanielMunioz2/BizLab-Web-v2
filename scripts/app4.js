@@ -64,7 +64,8 @@ if(document.querySelector("#reservasAdminHTML") != null){
 
         // Urls
 
-            var urlInfoAdmin = "http://165.22.176.119/BizLab/consultarInfoAdmin.php";
+            // var urlInfoAdmin = "http://165.22.176.119/BizLab/consultarInfoAdmin.php";
+            var urlInfoAdmin = "http://localhost/BizLab/consultarInfoAdmin.php";
         
         //-------------------------------------------------------------------------------------
 
@@ -286,8 +287,6 @@ if(document.querySelector("#reservasAdminHTML") != null){
 
                     }
 
-                    console.log(erroresInputCancelRese);
-
                     let sumaErrores = 0
 
                     for(let i = 0; i < erroresInputCancelRese.length; i++){
@@ -331,7 +330,6 @@ if(document.querySelector("#reservasAdminHTML") != null){
                         .then((response) => response.json())
                         .then((data) => {
 
-                            console.log(data)
                             if(data.length != 0){
 
                                 let fechaEntrada = data[0]; 
@@ -365,8 +363,6 @@ if(document.querySelector("#reservasAdminHTML") != null){
                                     }
 
                                 }
-
-                                console.log(restantes24horas);
 
                                 if(restantes24horas <= 24 && restantes24horas != 0){
                                     
@@ -436,7 +432,7 @@ if(document.querySelector("#reservasAdminHTML") != null){
                                     document.querySelector("#cargoAdicionalInput").addEventListener("input", (e)=>{
                                         
                                         let valor = e.target.value;
-                                        console.log(Number(valor))
+
                                         if(valor != ""){
                                             
                                             if(isNaN(Number(valor))){
@@ -535,8 +531,8 @@ if(document.querySelector("#reservasAdminHTML") != null){
                         })
                             .then((response) => response.json())
                             .then((data) => {
-        
-                                if(data.length != 0){
+
+                                if(data.length != 1){
         
                                     for(let i = 0; i < data.length; i++){
         
@@ -946,8 +942,6 @@ if(document.querySelector("#reservasAdminHTML") != null){
     
                                         estadoReseActuali = "En Proceso";
 
-                                        console.log(fechaActuSuma);
-
                                         if(actualizaEnProceso == 0){
     
                                             let formActuEstadoRese = new FormData();
@@ -1066,8 +1060,6 @@ if(document.querySelector("#reservasAdminHTML") != null){
     
                                     clearInterval(intervalTiempoRestante);
                                     intervalTiempoRestante = null;
-
-                                    console.log(fechaActuSuma);
     
                                     actuEstadoDiv = 0;
                                     actualizaEnProceso = 0;
@@ -1131,7 +1123,6 @@ if(document.querySelector("#reservasAdminHTML") != null){
                 }
 
                 let idRese = id;
-                console.log(idRese)
 
                 let formReserva = new FormData();
 
@@ -1462,7 +1453,7 @@ if(document.querySelector("#reservasAdminHTML") != null){
                     intervalReservasLista = setInterval(()=>{
                         
                         elegidosInputsWhere = 
-                        " JOIN `bizlab`.`unidades` ON `bizlab`.`reservas`.`id_unidad` = `bizlab`.`unidades`.`id_unidad` JOIN `bizlab`.`usuarios` ON `bizlab`.`reservas`.`id_usuario` = `bizlab`.`usuarios`.`id_usuario` JOIN `bizlab`.`productos` ON `bizlab`.`reservas`.`id_producto` = `bizlab`.`productos`.`id_producto` WHERE ";
+                        " JOIN `bizlabDB`.`unidades` ON `bizlabDB`.`reservas`.`id_unidad` = `bizlabDB`.`unidades`.`id_unidad` JOIN `bizlabDB`.`usuarios` ON `bizlabDB`.`reservas`.`id_usuario` = `bizlabDB`.`usuarios`.`id_usuario` JOIN `bizlabDB`.`productos` ON `bizlabDB`.`reservas`.`id_producto` = `bizlabDB`.`productos`.`id_producto` WHERE ";
                         let filtrosFechaWhere = "";
 
                         if(inBusquedaEspecifi.value == "" && hoy == "" && general == ""){
@@ -1544,8 +1535,6 @@ if(document.querySelector("#reservasAdminHTML") != null){
                                 filtrosFechaCuenta.push(3); 
 
                             }
-
-                            // console.log(filtrosFechaCuenta);
 
                             for(let i = 0; i < filtrosFechaCuenta.length; i++){
 
@@ -1707,21 +1696,21 @@ if(document.querySelector("#reservasAdminHTML") != null){
 
                             let valorEspecifi = inBusquedaEspecifi.value;
                             elegidosInputsWhere = 
-                                " JOIN `bizlab`.`unidades` ON `bizlab`.`reservas`.`id_unidad` = `bizlab`.`unidades`.`id_unidad` JOIN `bizlab`.`usuarios` ON `bizlab`.`reservas`.`id_usuario` = `bizlab`.`usuarios`.`id_usuario` JOIN `bizlab`.`productos` ON `bizlab`.`reservas`.`id_producto` = `bizlab`.`productos`.`id_producto` WHERE `reservas`.`codigoReserva` LIKE '%"+valorEspecifi+"%' OR `reservas`.`nombreUser` LIKE '%"+valorEspecifi+"%'";
+                                " JOIN `bizlabDB`.`unidades` ON `bizlabDB`.`reservas`.`id_unidad` = `bizlabDB`.`unidades`.`id_unidad` JOIN `bizlabDB`.`usuarios` ON `bizlabDB`.`reservas`.`id_usuario` = `bizlabDB`.`usuarios`.`id_usuario` JOIN `bizlabDB`.`productos` ON `bizlabDB`.`reservas`.`id_producto` = `bizlabDB`.`productos`.`id_producto` WHERE `reservas`.`codigoReserva` LIKE '%"+valorEspecifi+"%' OR `reservas`.`nombreUser` LIKE '%"+valorEspecifi+"%'";
 
                         }else{
 
                             if(hoy != ""){
 
                                 elegidosInputsWhere = 
-                                    " JOIN `bizlab`.`unidades` ON `bizlab`.`reservas`.`id_unidad` = `bizlab`.`unidades`.`id_unidad` JOIN `bizlab`.`usuarios` ON `bizlab`.`reservas`.`id_usuario` = `bizlab`.`usuarios`.`id_usuario` JOIN `bizlab`.`productos` ON `bizlab`.`reservas`.`id_producto` = `bizlab`.`productos`.`id_producto` WHERE `reservas`.`fechaReserva` = '"+cadenaFechaActual+"'";
+                                    " JOIN `bizlabDB`.`unidades` ON `bizlabDB`.`reservas`.`id_unidad` = `bizlabDB`.`unidades`.`id_unidad` JOIN `bizlabDB`.`usuarios` ON `bizlabDB`.`reservas`.`id_usuario` = `bizlabDB`.`usuarios`.`id_usuario` JOIN `bizlabDB`.`productos` ON `bizlabDB`.`reservas`.`id_producto` = `bizlabDB`.`productos`.`id_producto` WHERE `reservas`.`fechaReserva` = '"+cadenaFechaActual+"'";
 
                             }else{
 
                                 if(general != ""){
 
                                     elegidosInputsWhere = 
-                                    " JOIN `bizlab`.`unidades` ON `bizlab`.`reservas`.`id_unidad` = `bizlab`.`unidades`.`id_unidad` JOIN `bizlab`.`usuarios` ON `bizlab`.`reservas`.`id_usuario` = `bizlab`.`usuarios`.`id_usuario` JOIN `bizlab`.`productos` ON `bizlab`.`reservas`.`id_producto` = `bizlab`.`productos`.`id_producto` ";
+                                    " JOIN `bizlabDB`.`unidades` ON `bizlabDB`.`reservas`.`id_unidad` = `bizlabDB`.`unidades`.`id_unidad` JOIN `bizlabDB`.`usuarios` ON `bizlabDB`.`reservas`.`id_usuario` = `bizlabDB`.`usuarios`.`id_usuario` JOIN `bizlabDB`.`productos` ON `bizlabDB`.`reservas`.`id_producto` = `bizlabDB`.`productos`.`id_producto` ";
                                 
                                 }
 
@@ -1750,8 +1739,6 @@ if(document.querySelector("#reservasAdminHTML") != null){
 
                                 let paginasCant = data.length/10;
                                 paginasCant = Math.ceil(paginasCant);
-
-                                // console.log(paginasCant);
 
                                 paginaCantGene = paginasCant;
 

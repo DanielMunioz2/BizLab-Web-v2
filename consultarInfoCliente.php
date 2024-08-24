@@ -27,6 +27,142 @@
 
     if(isset($_SESSION["iniciado"])){
 
+        // Registrar Factura Mensualidad
+        if(isset($_POST["regisFactuMensualidad"])){
+
+            $fechaCreaFac = $_POST["fechaCreaFac"];
+            $horaCreaFac = $_POST["horaCreaFac"];
+            $serieFac = $_POST["serieFac"];
+            $codigoFac = $_POST["codigoFac"];
+            $userCodEpayco = $_POST["codigoUserEpayco"];
+            $mensuaMembresia = $_POST["mensuaMembresia"];
+            $ivaCantMembresia = $_POST["ivaCantMembresia"];
+            $descuCantMembresia = $_POST["descuCantMembresia"];
+            $totalMembresia = $_POST["totalMembresia"];
+            $membresiaIDEpayco = $_POST["membresiaIDEpayco"];
+            $membresiaCodigoEpayco = $_POST["membresiaCodigoEpayco"];
+            $codigoFac = $_POST["codigoFac"];
+            $referenciaEpayco = $_POST["referenciaEpayco"];
+            $franquiciaCard = $_POST["franquiciaCard"];
+            $bancoCard = $_POST["bancoCard"];
+            $factuEpaycoCod = $_POST["factuEpaycoCod"];
+            $respuestaTransa = $_POST["respuestaTransa"];
+            $motivoTransa = $_POST["motivoTransa"];
+            $tokenCardEpayco = $_POST["tokenCardEpayco"];
+            $idUser = $_POST["idUser"];
+            $idMembresiaUser = $_POST["idMembresiaUser"];
+
+            $membreIdEpayco = explode("-", $factuEpaycoCod);
+            $membreIdEpayco = $membreIdEpayco[0];
+
+            $resultMembresia = $conn->query(
+                "SELECT `membreFechaPagoP` FROM `bizlabDB`.`membresiauser`
+                WHERE `membresiauser`.`membreIdEpayco` = '$membresiaIDEpayco';"
+            );
+
+            $resultMembresia = $resultMembresia->fetch_assoc();
+
+            $fechaFacCaduca = date("Y-m-d",strtotime($resultMembresia["membreFechaPagoP"]."+ 30 days")); 
+            
+            $insertFactu = $conn->query(
+                "INSERT INTO `bizlabDB`.`facturas` 
+                (`refEpayco`, `epaycoRespuesta`, `epaycoMotivo`, `factuEpayco`, 
+                `facturaCodigo`, `facturaSerie`, `fechaFactura`, `horaFactura`, 
+                `fechaFacturaV`, `estadoFactura`, `precioFactura`, `factuSubTotal`, 
+                `ivaFactura`, `descuFactura`, `montoFactuTotal`, `tokenCliente`, 
+                `tokenTarjeta`, `metodoPago`, `tarjetaFranquicia`, `bancoNombre`, 
+                `idPlanEpayco`, `id_producto`, `id_usuario`, `id_membresia`, 
+                `id_unidad`, `id_reserva`)
+                VALUES
+                ('$referenciaEpayco', '$respuestaTransa', '$motivoTransa', '$factuEpaycoCod',
+                '$codigoFac', '$serieFac', '$fechaCreaFac', '$horaCreaFac', 
+                '$fechaFacCaduca', 'Pagada', $mensuaMembresia, $mensuaMembresia,
+                $ivaCantMembresia, $descuCantMembresia, $totalMembresia, '$userCodEpayco',
+                '$tokenCardEpayco', 'TDC', '$franquiciaCard', '$bancoCard',
+                '$membresiaCodigoEpayco', 0, $idUser, $idMembresiaUser,
+                0, 0);"
+            );
+
+            $idinsertadoFac = $conn->insert_id;
+
+            $updateMembreUser = $conn->query(
+                "UPDATE `bizlabdb`.`membresiauser` 
+                SET `membreFechaPagoP` = '$fechaFacCaduca' 
+                WHERE (`membreIdEpayco` = '$membreIdEpayco');"
+            );
+
+            echo json_encode([$fechaFacCaduca, $idinsertadoFac], JSON_UNESCAPED_UNICODE);
+
+        }
+        //--------------------------------------------------------------------------------------------------------------
+
+        // Activar/Desactivar Membresía
+        if(isset($_POST["habiliInabiliMembre"])){
+            
+            $idMembresiaUser = $_POST["idMembresiaUser"];
+            $estadoMembre = $_POST["estadoMembre"];
+
+            $resultUpdateMembre = $conn->query(
+                "UPDATE `bizlabdb`.`membresiauser` SET `membreEstado` = '$estadoMembre' WHERE (`membreIdEpayco` = '$idMembresiaUser');"
+            );
+
+            echo json_encode('Cuenta '.$estadoMembre, JSON_UNESCAPED_UNICODE);
+
+        }
+        //---------------------------------------------------------------------------------------------
+        
+        // Fecha de Pago Próxima - Mensualidad Membresía
+        if(isset($_POST["fechaProxPagoMensu"])){
+
+            $idMembresia = $_POST["idMembreEpayco"];
+
+            $resultMembresia = $conn->query(
+                "SELECT `membreFechaPagoP` FROM `bizlabDB`.`membresiauser`
+                WHERE `membresiauser`.`membreIdEpayco` = '$idMembresia';"
+            );
+
+            $resultMembresia = $resultMembresia->fetch_assoc();
+
+            $resultFactura = $conn->query(
+                "SELECT * FROM `bizlabDB`.`facturas`
+                WHERE `facturas`.`fechaFactura` = '".$resultMembresia["membreFechaPagoP"]."'
+                AND `facturas`.`factuEpayco` LIKE '%".$idMembresia."%';"
+            );
+
+            $resultFactura = $resultFactura->fetch_assoc();
+
+            echo json_encode([$resultMembresia, $resultFactura], JSON_UNESCAPED_UNICODE);
+
+        }
+
+        //-------------------------------------------------------------------------------------------------------------------
+
+        // Servicios - CLIENTE
+
+        if(isset($_POST["serviciosCLIMostrar"])){
+
+            $resultServices = $conn->query(
+                "SELECT * FROM `bizlabDB`.`productos`;"
+            );
+
+            $numRowsServi = $resultServices->num_rows;
+
+            $arrayServicios = [$numRowsServi-1];
+
+            if($numRowsServi > 0){
+
+                while($row = $resultServices->fetch_assoc()){
+
+                    array_push($arrayServicios, $row);
+
+                }
+
+            }
+
+            echo json_encode($arrayServicios, JSON_UNESCAPED_UNICODE);
+
+        }
+
         //------------------------------------------------------------------------------------------------------------------
         
         if(isset($_POST["fechaMesReser"])){

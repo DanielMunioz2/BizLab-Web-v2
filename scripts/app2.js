@@ -4,7 +4,8 @@
 
   // URLS para consultas a la base de datos
 
-    var urlBuscarInfoAdminDB = "http://165.22.176.119/BizLab/consultarInfoAdmin.php";
+    // var urlBuscarInfoAdminDB = "http://165.22.176.119/BizLab/consultarInfoAdmin.php";
+    var urlBuscarInfoAdminDB = "http://localhost/BizLab/consultarInfoAdmin.php";
 
   //-------------------------------------------------------------------------------------------------
 
@@ -104,10 +105,10 @@
     function sumaRestaDiasFecha(fecha, operacion, dias) {
 
       var date = fecha.split("-"),
-          hoy = new Date(Number(date[0]), (Number(date[1])-1), Number(date[2])),
-          dias = parseInt(dias),
-          calculado = new Date(),
-          dateResul = operacion == "sumar" ? hoy.getDate() + dias : hoy.getDate() - dias;
+      hoy = new Date(Number(date[0]), (Number(date[1])-1), Number(date[2])),
+      dias = parseInt(dias),
+      calculado = new Date(),
+      dateResul = operacion == "sumar" ? hoy.getDate() + dias : hoy.getDate() - dias;
 
       calculado.setDate(dateResul);
 
@@ -454,7 +455,7 @@ if (document.querySelector(".administracionHTML") != null) {
                               <span class="miembrosRecienSpan">${cantidadMiembrosRecientes}</span>
                           </div>
                           <span>${cadenaFechaActual}</span>
-                          <a href="miembros.php">Todos los Miembros</a>
+                          <a href="listaMiembros.php">Todos los Miembros</a>
                       </div>
                       <div>
                           <span>Facturas por Pagar</span>
@@ -464,7 +465,7 @@ if (document.querySelector(".administracionHTML") != null) {
                               <span class="factuRecienSpan">${cantidadFactuHoy}</span>
                           </div>
                           <span>${cadenaFechaActual}</span>
-                          <a href="facturas.php">Administrar Facturas</a>
+                          <a href="listaFacturas.php">Administrar Facturas</a>
                       </div>
                   </div>
                   <div class="divExtraB">
@@ -1144,8 +1145,6 @@ if (document.querySelector(".administracionHTML") != null) {
 
                 }
 
-                console.log(cantidadReseXDia);
-
               //----------------------------------------------------------------------------------------------------------------------
 
               // Creando días del mes ANTERIOR
@@ -1323,7 +1322,7 @@ if (document.querySelector(".administracionHTML") != null) {
         function cambiarCalendaDia(diaD, mesD, añoD) {
 
           //--------------------------------------------------------------------------------
-          //Contenedor Calendario General
+          // Contenedor Calendario General
 
             const calendaD = document.querySelector(".calendaDivContent");
             calendaD.innerHTML = "";
@@ -1355,8 +1354,6 @@ if (document.querySelector(".administracionHTML") != null) {
             })
               .then((response) => response.json())
               .then((data) => {
-
-                console.log(data);
 
                 function mostrarReservas() {
 

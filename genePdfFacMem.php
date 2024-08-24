@@ -113,6 +113,7 @@
             //---------------------------------------------------------------------
             // Email de la Factura
             //---------------------------------------------------------------------
+            //jiabbmmobophejbg
 
             $mail = new PHPMailer(true);
 
@@ -120,8 +121,8 @@
             $mail->isSMTP();                              //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';       //Set the SMTP server to send through
             $mail->SMTPAuth   = true;             //Enable SMTP authentication
-            $mail->Username   = 'dmunioz2034@gmail.com';   //SMTP write your email
-            $mail->Password   = 'jiabbmmobophejbg';      //SMTP password
+            $mail->Username   = 'bizclub2023@gmail.com';   //SMTP write your email
+            $mail->Password   = 'cdeylerydrvgcjwv';      //SMTP password
             $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
             $mail->Port       = 465;                                    
 
@@ -266,7 +267,7 @@
                                 <img src="imagesUser/<?php echo $resultadoUser["user_imagen"]; ?>" alt="">
                             </div>
                             <div class="divSpans">
-                                <span class="span1">Emprendedor Express</span>
+                                <span class="span1"><?php echo $nomMembre; ?></span>
                                 <span class="span2">
                                     <?php echo $resultadoUser["user_cargo"]." - ".$resultadoUser["user_empresa"]." | ".$resultadoUser["user_empresaNit"]; ?>
                                 </span>
@@ -313,7 +314,7 @@
                 <div class="footer_redesSocialesContent">
                     
                 </div>
-                <svg class="footer_logoBizSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194.79 194.79"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M97.39,0a97.4,97.4,0,1,0,97.4,97.39A97.4,97.4,0,0,0,97.39,0Zm0,20L20,97.39A77.48,77.48,0,0,1,97.39,20Zm0,154.79a77.53,77.53,0,0,1-74-54.75L120,23.39a77.39,77.39,0,0,1-22.65,151.4Z"/><path d="M117,70.07a43.72,43.72,0,1,0,43.72,43.72A43.71,43.71,0,0,0,117,70.07Zm0,67.43a23.72,23.72,0,1,1,23.72-23.71A23.74,23.74,0,0,1,117,137.5Z"/></g></g></svg>
+                <svg class="footer_logoBizSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76.43 39.84"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M72.55,19.72c-.51-.49-.49-.79-.1-1.27a9.71,9.71,0,0,0,1.65-3A11.54,11.54,0,0,0,63.13,0Q41.55,0,19.94,0a19.89,19.89,0,0,0-.68,39.76c7.53.15,15.07,0,22.61,0v0H64.24a12.61,12.61,0,0,0,3.91-.44C76.92,36.52,79.26,26.12,72.55,19.72ZM65.42,33.37a13.3,13.3,0,0,1-1.55.08H20.32A13.18,13.18,0,0,1,8.84,27.68,12.85,12.85,0,0,1,7.69,14.15C10,9.38,13.91,6.54,19.22,6.49c14.72-.15,29.44-.07,44.16,0a5.05,5.05,0,0,1,5,5.09,5.13,5.13,0,0,1-4.91,5.18c-.4,0-.8,0-1.2,0l-38.53,0A3.21,3.21,0,0,0,20.39,20a3.26,3.26,0,0,0,3.42,3.23q20.52,0,41-.06a5.11,5.11,0,0,1,.57,10.2Z"/></g></g></svg>
                 <div class="footer_copyrightContent">
                     Copyright​ © 2024 BizLab SAS 
                 </div>
@@ -321,4 +322,9 @@
         </footer>
         <script src="scripts\app3.js"></script>
     </body>
+    <script>
+
+        history.replaceState(null,null,"index.php");
+
+    </script>
 </html>

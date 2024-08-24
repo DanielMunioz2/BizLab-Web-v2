@@ -42,7 +42,7 @@
             $proximoPago = $_POST["facVencimiento"];
 
             $fechaCaduca = explode("-", $proximoPago);
-            $fechaCaduca = $fechaCaduca[2]."-".$fechaCaduca[1]."-".$fechaCaduca[0];
+            $fechaCaduca = $fechaCaduca[0]."-".$fechaCaduca[1]."-".$fechaCaduca[2];
 
             // $facTranId   $subscripIdEpayco
             // $precioTotal $direcUser $docuUser $emailUser
@@ -100,6 +100,8 @@
 
             echo json_encode([$idHistoInsertId, $idInsertadoFactura, $idMembreInsertId, intval($_SESSION["iniciado"])], JSON_UNESCAPED_UNICODE);
 
+            $_SESSION["tipoUsuario"] = "Miembro";
+            
         }else{
             
             header("location:index.php");

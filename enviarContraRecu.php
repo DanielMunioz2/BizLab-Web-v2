@@ -40,8 +40,8 @@
             $mail->isSMTP();                              //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';       //Set the SMTP server to send through
             $mail->SMTPAuth   = true;             //Enable SMTP authentication
-            $mail->Username   = 'dmunioz2034@gmail.com';   //SMTP write your email
-            $mail->Password   = 'jiabbmmobophejbg';      //SMTP password
+            $mail->Username   = 'bizclub2023@gmail.com';   //SMTP write your email
+            $mail->Password   = 'cdeylerydrvgcjwv';      //SMTP password
             $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
             $mail->Port       = 465;                                    
 
@@ -96,6 +96,7 @@
     
             //Create an instance; passing `true` enables exceptions
             //if (isset($_POST["send"])) {
+            //jiabbmmobophejbg 
     
                 $mail = new PHPMailer(true);
     
@@ -103,8 +104,8 @@
                 $mail->isSMTP();                              //Send using SMTP
                 $mail->Host       = 'smtp.gmail.com';       //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;             //Enable SMTP authentication
-                $mail->Username   = 'dmunioz2034@gmail.com';   //SMTP write your email
-                $mail->Password   = 'jiabbmmobophejbg';      //SMTP password
+                $mail->Username   = 'bizclub2023@gmail.com';   //SMTP write your email
+                $mail->Password   = 'cdeylerydrvgcjwv';      //SMTP password
                 $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
                 $mail->Port       = 465;                                    
     

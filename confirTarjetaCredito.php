@@ -9,14 +9,7 @@
     if(isset($_SESSION["iniciado"])){
 
         // Comprobamos si existe el envio del formulario
-        if(isset($_POST["numeroTarjeta"])){
-
-            // Tomando datos de la tarjeta de crédito
-            $numTarje = $_POST["numeroTarjeta"];
-            $cvcTarje = $_POST["cvcTarjeta"];
-            $mesVTarje = $_POST["mesVTarjeta"];
-            $añoVTarje = $_POST["anioVTarjeta"];
-            //---------------------------------------------------------------
+        if(isset($_POST["numeroTarjeta"])){ 
 
             // Conexión con Epayco
             $epayco = new Epayco\Epayco(array(
@@ -25,8 +18,12 @@
                 "lenguage" => "ES",
                 "test" => true
             ));
-            //---------------------------------------------------------------
 
+            $numTarje = $_POST["numeroTarjeta"];
+            $cvcTarje = $_POST["cvcTarjeta"];
+            $mesVTarje = $_POST["mesVTarjeta"];
+            $añoVTarje = $_POST["anioVTarjeta"];
+            
             // Buscando la data del usuario
             $resultUser = "";
 
@@ -51,9 +48,9 @@
             
             //-----------------------------------------------------------------------------------
 
-            // Comprobando la existencia de la tarjeta en la DB 
-            //(Si no esta registrada, insertar la nueva tarjeta)
-            //(Si esta registrada, se actualizara el token Epayco de la tarjeta)
+            // Comprobando la existencia de la tarjeta en la Base de Datos 
+            // (Si no está registrada, insertar la nueva tarjeta)
+            // (Si está registrada, se actualizara el token Epayco de la tarjeta)
             $idTarjeta = "";
             $existe = "";
             $resultToken = "";
@@ -72,20 +69,33 @@
 
                 $resultToken = $token->{"status"};
 
-                if($resultToken==true){
+                if($resultToken == true){
                     
                     $existe = "Tarjeta Existente, NO REGISTRADA en DB";
                     $idTarjeta = $token->{"id"};
                     $estadoT = $token->{"data"};
                     $maskCard = $token->{"card"}->{"mask"};
+                    $nameCard = $token->{"card"}->{"name"};
 
-                    $conn->query("INSERT INTO `bizlabDB`.`tarjetascredito` (`tarje_mask`, `tarje_tokenEpayco`, `tarje_numero`, `tarje_cvc`) VALUES ('$maskCard', '$idTarjeta', '$numTarje', '$cvcTarje');"); 
+                    $conn->query(
+                        "INSERT INTO `bizlabDB`.`tarjetascredito` 
+                        (`tarje_mask`, 
+                        `tarje_tokenEpayco`, 
+                        `tarje_numero`, 
+                        `tarje_cvc`) 
+                        VALUES 
+                        ('$maskCard', 
+                        '$idTarjeta', 
+                        '$numTarje', 
+                        '$cvcTarje');"
+                    ); 
                     
                 }else{
 
                     $idTarjeta = null;
                     $estadoT = null;
                     $existe = "Tarjeta Inexistente";
+                    $nameCard = "Sin Nombre";
                     
                 }
 
@@ -102,21 +112,40 @@
                     "hasCvv" => true //hasCvv: validar codigo de seguridad en la transacción
                 ));
 
-                $idTarjeta = $token->{"id"};
-                $estadoT = $token->{"data"};
-                $maskCard = $token->{"card"}->{"mask"};
+                $resultToken = $token->{"status"};
 
-                $conn->query("UPDATE `bizlabDB`.`tarjetascredito` SET `tarjetascredito`.`tarje_tokenEpayco` = '$idTarjeta', `tarjetascredito`.`tarje_mask` = '$maskCard' WHERE (`tarjetascredito`.`id_tarjetaCre` = '".$resultadoTarjetas["id_tarjetaCre"]."');");
+                if($resultToken == true){
+
+                    $idTarjeta = $token->{"id"};
+                    $estadoT = $token->{"data"};
+                    $maskCard = $token->{"card"}->{"mask"};
+                    $nameCard = $token->{"card"}->{"name"};
+
+                    $conn->query(
+                        "UPDATE `bizlabDB`.`tarjetascredito` 
+                        SET 
+                        `tarjetascredito`.`tarje_tokenEpayco` = '$idTarjeta', 
+                        `tarjetascredito`.`tarje_mask` = '$maskCard' 
+                        WHERE 
+                        (`tarjetascredito`.`id_tarjetaCre` = '".$resultadoTarjetas["id_tarjetaCre"]."');"
+                    );
+
+                }else{
+
+                    $idTarjeta = null;
+                    $estadoT = null;
+                    $existe = "Tarjeta Inexistente";
+                    $nameCard = "Sin Nombre";
+
+                }
 
             }
             //---------------------------------------------------------------
 
-            echo json_encode([$idTarjeta, $existe, $token], JSON_UNESCAPED_UNICODE);
+            echo json_encode([$idTarjeta, $existe, $token, $nameCard], JSON_UNESCAPED_UNICODE);
             
         }else{
-
             header("location:index.php");
-
         }
 
     }else{

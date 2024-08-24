@@ -204,42 +204,14 @@
               }
             }
           }
-          & .div2 {
-            width: 100%;
-            display: flex;
-            height: max-content;
-            & a {
-              width: 100%;
-            }
-            & button {
-              font-size: 1.6rem;
-              width: 100%;
-              padding: 1.8rem;
-              display: flex;
-              justify-content: flex-start;
-              color: #002d56aa;
-              transition: 0.2s;
-              cursor: pointer;
-              & svg {
-                width: 2rem;
-                height: max-content;
-                fill: #002d56aa;
-                margin-right: 1rem;
-                transition: 0.2s;
-              }
-              &:hover {
-                background-color: #002d5633;
-                color: #ffffff;
-                & svg {
-                  fill: #ffffff;
-                }
-              }
-            }
-          }
           & .div3 {
             width: 100%;
             display: flex;
             height: max-content;
+            & a{
+              width: 100%;
+              height: 100%;
+            }
             & button {
               font-size: 1.6rem;
               width: 100%;

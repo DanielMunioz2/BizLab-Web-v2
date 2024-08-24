@@ -6,13 +6,247 @@
   //-----------------------------------------------------------------------------------------------------------------------------
   // VARIABLES
 
+  // var urlEnviContraRecu = "http://165.22.176.119/BizLab/enviarContraRecu.php";
+  // var urlInfoClienteDB = "http://165.22.176.119/BizLab/consultarInfoCliente.php";
+  // var urlConsultarUser = "http://165.22.176.119/BizLab/consultarUsuario.php";
+  // var urlConsultarTDC = "http://165.22.176.119/BizLab/confirTarjetaCredito.php";
+  // var urlPagarMensualidadTDC = "http://165.22.176.119/BizLab/transapagoMensualidad.php";
+  var urlEnviContraRecu = "http://localhost/BizLab/enviarContraRecu.php";
   var urlInfoClienteDB = "http://localhost/BizLab/consultarInfoCliente.php";
+  var urlConsultarUser = "http://localhost/BizLab/consultarUsuario.php";
+  var urlConsultarTDC = "http://localhost/BizLab/confirTarjetaCredito.php";
+  var urlPagarMensualidadTDC = "http://localhost/BizLab/transapagoMensualidad.php";
+
+  var diaGeneNum = new Date().getDate();
+  var mesGeneNum = new Date().getMonth()+1;
+  var anioGeneNum = new Date().getFullYear();
+  var diaGeneTex = diaGeneNum < 10 ? "0"+diaGeneNum : String(diaGeneNum);
+  var mesGeneTex = mesGeneNum < 10 ? "0"+mesGeneNum : String(mesGeneNum);
+  var anioGeneTex = String(anioGeneNum);
+
+  var cadenaFechaActual = anioGeneTex+"-"+mesGeneTex+"-"+diaGeneTex;
+  var cadenaFechaActuAnioPeque = anioGeneTex.substring(2,4)+"-"+mesGeneTex+"-"+diaGeneTex;
+
+  var mesesFactura = {
+    1 : "enero",
+    2 : "febrero",
+    3 : "marzo",
+    4 : "abril",
+    5 : "mayo",
+    6 : "junio",
+    7 : "julio",
+    8 : "agosto",
+    9 : "septiembre",
+    10 : "octubre",
+    11 : "noviembre",
+    12 : "diciembre"
+  };
+
+  var mesesFacturaCod = {
+      "enero" : "EN",
+      "febrero" : "FE",
+      "marzo" : "MR",
+      "abril" : "AB",
+      "mayo" : "MY",
+      "junio" : "JN",
+      "julio" : "JL",
+      "agosto" : "AG",
+      "septiembre" : "SP",
+      "octubre" : "OC",
+      "noviembre" : "NV",
+      "diciembre" : "DI"
+  };
 
   //-----------------------------------------------------------------------------------------------------------------------------
 
   //-----------------------------------------------------------------------------------------------------------------------------
   // FUNCIONES
-  
+
+  // Crear Fecha
+  function crearFecha(){
+
+    let anioNumActual = new Date().getFullYear();
+    let diaNumActual = new Date().getDate();
+    let mesNumActual = new Date().getMonth()+1;
+    let mesNumAnterior = new Date().getMonth();
+    let anioNumAnte = mesNumAnterior == 0 ? anioNumActual-1 : anioNumActual;
+    mesNumAnterior = mesNumAnterior == 0 ? 12 : mesNumAnterior;
+    let mesNumPosterior = new Date().getMonth()+2;
+    let anioNumPoste =  mesNumPosterior == 13 ? anioNumActual+1 : anioNumActual;
+    mesNumPosterior = mesNumPosterior == 13 ? 1 : mesNumPosterior;
+
+    let diaActualTexto = diaNumActual < 10 ? "0"+diaNumActual : diaNumActual;
+    let mesActualTexto = mesNumActual < 10 ? "0"+mesNumActual : mesNumActual;
+    let mesAnteriorTexto = mesNumAnterior < 10 ? "0"+mesNumAnterior : mesNumAnterior;
+    let mesPosteriorTexto = mesNumPosterior < 10 ? "0"+mesNumPosterior : mesNumPosterior;
+    let anioActualTexto = String(anioNumActual);
+
+    let fechaFinal = anioActualTexto+"-"+mesActualTexto+"-"+diaActualTexto;
+    let sumaFechaActual = anioNumActual+(mesNumActual*30)+diaNumActual;
+
+    let diaSemana = numeroDiaSemana(fechaFinal);
+
+    return [
+      fechaFinal, 
+      diaNumActual,
+      mesNumAnterior, 
+      mesNumActual, 
+      mesNumPosterior,
+      anioNumActual, 
+      diaActualTexto,
+      mesActualTexto,
+      mesAnteriorTexto,
+      mesPosteriorTexto,
+      anioActualTexto,
+      anioNumAnte,
+      anioNumPoste,
+      diaSemana, 
+      sumaFechaActual
+    ];
+
+  }
+
+  // Fecha a Número
+  function fechaANumero(fecha){
+
+    let fechaSeparada = fecha.split("-");
+
+    let suma = 
+      Number(fechaSeparada[2])+
+      (Number(fechaSeparada[1])*30)+
+      Number(fechaSeparada[0]);
+
+    return suma;
+
+  }
+
+  // Sumar o restar dias a una fecha
+  function sumaRestaDiasFecha(fecha, operacion, dias) {
+
+    var date = fecha.split("-"),
+    hoy = new Date(Number(date[0]), (Number(date[1])-1), Number(date[2])),
+    dias = parseInt(dias),
+    calculado = new Date(),
+    dateResul = operacion == "sumar" ? hoy.getDate() + dias : hoy.getDate() - dias;
+
+    calculado.setDate(dateResul);
+
+    let diaTexto = calculado.getDate() < 10 ? "0"+calculado.getDate() : String(calculado.getDate());
+    let mesTexto = (calculado.getMonth() + 1) < 10 ? "0"+(calculado.getMonth() + 1) : String((calculado.getMonth() + 1));
+    let anioTexto = String(calculado.getFullYear());
+
+    let fechaNuevaCompleta = anioTexto+"-"+mesTexto+"-"+diaTexto;
+
+    return [fechaNuevaCompleta, calculado.getDate(), (calculado.getMonth() + 1), calculado.getFullYear()];
+    
+  }
+
+  // Funcion para definir que dia de la semana es tal fecha
+  function diaSemanaNumero(fecha){
+
+      let fechaElegida = fecha.split("-");
+
+      let diaSemana = new Date(Number(fechaElegida[0]), Number(fechaElegida[1])-1, Number(fechaElegida[2])).getDay();
+
+      return diaSemana;
+
+  }
+
+  // Crear HORA (Formato: 00:00 AM/PM)
+  function crearHoraActual(){
+
+    let hora = new Date().getHours();
+    let minutos = new Date().getMinutes();
+
+    let horaTexto = hora > 12 ? hora - 12 : hora;
+    horaTexto = horaTexto < 10 ? "0"+horaTexto : String(horaTexto);
+    let minutosTexto = minutos < 10 ? "0"+minutos : String(minutos);
+    let meridiano = hora < 12 ? "AM" : "PM";
+
+    let horaCompleta = horaTexto+":"+minutosTexto+" "+meridiano; 
+
+    return [horaCompleta, horaTexto, minutosTexto, meridiano, hora, minutos];
+
+  }
+
+  // Crear el Código de la Factura
+  function creaFechaCodFac(){
+
+      // Fecha y hora de creación de la factura
+      let dia = new Date().getDate()<10 ? "0"+new Date().getDate(): new Date().getDate();
+      let mes = new Date().getMonth()+1 < 10 ? "0"+(new Date().getMonth()+1): new Date().getMonth()+1;
+      let anio = new Date().getFullYear();
+      let minutos = new Date().getMinutes();
+      let segundos = new Date().getSeconds();
+      let hora = new Date().getHours() < 13 ? new Date().getHours() : new Date().getHours()-12;
+      hora = hora<10 ? "0"+hora: hora;
+      let meridiano = new Date().getHours() < 12 ? "AM" : "PM";
+      let horaSuma =  
+          new Date().getHours() <= 12
+          ? hora+""+minutos+""+segundos+"000"
+          : hora+""+minutos+""+segundos+"720";
+
+      let fechaCreacion = anio+"-"+mes+"-"+dia;
+      let anioPeque = String(anio).substring(2,4);
+
+      let horaCreacion = hora+":"+minutos+" "+meridiano;
+      let serieFactura = mesesFactura[new Date().getMonth()+1]+"-"+anio;
+      let codFactura = 
+          "FAC"+(mesesFacturaCod[mesesFactura[new Date().getMonth()+1]])+anioPeque+"-"+dia+horaSuma;
+      let codMembre =
+          "MEM"+(mesesFacturaCod[mesesFactura[new Date().getMonth()+1]])+anioPeque+"-"+dia+horaSuma;
+      let codRese =
+          "RES"+(mesesFacturaCod[mesesFactura[new Date().getMonth()+1]])+anioPeque+"-"+dia+horaSuma;
+
+      return [fechaCreacion, horaCreacion, serieFactura, codFactura, codMembre, codRese];
+
+  }
+
+  // Convertir minutos a horas
+  function minutosAHora(minutos){
+
+      let hora = parseInt(Number(minutos/60));
+      let meri = hora < 12 ? "AM" : "PM";
+      let minu = Number(minutos)-((parseInt(Number(minutos/60)))*60);
+      hora = hora > 12 ? hora - 12 : hora;
+      
+      let minuTexto = minu < 10 ? "0"+minu : minu;
+      let horaFinalSinCero = hora+":"+minuTexto+" "+meri;
+
+      return horaFinalSinCero; 
+
+  }
+
+  // Convertir hora a minutos
+  function horaAMinutos(hora){
+
+      let horaFinal = 0;
+
+      if(hora.includes("AM") || hora.includes("PM")){
+
+          let horaSeparada = hora.split(":");
+          let minutos = horaSeparada[1].split(" ");
+          let meridiano = minutos[1];
+          minutos = Number(minutos[0]);
+
+          horaFinal = (Number(horaSeparada[0])*60)+minutos;
+
+          if(meridiano == "PM" && horaSeparada[0] != 12){
+              horaFinal += 720;
+          }
+
+      }else{
+
+          let horaSeparada = hora.split(":");
+          
+          horaFinal = Number(horaSeparada[0]*60)+Number(horaSeparada[1]);
+
+      }
+
+      return horaFinal;
+
+  };
+
   //-----------------------------------------------------------------------------------------------------------------------------
 
 //------------------------------------------
@@ -35,6 +269,14 @@ if(document.querySelector("#indexHTML") != null){
     const divPerfilFotoBtn = document.querySelector(".divPerfil");
     const ajustesCuentaBtn = document.querySelector("#ajustesCuentaBtn"); 
     const btnCerrarSesion = document.querySelector(".btnCerrar");
+
+    // BOTONES
+    const btnPagarMensualidad = document.querySelector(".btnPagarMensuali");
+    const btnRealizaRese = document.querySelector(".btnRealizaRese");
+
+    // FORMULARIOS
+    const form_btnPagarMensu = document.querySelector("#form_btnPagarMensu");
+    const form_btnRealizaRese = document.querySelector("#form_btnRealizaRese");
 
   // Tomando elementos del DOM
   //---------------------------------------------------------------------------------------------------------------------------
@@ -67,30 +309,56 @@ if(document.querySelector("#indexHTML") != null){
     }
 
     // Foto Perfil Botón
-    divPerfilFotoBtn.addEventListener("click", () => {
-      if (cuadroOPerfil.classList.contains("cuadroOPerfil1")) {
-          cuadroOPerfil.classList.replace("cuadroOPerfil1", "cuadroOPerfil2");
-      } else {
-          if (cuadroOPerfil.classList.contains("cuadroOPerfil2")) {
-          cuadroOPerfil.classList.replace("cuadroOPerfil2", "cuadroOPerfil1");
-          }
-      }
-    });
+    if(divPerfilFotoBtn != null){
+
+      divPerfilFotoBtn.addEventListener("click", () => {
+        if (cuadroOPerfil.classList.contains("cuadroOPerfil1")) {
+            cuadroOPerfil.classList.replace("cuadroOPerfil1", "cuadroOPerfil2");
+        } else {
+            if (cuadroOPerfil.classList.contains("cuadroOPerfil2")) {
+            cuadroOPerfil.classList.replace("cuadroOPerfil2", "cuadroOPerfil1");
+            }
+        }
+      });
+
+    }
 
     // Botón Ajustes de la Cuenta
-    ajustesCuentaBtn.addEventListener("click", (e) => {
+    if(ajustesCuentaBtn != null){
       
-      e.preventDefault();
-      window.location.href = "usuarioPerfil.php";
+      ajustesCuentaBtn.addEventListener("click", (e) => {
+      
+        e.preventDefault();
+        window.location.href = "usuarioPerfil.php";
+  
+      })
 
-    })
+    }
     
     // Botón Cerrar Sesión
-    btnCerrarSesion.addEventListener("click", (e) => {
+    if(btnCerrarSesion != null){
 
-      window.location.href = "cerrar.php";
+      btnCerrarSesion.addEventListener("click", (e) => {
 
-    });
+        window.location.href = "cerrar.php";
+  
+      });
+
+    }
+
+    // Botón Pagar Mensualidad
+    if(btnPagarMensualidad != null){
+      btnPagarMensualidad.addEventListener("click", (e)=>{
+        form_btnPagarMensu.submit();
+      })
+    }
+
+    // Botón Realizar Reserva
+    if(btnRealizaRese != null){
+      btnRealizaRese.addEventListener("click", (e)=>{
+        form_btnRealizaRese.submit();
+      })
+    }
 
   // EVENTOS
   //---------------------------------------------------------------------------------------------------------------------------
@@ -155,7 +423,6 @@ if(document.querySelector("#iniSesionHTML") !== null) {
     if (inputCorreo.value !== "" && inputContraseña.value !== "") {
       let correo = inputCorreo.value;
       let contraseña = inputContraseña.value;
-      let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
       let formUserLogin = new FormData();
 
@@ -163,7 +430,7 @@ if(document.querySelector("#iniSesionHTML") !== null) {
       formUserLogin.append("contraseñaUser", contraseña);
       formUserLogin.append("userVerifi", true);
 
-      fetch(url, {
+      fetch(urlConsultarUser, {
         method: "POST",
         body: formUserLogin,
       })
@@ -248,7 +515,7 @@ if(document.querySelector("#iniSesionHTML") !== null) {
 // <<-- Registro - INICIO -->>
 //-----------------------------
 
-if (document.querySelector(".registroHTML") !== null) {
+if (document.querySelector(".registroHTML") != null) {
   //SELECCIONANDO OBJETOS DEL DOM (REGISTRO.PHP) - INICIO
 
   //INPUTS
@@ -635,8 +902,6 @@ if (document.querySelector(".registroHTML") !== null) {
       ) {
         let documentoComprobar = documentoInput.value;
 
-        let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
-
         let formDocumentoVerificar = new FormData();
 
         formDocumentoVerificar.append(
@@ -645,7 +910,7 @@ if (document.querySelector(".registroHTML") !== null) {
         );
         formDocumentoVerificar.append("userVerifi", true);
 
-        fetch(url, {
+        fetch(urlConsultarUser, {
           method: "POST",
           body: formDocumentoVerificar,
         })
@@ -684,14 +949,12 @@ if (document.querySelector(".registroHTML") !== null) {
       fecha = fechaNInputRegis.value.trim();
     }
 
-    let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
-
     let formFechaVerificar = new FormData();
 
     formFechaVerificar.append("fechaVerificar", fecha);
     formFechaVerificar.append("userVerifi", true);
 
-    fetch(url, {
+    fetch(urlConsultarUser, {
       method: "POST",
       body: formFechaVerificar,
     })
@@ -774,14 +1037,12 @@ if (document.querySelector(".registroHTML") !== null) {
     if (erroneos[5] == 0 && telefonoInputRegis.value.length != 0) {
       let telefonoExistente = telefonoInputRegis.value;
 
-      let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
-
       let formTelefVerificar = new FormData();
 
       formTelefVerificar.append("telefExistencia", telefonoExistente);
       formTelefVerificar.append("userVerifi", true);
 
-      fetch(url, {
+      fetch(urlConsultarUser, {
         method: "POST",
         body: formTelefVerificar,
       })
@@ -911,14 +1172,12 @@ if (document.querySelector(".registroHTML") !== null) {
     if (erroneos[9] == 0 && inputCorreo.value.length != 0) {
       let correoExistente = inputCorreo.value;
 
-      let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
-
       let formCorreoVerificar = new FormData();
 
       formCorreoVerificar.append("correoExistencia", correoExistente);
       formCorreoVerificar.append("userVerifi", true);
 
-      fetch(url, {
+      fetch(urlConsultarUser, {
         method: "POST",
         body: formCorreoVerificar,
       })
@@ -995,14 +1254,12 @@ if (document.querySelector(".registroHTML") !== null) {
     if (erroneos[11] == 0 && correoAdminInput.value.length != 0) {
       let correoAdminExis = correoAdminInput.value;
 
-      let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
-
       let formCorreoAVerifi = new FormData();
 
       formCorreoAVerifi.append("correoExisteAdmin", correoAdminExis);
       formCorreoAVerifi.append("userVerifi", true);
 
-      fetch(url, {
+      fetch(urlConsultarUser, {
         method: "POST",
         body: formCorreoAVerifi,
       })
@@ -1473,15 +1730,15 @@ if (document.querySelector(".registroHTML") !== null) {
       estadoBTNA = desbloqBloqBoton();
 
       if (estadoBTNA != false) {
+
         let codAcceso = inputCodigoAcce.value.trim();
-        let url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
         let formRegisAdmin = new FormData();
 
         formRegisAdmin.append("codigoAcceso", codAcceso);
         formRegisAdmin.append("userVerifi", true);
 
-        fetch(url, {
+        fetch(urlConsultarUser, {
           method: "POST",
           body: formRegisAdmin,
         })
@@ -1559,7 +1816,7 @@ if (document.querySelector(".registroHTML") !== null) {
                 // formRegisAdmin.append("nitAdmin", 0);
                 // formRegisAdmin.append("userVerifi", true);
 
-                // fetch("http://165.22.176.119/BizLab/consultarUsuario.php", {
+                // fetch(urlConsultarUser, {
                 //   method: "POST",
                 //   body: formRegisAdmin,
                 // })
@@ -1734,11 +1991,222 @@ if (document.querySelector(".registroHTML") !== null) {
   //
   //--------------------------------------------------------------------------
   //
-}
+};
 
 //---------------------------
 // <<-- Registro - FIN -->>
 //---------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------
+// <<-- Servicios CLI - INICIO -->>
+//-----------------------------------
+
+if(document.querySelector("#serviciosHTML-CLI") != null){
+
+  //------------------------------------------------------------------------------------------------------------------------------
+  // Tomando Elementos del DOM
+
+    // CONTENEDORES
+    const cuadroOPerfil = document.querySelector(".cuadroPOculto");
+    
+    // BOTONES
+    const divPerfilFotoBtn = document.querySelector(".divPerfil");
+    const ajustesCuentaBtn = document.querySelector("#ajustesCuentaBtn"); 
+    const btnCerrarSesion = document.querySelector(".btnCerrar");
+    const btnPagarMensualidad = document.querySelector(".btnPagarMensuali");
+    const btnRealizaRese = document.querySelector(".btnRealizaRese");
+
+    // FORMULARIOS
+    const form_btnPagarMensu = document.querySelector("#form_btnPagarMensu");
+    const form_btnRealizaRese = document.querySelector("#form_btnRealizaRese");
+
+  //------------------------------------------------------------------------------------------------------------------------------
+
+  //------------------------------------------------------------------------------------------------------------------------------
+  // FUNCIONES
+
+    // (Función Inicial) Llenar catálogo de servicios
+    const rangoServiContentGene = document.createRange();
+
+    // (Función Secundaria) Enviar ID y Nombre Servicio a "realizarReservas-CLI.php"
+    function enviarServiIDRese(idForm){
+      
+      if(document.querySelector("#rolUserINOculto").value == "Usuario"){
+        window.location.href = "membresiasCliente.php";  
+      }
+
+      if(
+        document.querySelector("#rolUserINOculto").value == "Miembro" ||
+        document.querySelector("#rolUserINOculto").value == "Administrador"
+      ){
+        document.querySelector("#"+idForm).submit();
+      }
+      
+    }
+    
+    function catalogoServicios(){
+
+      let formCatalogoServices = new FormData();
+
+      formCatalogoServices.append("serviciosCLIMostrar", true);
+
+      fetch(urlInfoClienteDB, {
+        method: "POST",
+        body: formCatalogoServices,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+
+          let htmlServicios = "";
+
+          if(data.length != 1){
+
+            for(let i = 1; i < data.length; i++){
+
+              htmlServicios += `
+              <div id="divServi${(data[i]["id_producto"])}" class="divServicio divServi">
+                <form 
+                  id = "formServi${(data[i]["id_producto"])}" 
+                  name = "formServi${(data[i]["id_producto"])}"
+                  method = "post"
+                  action = "realizarReserva-CLI.php"
+                >
+                  <input type="hidden" value="${(data[i]["id_producto"])}" name="idServiListaCli-ID">
+                  <input type="hidden" value="${(data[i]["produNombre"])}" name="idServiListaCli-Name">
+                </form>
+                <div class="divImgGene divImgG">
+                  <img src="images/productosImages/${data[i]["productoImgPrin"]}" alt="Imagen del Servicio">
+                </div>
+                <div class="divDatosGene divDatosG">
+                  <span class="nombreServicio nomServi">${data[i]["produNombre"]}</span>
+                  <div class="divDescri">
+                    <p class="descriServi desServi">${data[i]["produDescri"]}</p>
+                  </div>
+                  <div class="btnDiv">
+                    <button 
+                      class="botonReseAhora" 
+                      onclick="
+                        enviarServiIDRese(
+                          'formServi${(data[i]["id_producto"])}'
+                        )
+                      "
+                    >
+                      Reservar Ahora
+                    </button>
+                  </div>
+                </div>
+              </div>
+              `;
+
+            }
+
+          }else{
+
+            htmlServicios = `
+            <div>
+              <span>No se Encontraron Servicios para Ti</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.77 511.57"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M489.17,422.32c-29.91-29.59-59.47-59.54-89.42-89.09-4.14-4.09-4.32-6.88-1.47-11.75,25.25-43.13,34.35-89.56,27-139-8.15-54.69-34-99.72-76.62-134.58C302,9.77,248-5.1,188.39,1.53,142.54,6.62,102.08,25,68.8,57,9.4,114-12,183.79,6.38,263.86,30.07,367.24,129.17,439.79,241.71,425.74a202.19,202.19,0,0,0,80.88-28.07c4.16-2.53,6.62-2.32,10.11,1.2,29.85,30.13,60,60,89.83,90.1,9.69,9.79,19.56,19,33.35,22.6h19c6.47-2.43,13.09-4.45,18.67-8.83,8.32-6.52,14.16-14.65,16.95-24.9a25.91,25.91,0,0,1,1.31-3.2v-19C508.15,441.9,499,432,489.17,422.32Zm1.45,47.55c-3.22,18.64-25.75,27.48-40.69,15.8a71.78,71.78,0,0,1-6.22-5.75Q392.35,428.6,341,377.25c-8.54-8.53-11.69-8.92-21.62-2.46-28.6,18.62-59.82,29.18-94,30.93C171.23,408.49,124,391.86,83.86,355.4,51.7,326.19,32.43,289.81,24.43,247.3c-2.09-11.13-2.72-22.41-2.94-33.76,1.77-67.18,29.63-120.74,84.8-159.39,24.88-17.43,52.91-27.68,83.17-31.31,46.8-5.6,90.35,3.88,129.78,29.77,37.22,24.44,63.07,58.06,77.4,100.37a186.51,186.51,0,0,1,9.91,62.7c-.5,36-10.11,69.51-29.38,100.09-1,1.55-2,3.08-3,4.63-5.23,8.27-4.8,12.36,2.16,19.33q52.54,52.59,105.16,105.12C488.56,451.85,492.37,459.69,490.62,469.87Z"/><path d="M270.1,67.47a104.63,104.63,0,0,0-20.51-6.15c-6-1.15-11.11,2-12.47,7.28-1.47,5.7,1,10.46,6.77,12.74a58,58,0,0,0,5.71,1.75c59.43,16.6,99.38,69,99.51,135.57.24,22.56-7.06,48.16-22.92,70.57-31.88,45.07-75.85,64.6-130.75,58.35-30.33-3.45-56.4-16.76-77.56-38.49C87.41,277.82,74.12,239.9,80,196.52c7.07-52.15,36.17-88.05,84.37-108.72,3.2-1.37,6.59-2.46,9.51-4.3a9.45,9.45,0,0,0,4.45-10.77,10.22,10.22,0,0,0-9.06-8.14c-2.86-.4-5.57.72-8.23,1.65C102.38,86.82,60.09,143.51,57.56,205.64c-1.72,42.19,11.09,79.55,38.89,111.55,43.44,50,116.39,66.92,177.45,41.21,68.27-28.74,107.71-99.79,93.94-172.48C357.08,129.08,323.62,89.65,270.1,67.47Z"/><path d="M166.16,151.9a10.3,10.3,0,0,0-15.67,7.78c-.49,4.37,2,7.53,4.91,10.42q19.59,19.58,39.15,39.18c5,5,5.06,3.76-.17,9q-19.55,19.62-39.14,39.18c-3,3-5.53,6.35-4.61,11a10.42,10.42,0,0,0,7.16,8.26c4.52,1.56,8.16-.19,11.28-3.31q20-19.89,39.9-39.83c5.71-5.68,4.13-5.71,9.69-.18q19.64,19.53,39.17,39.16c3.32,3.34,6.95,5.78,12,4.25,8.36-2.54,10.14-11.84,3.39-18.67q-20.34-20.58-41-40.88c-2.77-2.71-2.95-4.21-.06-7C245.72,197,259,183.47,272.45,170.07c2.64-2.63,5-5.39,5-9.86a10.43,10.43,0,0,0-6.77-9.16c-5.58-2.3-9.6.55-13.28,4.22C244,168.67,230.53,182,217.25,195.55c-2.59,2.64-4,2.77-6.68,0-13-13.31-26.26-26.41-39.47-39.55A26.61,26.61,0,0,0,166.16,151.9Z"/><path d="M207.16,78.15a10.23,10.23,0,0,0,10.48-10.33,10.29,10.29,0,1,0-20.57-.34A10.17,10.17,0,0,0,207.16,78.15Z"/></g></g></svg>
+            </div>
+            `;
+
+          }
+
+          rangoServiContentGene.selectNode(document.getElementsByTagName("div").item(0));
+          const serviGeneLista =
+            rangoServiContentGene.createContextualFragment(htmlServicios);
+          document.querySelector("#catalogoServiGene").appendChild(serviGeneLista);
+
+        })
+        .catch((err) => console.log(err));
+
+    }
+
+    catalogoServicios();
+
+  //------------------------------------------------------------------------------------------------------------------------------
+
+  //------------------------------------------------------------------------------------------------------------------------------
+  // EVENTOS
+
+    // (Click fuera) ocultar cuadro perfil opciones
+    if(document.querySelector("#cuadroPOculto") != null){
+
+      window.addEventListener('click', function mostrarCuadroPerfil(e) {
+
+        if (document.getElementById('divPerfil').contains(e.target)) {
+            
+
+        } else {
+                
+            document.querySelector("#cuadroPOculto").classList.replace("cuadroOPerfil2", "cuadroOPerfil1");
+
+        }
+
+      });
+
+    }
+
+    // Foto Perfil Botón
+    if(divPerfilFotoBtn != null){
+
+      divPerfilFotoBtn.addEventListener("click", () => {
+        if (cuadroOPerfil.classList.contains("cuadroOPerfil1")) {
+            cuadroOPerfil.classList.replace("cuadroOPerfil1", "cuadroOPerfil2");
+        } else {
+            if (cuadroOPerfil.classList.contains("cuadroOPerfil2")) {
+            cuadroOPerfil.classList.replace("cuadroOPerfil2", "cuadroOPerfil1");
+            }
+        }
+      });
+
+    }
+
+    // Botón Ajustes de la Cuenta
+    if(ajustesCuentaBtn != null){
+      
+      ajustesCuentaBtn.addEventListener("click", (e) => {
+      
+        e.preventDefault();
+        window.location.href = "usuarioPerfil.php";
+  
+      })
+
+    }
+    
+    // Botón Cerrar Sesión
+    if(btnCerrarSesion != null){
+
+      btnCerrarSesion.addEventListener("click", (e) => {
+
+        window.location.href = "cerrar.php";
+  
+      });
+
+    }
+
+    // Botón Pagar Mensualidad
+    if(btnPagarMensualidad != null){
+      btnPagarMensualidad.addEventListener("click", (e)=>{
+        form_btnPagarMensu.submit();
+      })
+    }
+
+    // Botón Realizar Reserva
+    if(btnRealizaRese != null){
+      btnRealizaRese.addEventListener("click", (e)=>{
+        form_btnRealizaRese.submit();
+      })
+    }
+
+  //------------------------------------------------------------------------------------------------------------------------------
+
+};
+
+//---------------------------------
+// <<-- Servicios CLI - FIN -->>
+//---------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -1780,9 +2248,9 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
   //EVENTOS
   //
 
-  correoInput.addEventListener("input", (e) => {
+  correoInput.addEventListener("input", (e) =>{
+    
     var correo = correoInput.value;
-    var url = "http://165.22.176.119/BizLab/consultarUsuario.php";
 
     if (correo.length != 0) {
       let formCorreoRecuContra = new FormData();
@@ -1790,7 +2258,7 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
       formCorreoRecuContra.append("correoRecuContra", correo);
       formCorreoRecuContra.append("userVerifi", true);
 
-      fetch(url, {
+      fetch(urlConsultarUser, {
         method: "POST",
         body: formCorreoRecuContra,
       })
@@ -1837,7 +2305,6 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
       btnCancelar.classList.replace("btnCan1", "btnCan2");
 
       let correo = correoInput.value.trim();
-      let url = "http://localhost/BizLab/enviarContraRecu.php";
       var cod = "";
 
       let formRecuContra = new FormData();
@@ -1845,7 +2312,7 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
       formRecuContra.append("correoUser", correo);
       formRecuContra.append("send", true);
 
-      fetch(url, {
+      fetch(urlEnviContraRecu, {
         method: "POST",
         body: formRecuContra,
       })
@@ -1885,14 +2352,13 @@ if (document.querySelector(".recuvaContraHTML") !== null) {
             console.log("boton codigo REENVIAR tocado");
             btnVerifCodi.setAttribute("disabled", "");
             let correo = correoInput.value.trim();
-            let url = "http://localhost/BizLab/enviarContraRecu.php";
 
             let formRecuContraRe = new FormData();
 
             formRecuContraRe.append("correoUser", correo);
             formRecuContraRe.append("send", true);
 
-            fetch(url, {
+            fetch(urlEnviContraRecu, {
               method: "POST",
               body: formRecuContraRe,
             })
@@ -2113,7 +2579,7 @@ if (document.querySelector(".recuvaContra2HTML") !== null) {
 // <<-- confirmarNuevoMiembro.php - INICIO -->>
 //-----------------------------------------------
 
-if (document.querySelector(".confirmarCorreoHTML") != null) {
+if(document.querySelector(".confirmarCorreoHTML") != null) {
   //TOMANDO OBJETOS DEL DOM
 
   //INPUTS
@@ -2169,14 +2635,14 @@ if (document.querySelector(".confirmarCorreoHTML") != null) {
       }
     }
 
-    let url = "http://localhost/BizLab/enviarContraRecu.php";
+    
 
     let formCorreoCodigo = new FormData();
 
     formCorreoCodigo.append("correoUser", correo);
     formCorreoCodigo.append("send2Correo", true);
 
-    fetch(url, {
+    fetch(urlEnviContraRecu, {
       method: "POST",
       body: formCorreoCodigo,
     })
@@ -2224,7 +2690,7 @@ if (document.querySelector(".confirmarCorreoHTML") != null) {
                 formRegisMiembro.append("nitMiembro", inputNitM.value);
                 formRegisMiembro.append("userVerifi", true);
 
-                fetch("http://165.22.176.119/BizLab/consultarUsuario.php", {
+                fetch(urlConsultarUser, {
                   method: "POST",
                   body: formRegisMiembro,
                 })
@@ -2295,7 +2761,7 @@ if (document.querySelector(".confirmarCorreoHTML") != null) {
                   );
                   formRegisMiembro.append("userVerifi", true);
 
-                  fetch("http://165.22.176.119/BizLab/consultarUsuario.php", {
+                  fetch(urlConsultarUser, {
                     method: "POST",
                     body: formRegisMiembro,
                   })
@@ -2361,5 +2827,513 @@ if (document.querySelector(".confirmarCorreoHTML") != null) {
 
 //--------------------------------------------
 // <<-- confirmarNuevoMiembro.php - FIN -->>
+//--------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------
+// <<-- comprobarStdMembresia.php - INICIO -->>
+//-----------------------------------------------
+
+if(document.querySelector("#comprobarMembreHTML") != null){
+
+  //--------------------------------------------------------------------------------------------------------------------------------
+  // Tomando Elementos del DOM
+
+    // BOTONES
+    const btn_pagarMensualidad = document.querySelector("#btn_pagarMensualidad");
+    const btn_volver = document.querySelector("#btn_volver");
+
+    // INPUTS
+    const in_numTDC = document.querySelector("#in_numTDC"); 
+    const in_mesVTDC = document.querySelector("#in_mesVTDC");
+    const in_anioVTDC = document.querySelector("#in_anioVTDC");
+    const in_numCVVTDC = document.querySelector("#in_numCVVTDC");
+
+    // CONTENEDORES
+    const divEstadoCuenta = document.querySelector("#divEstadoCuenta");
+
+  //--------------------------------------------------------------------------------------------------------------------------------
+
+  //--------------------------------------------------------------------------------------------------------------------------------
+  // VARIABLES GENERALES O CONSTANTES
+
+    var erroresInputs = [0,0,0,0];
+
+  //--------------------------------------------------------------------------------------------------------------------------------
+
+  //--------------------------------------------------------------------------------------------------------------------------------
+  // FUNCIONES - INICIO
+
+    //------------------------------------------------------------------------------------------------------------------------------
+    // Buscar la proxima fecha de pago de la mensualidad
+    const rangoDivStdMembresia = document.createRange();
+
+    function fechaProximaPagoFiltrar(datos){
+
+      let fechaProxPago = datos[0]["membreFechaPagoP"];
+      let facturaFecha = datos[1];
+
+      let fechaSumaPagoProx = fechaANumero(fechaProxPago);
+      let fechaSumaActu = fechaANumero(cadenaFechaActual);
+
+      let htmlDivStdCuenta = ``;
+
+      if(fechaSumaPagoProx == fechaSumaActu){
+
+        // Cuenta Activa - Último día para pagar la siguiente mensualidad
+        btn_pagarMensualidad.removeAttribute("disabled");
+        btn_pagarMensualidad.classList.replace("buttonPagarMensu-B", "buttonPagarMensu-D");
+
+        // Form para habilitar/inhabilitar la membresía
+        let formInabilitarMembre = new FormData();
+
+        formInabilitarMembre.append("habiliInabiliMembre", true);
+        formInabilitarMembre.append("estadoMembre", 'Activa');
+        formInabilitarMembre.append("idMembresiaUser", document.querySelector("#inO_idMembreUser").value);
+
+        fetch(urlInfoClienteDB, {
+          method: "POST",
+          body: formInabilitarMembre,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+              
+            console.log("Estado Cuenta:");
+            console.log(data);
+
+          })
+          .catch((err) => console.log(err));
+
+        // Div Estado Cuenta
+        htmlDivStdCuenta = `
+        <div class="stdMembreDiv">
+          <span class="spanDispo">Membresía Activa</span>
+        </div>
+        <div class="divProxiPagoSpan">
+          <span>Su próximo pago se realiza HOY <b>(${fechaProxPago})</b></span>
+        </div>
+        `;
+
+      }else{
+
+        if(fechaSumaPagoProx > fechaSumaActu){
+
+          // Cuenta Activa - Mensualidad Paga, fecha de pago próxima aún lejos
+          btn_pagarMensualidad.setAttribute("disabled", "");
+          btn_pagarMensualidad.classList.replace("buttonPagarMensu-D", "buttonPagarMensu-B");
+
+          // Form para habilitar/inhabilitar la membresía
+          let formInabilitarMembre = new FormData();
+
+          formInabilitarMembre.append("habiliInabiliMembre", true);
+          formInabilitarMembre.append("estadoMembre", 'Activa');
+          formInabilitarMembre.append("idMembresiaUser", document.querySelector("#inO_idMembreUser").value);
+
+          fetch(urlInfoClienteDB, {
+            method: "POST",
+            body: formInabilitarMembre,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+                
+              console.log("Estado Cuenta:");
+              console.log(data);
+
+            })
+            .catch((err) => console.log(err));
+          
+          // Div Estado Cuenta
+          htmlDivStdCuenta = `
+          <div class="stdMembreDiv">
+            <span class="spanDispo">Membresía Activa</span>
+          </div>
+          <div class="divProxiPagoSpan">
+            <span>Su próximo pago se realizará en: <b>${fechaProxPago}</b></span>
+          </div>
+          `;
+        }
+        
+      }
+
+      if(fechaSumaActu > fechaSumaPagoProx){
+
+        if(facturaFecha != null){
+
+          // Cuenta Activa - Mensualidad al día
+          btn_pagarMensualidad.setAttribute("disabled", "");
+          btn_pagarMensualidad.classList.replace("buttonPagarMensu-D", "buttonPagarMensu-B");
+
+          // Form para habilitar/inhabilitar la membresía
+          let formInabilitarMembre = new FormData();
+
+          formInabilitarMembre.append("habiliInabiliMembre", true);
+          formInabilitarMembre.append("estadoMembre", 'Activa');
+          formInabilitarMembre.append("idMembresiaUser", document.querySelector("#inO_idMembreUser").value);
+
+          fetch(urlInfoClienteDB, {
+            method: "POST",
+            body: formInabilitarMembre,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+                
+              console.log("Estado Cuenta:");
+              console.log(data);
+
+            })
+            .catch((err) => console.log(err));
+
+          // Div Estado Cuenta
+          htmlDivStdCuenta = `
+          <div class="stdMembreDiv">
+            <span class="spanDispo">Membresía Activa</span>
+          </div>
+          <div class="divProxiPagoSpan">
+            <span>Su próximo pago se realizará en: <b>${fechaProxPago}</b></span>
+          </div>
+          `;
+
+        }else{
+
+          // Cuenta Inactiva por Pago de Mensualidad Atrasado
+          btn_pagarMensualidad.removeAttribute("disabled");
+          btn_pagarMensualidad.classList.replace("buttonPagarMensu-B", "buttonPagarMensu-D");
+
+          // Form para habilitar/inhabilitar la membresía
+          let formInabilitarMembre = new FormData();
+
+          formInabilitarMembre.append("habiliInabiliMembre", true);
+          formInabilitarMembre.append("estadoMembre", 'Inactiva');
+          formInabilitarMembre.append("idMembresiaUser", document.querySelector("#inO_idMembreUser").value);
+
+          fetch(urlInfoClienteDB, {
+            method: "POST",
+            body: formInabilitarMembre,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+                
+              console.log("Estado Cuenta:");
+              console.log(data);
+
+            })
+            .catch((err) => console.log(err));
+
+          // Div Estado Cuenta
+          htmlDivStdCuenta = `
+          <div class="stdMembreDiv">
+            <span class="spanInacti">Membresía Inactiva</span>
+          </div>
+          <div class="divProxiPagoSpan">
+            <span>El pago de su mensualidad está atrasado, pague el mes faltante para reactivar su membresía.</span>
+          </div>
+          `;
+
+        }
+
+      }
+
+      // Llenando Div con el estado de la membresía
+      rangoDivStdMembresia.selectNode(document.getElementsByTagName("div").item(0));
+      const estadoCuenta =
+        rangoDivStdMembresia.createContextualFragment(htmlDivStdCuenta);
+      divEstadoCuenta.appendChild(estadoCuenta);
+
+    }
+
+    function buscarFechaPagoProximo(){
+
+      let formPagoFechaP = new FormData();
+
+      formPagoFechaP.append("fechaProxPagoMensu", true);
+      formPagoFechaP.append("idMembreEpayco", document.querySelector("#inO_idMembreUser").value);
+
+      fetch(urlInfoClienteDB, {
+        method: "POST",
+        body: formPagoFechaP,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+            fechaProximaPagoFiltrar(data);
+        })
+        .catch((err) => console.log(err));
+
+    }
+
+    buscarFechaPagoProximo();
+
+    //------------------------------------------------------------------------------------------------------------------------------
+
+    function verificarErroresIN(){
+
+      let sumaErroresIn = 0;
+
+      for(let i = 0; i < erroresInputs.length; i++){
+        sumaErroresIn += erroresInputs[i];
+      }
+
+      if(sumaErroresIn == 0){
+        btn_pagarMensualidad.removeAttribute("disabled");
+        btn_pagarMensualidad.classList.replace("buttonPagarMensu-B", "buttonPagarMensu-D");
+      }else{
+        btn_pagarMensualidad.setAttribute("disabled", "");
+        btn_pagarMensualidad.classList.replace("buttonPagarMensu-D", "buttonPagarMensu-B");
+      }
+
+      return sumaErroresIn;
+
+    }
+
+    function enviarComprobarTDC(){
+
+      // Verificar Errores
+      let sumaErrores = verificarErroresIN();
+
+      console.log(sumaErrores);
+      console.log(erroresInputs);
+
+      if(
+        in_numTDC.value != "" &&
+        in_mesVTDC.value != "" &&
+        in_anioVTDC.value != "" &&
+        in_numCVVTDC.value != "" &&
+        sumaErrores == 0
+      ){
+
+        let formComprobarTarjeta = new FormData();
+
+        formComprobarTarjeta.append("numeroTarjeta", in_numTDC.value);
+        formComprobarTarjeta.append("mesVTarjeta", in_mesVTDC.value);
+        formComprobarTarjeta.append("anioVTarjeta", in_anioVTDC.value);
+        formComprobarTarjeta.append("cvcTarjeta", in_numCVVTDC.value);
+
+        fetch(urlConsultarTDC, {
+          method: "POST",
+          body: formComprobarTarjeta,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+
+              let formPagarMensualidad = new FormData();
+
+              // console.log(data[0]);
+              // console.log(document.querySelector("#inO_totalMembre").value);
+              // console.log(document.querySelector("#inO_ivaCantMembre").value);
+              // console.log(document.querySelector("#inO_mensualidadMembre").value);
+              // console.log(document.querySelector("#inO_userDocumento").value);
+              // console.log(document.querySelector("#inO_userNombre").value);
+              // console.log(document.querySelector("#inO_userApellido").value);
+              // console.log(document.querySelector("#inO_userEmail").value);
+              // console.log(document.querySelector("#inO_userCelular").value);
+              // console.log(cadenaFechaActuAnioPeque);
+              // console.log(document.querySelector("#inO_ipUser").value);
+              // console.log(data[3]);
+
+              formPagarMensualidad.append("transaPagoMembresia", true);
+              formPagarMensualidad.append("tokenTarjeta", data[0]);
+              formPagarMensualidad.append("totalTransaccion", document.querySelector("#inO_totalMembre").value);
+              formPagarMensualidad.append("ivaTransaccion", document.querySelector("#inO_ivaCantMembre").value);
+              formPagarMensualidad.append("ivaBaseTransa", document.querySelector("#inO_mensualidadMembre").value);
+              formPagarMensualidad.append("userDocumentoTransa", document.querySelector("#inO_userDocumento").value);
+              formPagarMensualidad.append("userNombreTransa", document.querySelector("#inO_userNombre").value);
+              formPagarMensualidad.append("userApellidoTransa", document.querySelector("#inO_userApellido").value);
+              formPagarMensualidad.append("userEmailTransa", document.querySelector("#inO_userEmail").value);
+              formPagarMensualidad.append("userCelularTransa", document.querySelector("#inO_userCelular").value);
+              formPagarMensualidad.append("fechaTransa", cadenaFechaActuAnioPeque);
+              formPagarMensualidad.append("ipUserTransa", document.querySelector("#inO_ipUser").value);
+              formPagarMensualidad.append("nombreTDCTransa", data[3]);
+              formPagarMensualidad.append("numeroTDC", in_numTDC.value);
+              formPagarMensualidad.append("mesVTDC", in_mesVTDC.value);
+              formPagarMensualidad.append("anioVTDC", in_anioVTDC.value);
+              formPagarMensualidad.append("numCVCTDC", in_numCVVTDC.value);
+              
+              fetch(urlPagarMensualidadTDC, {
+                method: "POST",
+                body: formPagarMensualidad,
+              })
+                .then((response) => response.json())
+                .then((data) => {
+
+                  console.log(data);
+                  
+                  let factuCod = creaFechaCodFac();
+                  let fechaCrea = factuCod[0];
+                  let horaCrea = factuCod[1];
+                  let serieFactu = factuCod[2];
+                  let factuCodigo = factuCod[3];
+                  
+                  let formRegisFactuMensualidad = new FormData();
+
+                  let respuestaEpayco = data.data.transaction.data.respuesta;
+                  let motivoEpayco = data.data.transaction.data.estado;
+
+                  formRegisFactuMensualidad.append("regisFactuMensualidad", true);
+                  formRegisFactuMensualidad.append("fechaCreaFac", fechaCrea);
+                  formRegisFactuMensualidad.append("horaCreaFac", horaCrea);
+                  formRegisFactuMensualidad.append("serieFac", serieFactu);
+                  formRegisFactuMensualidad.append("codigoFac", factuCodigo);
+                  formRegisFactuMensualidad.append("mensuaMembresia", document.querySelector("#inO_mensualidadMembre").value);
+                  formRegisFactuMensualidad.append("ivaCantMembresia", document.querySelector("#inO_ivaCantMembre").value);
+                  formRegisFactuMensualidad.append("descuCantMembresia", document.querySelector("#inO_descuCantMembre").value);
+                  formRegisFactuMensualidad.append("codigoUserEpayco", document.querySelector("#inO_idUserCodigoEpayco").value);
+                  formRegisFactuMensualidad.append("totalMembresia", document.querySelector("#inO_totalMembre").value);
+                  formRegisFactuMensualidad.append("membresiaIDEpayco", document.querySelector("#inO_idMembreUser").value);
+                  formRegisFactuMensualidad.append("membresiaCodigoEpayco", document.querySelector("#inO_idMembreCodigoEpayco").value);
+                  formRegisFactuMensualidad.append("idUser", document.querySelector("#inO_userId").value);
+                  formRegisFactuMensualidad.append("idMembresiaUser", document.querySelector("#inO_userIdMembresia").value);
+                  formRegisFactuMensualidad.append("codigoFac", factuCodigo);
+                  formRegisFactuMensualidad.append("referenciaEpayco", data.data.transaction.data.ref_payco);
+                  formRegisFactuMensualidad.append("franquiciaCard", data.data.transaction.data.franquicia);
+                  formRegisFactuMensualidad.append("bancoCard", data.data.transaction.data.banco);
+                  formRegisFactuMensualidad.append("factuEpaycoCod", document.querySelector("#inO_idMembreUser").value+"-"+data.data.transaction.data.factura.split("Y")[1]);
+                  formRegisFactuMensualidad.append("respuestaTransa", data.data.transaction.data.respuesta);
+                  formRegisFactuMensualidad.append("motivoTransa", data.data.transaction.data.estado);
+                  formRegisFactuMensualidad.append("tokenCardEpayco", data.data.tokenCard.cardTokenId);
+
+                  fetch(urlInfoClienteDB, {
+                    method: "POST",
+                    body: formRegisFactuMensualidad,
+                  })
+                    .then((response) => response.json())
+                    .then((data) => {
+
+                      document.querySelector("#inFormO_codMembresiaEmail").value = document.querySelector("#inO_idMembreCodigo").value;
+                      document.querySelector("#inFormO_fechaCreaFac").value = fechaCrea;
+                      document.querySelector("#inFormO_fechaCaducaFac").value = data[0];
+                      document.querySelector("#inFormO_facNumPedido").value = data[1];
+                      document.querySelector("#inFormO_mensuaMembresia").value = document.querySelector("#inO_mensualidadMembre").value;
+                      document.querySelector("#inFormO_ivaCantMembresia").value = document.querySelector("#inO_ivaCantMembre").value;
+                      document.querySelector("#inFormO_descuCantMembresia").value = document.querySelector("#inO_descuCantMembre").value;
+                      document.querySelector("#inFormO_totalMembresia").value = document.querySelector("#inO_totalMembre").value;
+                      document.querySelector("#inFormO_horaCreaFac").value = horaCrea;
+                      document.querySelector("#inFormO_serieFac").value = serieFactu;
+                      document.querySelector("#inFormO_codigoFac").value = factuCodigo;
+                      document.querySelector("#inFormO_membreNombre").value = document.querySelector("#inO_nombreMembre").value;
+                      document.querySelector("#inFormO_respuestaEpay").value = respuestaEpayco;
+                      document.querySelector("#inFormO_motivoEpay").value = motivoEpayco;
+
+                      document.querySelector("#formCreaFacMensualidad").submit();
+                      
+                    })
+                    .catch((err) => console.log(err));
+
+                })
+                .catch((err) => console.log(err));
+
+            })
+            .catch((err) => console.log(err));
+
+      }
+
+    }
+
+  // FUNCIONES - FIN
+  //--------------------------------------------------------------------------------------------------------------------------------
+
+  //--------------------------------------------------------------------------------------------------------------------------------
+  // EVENTOS - INICIO
+
+    // Número de Tarjeta INPUT
+    in_numTDC.addEventListener("input", (e)=>{
+
+      let valor = e.target.value;
+
+      if(valor != ""){
+
+        if(isNaN(Number(valor))){
+          erroresInputs[0] = 1;
+        }else{
+          erroresInputs[0] = 0;
+        }
+
+      }else{
+        erroresInputs[0] = 1;
+      }
+
+      verificarErroresIN();
+
+    });
+
+    // Mes de Vencimiento INPUT
+    in_mesVTDC.addEventListener("input", (e)=>{
+
+      let valor = in_mesVTDC.options[in_mesVTDC.selectedIndex].text;
+
+      if(valor != ""){
+
+        if(isNaN(Number(valor))){
+          erroresInputs[1] = 1;
+        }else{
+          erroresInputs[1] = 0;
+        }
+
+      }else{
+        erroresInputs[1] = 1;
+      }
+
+      verificarErroresIN();
+
+    });
+
+    // Año de Vencimiento INPUT
+    in_anioVTDC.addEventListener("input", (e)=>{
+
+      let valor = e.target.value;
+
+      if(valor != ""){
+
+        if(isNaN(Number(valor))){
+          erroresInputs[2] = 1;
+        }else{
+          erroresInputs[2] = 0;
+        }
+
+      }else{
+        erroresInputs[2] = 1;
+      }
+
+      verificarErroresIN();
+
+    });
+
+    // Número CVC INPUT
+    in_numCVVTDC.addEventListener("input", (e)=>{
+
+      let valor = e.target.value;
+
+      if(valor != ""){
+
+        if(isNaN(Number(valor))){
+          erroresInputs[3] = 1;
+        }else{
+          erroresInputs[3] = 0;
+        }
+
+      }else{
+        erroresInputs[3] = 1;
+      }
+
+      verificarErroresIN();
+
+    });
+
+    // Botón Volver
+    btn_volver.addEventListener("click", (e)=>{
+      window.location.href = "index.php";
+    });
+
+    // Botón Pagar Mensualidad
+    btn_pagarMensualidad.addEventListener("click", (e)=>{
+      enviarComprobarTDC();
+    });
+
+  // EVENTOS - FIN
+  //--------------------------------------------------------------------------------------------------------------------------------
+
+}
+
+//--------------------------------------------
+// <<-- comprobarStdMembresia.php - FIN -->>
 //--------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------

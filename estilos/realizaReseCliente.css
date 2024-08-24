@@ -32,7 +32,8 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    padding-bottom: 30rem;
+    padding-bottom: 26rem;
+    padding-top: 16rem;
     &::-webkit-scrollbar {
       -webkit-appearance: none;
       width: 1rem;
@@ -43,10 +44,13 @@
     }
 }
 
-.header{
+.headerCli{
     width: 100%;
     height: 16rem;
     background: linear-gradient(0deg, rgba(217,219,224,1) 0%, rgb(100, 113, 209) 100%);
+    position: absolute;
+    left: 0;
+    top: 0;
     & .headerDiv1{
       width: 100%;
       height: 70%;
@@ -66,8 +70,9 @@
         top: 0;
         left: 0;
         & svg{
-          width: 6rem;
+          width: 24rem;
           height: max-content;
+          fill: #ffffff;
         }
       }
       & .divPerfilGene{
@@ -125,6 +130,144 @@
           }
         }
       }
+      & .cuadroOPerfil1 {
+        height: 0rem;
+        width: 0rem;
+        box-shadow: none;
+        overflow: hidden;
+        position: absolute;
+        transform-origin: top left;
+        transition: 0.3s;
+        z-index: 1000;
+      }
+      & .cuadroOPerfil2 {
+        display: flex;
+        position: absolute;
+        z-index: 1000;
+        width: 50rem;
+        height: max-content;
+        display: flex;
+        flex-direction: column;
+        border-radius: 1rem;
+        top: 100%;
+        right: 2rem;
+        transition: 0.3s;
+        overflow: hidden;
+        background-color: #e9e8e8;
+        transform-origin: top right;
+        box-shadow: 0.2rem 0.4rem 0.4rem #33333355;
+        & .div1 {
+          width: 100%;
+          height: max-content;
+          display: flex;
+          flex-direction: column;
+          border-bottom: 1px solid #002d5622;
+          & div {
+            width: 100%;
+            height: max-content;
+            display: flex;
+            align-items: center;
+            padding-top: 1.4rem;
+            padding-left: 2rem;
+            padding-bottom: 1.4rem;
+            & svg {
+              width: 2rem;
+              height: max-content;
+              fill: #002d5699;
+            }
+            & span {
+              font-size: 1.6rem;
+              margin-left: 1rem;
+              color: #002d56aa;
+            }
+          }
+          & button {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            padding: 1.8rem;
+            font-size: 1.6rem;
+            color: #002d56aa;
+            cursor: pointer;
+            transition: 0.2s;
+            & svg {
+              width: 2rem;
+              height: max-content;
+              fill: #002d56aa;
+              margin-right: 1rem;
+              transition: 0.2s;
+            }
+            &:hover {
+              background-color: #002d5633;
+              color: #ffffff;
+              & svg {
+                fill: #ffffff;
+              }
+            }
+          }
+        }
+        & .div2 {
+          width: 100%;
+          display: flex;
+          height: max-content;
+          & a {
+            width: 100%;
+          }
+          & button {
+            font-size: 1.6rem;
+            width: 100%;
+            padding: 1.8rem;
+            display: flex;
+            justify-content: flex-start;
+            color: #002d56aa;
+            transition: 0.2s;
+            cursor: pointer;
+            & svg {
+              width: 2rem;
+              height: max-content;
+              fill: #002d56aa;
+              margin-right: 1rem;
+              transition: 0.2s;
+            }
+            &:hover {
+              background-color: #002d5633;
+              color: #ffffff;
+              & svg {
+                fill: #ffffff;
+              }
+            }
+          }
+        }
+        & .div3 {
+          width: 100%;
+          display: flex;
+          height: max-content;
+          & button {
+            font-size: 1.6rem;
+            width: 100%;
+            padding: 1.8rem;
+            display: flex;
+            justify-content: flex-start;
+            color: #002d56aa;
+            transition: 0.2s;
+            cursor: pointer;
+            & svg {
+              width: 2rem;
+              height: max-content;
+              fill: #002d56aa;
+              margin-right: 1rem;
+              transition: 0.2s;
+            }
+            &:hover {
+              background-color: #002d5633;
+              color: #ffffff;
+              & svg {
+                fill: #ffffff;
+              }
+            }
+          }
+        }
+      }
     }
     & .headerNav{
       background-color: #c4cee4;
@@ -144,19 +287,27 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-right: 1.4rem;
-          &:last-child{
-            margin-right: 0;
+          margin-left: 1.4rem;
+          &:first-child{
+            margin-left: 0;
           }
           & a{
             font-size: 1.6rem;
             font-weight: 600;
             color: #183a6d;
+            cursor: pointer;
+            transition: .3s;
+            padding: .8rem 1rem;
+            border-radius: 1rem;
+            &:hover{
+              background-color: #004f7844;
+              color: #ffffff;
+            }
           }
         }
       }
     }
-}
+  }
 
 .main{
     max-width: 100%;
@@ -211,6 +362,7 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        margin-bottom: 10rem;
         align-items: center;
         box-shadow: .6rem .6rem .4rem #183a6d44;
         & .div1-C{
@@ -2196,43 +2348,55 @@
     }
 }
 
-.footer {
+.footer{
     width: 100%;
-    height: 24rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: absolute;
+    height: 26rem;
     background-color: #004f78;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
     bottom: 0;
-    & .footer_contenido {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      & .footer_redesSocialesContent {
+    left: 0;
+    overflow: hidden;
+    & .flexContainerEnlaces{
         width: 100%;
-        height: 3rem;
-        margin: 3rem 0;
-      }
-      & .footer_logoBizSvg {
-        width: 7rem;
-        height: max-content;
-        fill: #ffffffdd;
-        margin: 1rem 0;
-      }
-      & .footer_copyrightContent {
-        width: 100%;
-        height: max-content;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: 400;
-        color: #ffffffdd;
-        font-size: 2rem;
-      }
+        justify-content: flex-end;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #ffffff44;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #ffffff44;
+        & a{
+            margin-right: 2rem;
+            &:last-child{
+                margin-right: 3rem;
+            }
+        }
     }
-}
+    & .flexContainerLogo{
+        width: 100%;
+        display: flex;
+        margin-top: 2rem;
+        flex-direction: column;
+        align-items: center;
+        height: max-content;
+        & .footer_logoBizSvg {
+            width: 7rem;
+            height: max-content;
+            fill: #ffffffdd;
+            margin: 1rem 0;
+        }
+        & .footer_copyrightContent {
+            width: 100%;
+            height: max-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 400;
+            color: #ffffffdd;
+            font-size: 2rem;
+        }
+    }
+  }

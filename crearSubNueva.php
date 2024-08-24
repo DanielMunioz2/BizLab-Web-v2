@@ -29,6 +29,7 @@
         $userDirecc = $_POST["userDirecc"];
         $userTelfF = $_POST["userTelf"];
         $userTelf = $_POST["userCelular"];
+        $userIp = $_POST["userIp"];
 
         $sub = $epayco->subscriptions->create(array(
             "id_plan" => $membreCod,
@@ -40,6 +41,34 @@
             "url_confirmation" => "https://ejemplo.com/confirmacion",
             "method_confirmation" => "POST"
         ));
+        
+        $sub3 = $epayco->subscriptions->charge(array(
+            "id_plan" => $membreCod,
+            "customer" => $miembroToken,
+            "token_card" => $tarjeToken,
+            "doc_type" => "CC",
+            "doc_number" => $userDocume,
+            "address" => $userDirecc,
+            "phone"=> $userTelfF,
+            "cell_phone"=> $userTelf,
+            "ip" => $userIp,  // This is the client's IP, it is required
+            "text"=> true
+        ));
+
+        echo json_encode($sub3, JSON_UNESCAPED_UNICODE);
+
+    }
+
+    if(isset($_POST["membreCodiPagoMem"])){
+
+        $membreCod = $_POST["membreCodiPagoMem"];
+        $miembroToken = $_POST["userToken"];
+        $tarjeToken = $_POST["userTarjeToken"];
+        $userDocume = $_POST["userDocument"];
+        $userDirecc = $_POST["userDirecc"];
+        $userTelfF = $_POST["userTelf"];
+        $userTelf = $_POST["userCelular"];
+        $userIp = $_POST["userIp"];
 
         $sub3 = $epayco->subscriptions->charge(array(
             "id_plan" => $membreCod,
@@ -50,12 +79,12 @@
             "address" => $userDirecc,
             "phone"=> $userTelfF,
             "cell_phone"=> $userTelf,
-            "ip" => "63.141.49.75",  // This is the client's IP, it is required
+            "ip" => $userIp,  // This is the client's IP, it is required
             "text"=> true
         ));
 
         echo json_encode($sub3, JSON_UNESCAPED_UNICODE);
-
+        
     }
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
