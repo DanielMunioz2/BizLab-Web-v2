@@ -6295,6 +6295,17 @@ if(document.querySelector("#realizarReseCLI-HTML") != null){
     //----------------------------------------------------------------------------------------------------------------------------------------------
     // EVENTOS - INICIO
 
+        // (Bloquear Boton CTRL, CTRL+F5)
+        window.addEventListener("keypress", function(event){
+
+            console.log(event);
+            // if (event.keyCode == ){
+            //     event.preventDefault();
+            //     alert("Acción NO Permitida");
+            // }
+
+        }, false);
+
         // (Click fuera) ocultar cuadro perfil opciones
         if(document.querySelector("#cuadroPOculto") != null){
 

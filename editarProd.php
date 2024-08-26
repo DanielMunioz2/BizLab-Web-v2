@@ -540,6 +540,7 @@
 <!DOCTYPE html>
 <html lang="en" class="editarProdHTML">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Producto</title>
@@ -550,7 +551,9 @@
         <input type="hidden" value="<?php echo $tipo?>" name="tipoEditEli">
         <input type="hidden" value="<?php echo $imagen?>" name="imagen">
     </form>
+    <link rel="shortcut icon" type="x-icon" href="images/favicon_bizclub.svg">
     <link rel="stylesheet" href="estilos/editarProd.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>

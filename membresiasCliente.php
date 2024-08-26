@@ -136,6 +136,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Membresías BizClub</title>
+    <link rel="shortcut icon" type="x-icon" href="images/favicon_bizclub.svg">
     <link rel="stylesheet" href="estilos/membresiasCliente.css">
 </head>
 <body class="body">

@@ -357,6 +357,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura de Compra - Nueva Reserva</title>
+    <link rel="shortcut icon" type="x-icon" href="images/favicon_bizclub.svg">
     <link rel="stylesheet" href="estilos/factuCompraRese.css">
 </head>
 <body class="body">

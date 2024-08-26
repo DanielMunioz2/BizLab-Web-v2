@@ -19,6 +19,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Inicia Sesión</title>
+        <link rel="shortcut icon" type="x-icon" href="images/favicon_bizclub.svg">
         <link rel="stylesheet" href="estilos/inicioSesion.css">
     </head>
     <body class="body">

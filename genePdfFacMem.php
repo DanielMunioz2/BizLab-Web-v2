@@ -225,6 +225,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Compra Exitosa</title>
+        <link rel="shortcut icon" type="x-icon" href="images/favicon_bizclub.svg">
         <link rel="stylesheet" href="estilos/genePdfFacMem.css">
 
         <!-- Form Descargar Factura -->

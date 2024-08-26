@@ -160,6 +160,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil</title>
+    <link rel="shortcut icon" type="x-icon" href="images/favicon_bizclub.svg">
     <link rel="stylesheet" href="estilos/usuarioPerfil.css">
 
     <input class="userId" id="userId" type="hidden" value="<?php echo $resultadoUser["id_usuario"]; ?>">

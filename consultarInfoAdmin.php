@@ -982,8 +982,8 @@
                 );
 
                 $resultadoDeudaNueva = $conn->query(
-                    "INSERT INTO `bizlabDB`.`deudas` 
-                    (`tipoDeuda`, `estadoDeuda`, `precioDeuda`, `id_user`)
+                    "INSERT INTO `bizlabDB`.`deudas_users` 
+                    (`tipoDeuda`, `estadoDeuda`, `precioDeuda`, `id_usuario`)
                     VALUES
                     ('".$tipoDeuda."', 'Pendiente', ".intval($cargoAdicional).", ".intval($idUserRese).");"
                 );

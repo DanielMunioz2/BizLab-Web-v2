@@ -29,7 +29,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar Nuevo Miembro</title>
+    <link rel="shortcut icon" type="x-icon" href="images/favicon_bizclub.svg">
     <link rel="stylesheet" href="estilos/confirmarNuevoMiembro.css">
+
     <input type="text" value="<?php echo $nombreM?>" class="inputNom">
     <input type="text" value="<?php echo $apellidoM?>" class="inputApe">
     <input type="text" value="<?php echo $documentoM?>" class="inputDocu">
@@ -43,6 +45,7 @@
     <input type="text" value="<?php echo $nitM?>" class="inputNit">
     <input type="text" value="<?php echo $correoA?>" class="correoAdmin">
     <input type="text" value="<?php echo $contraA?>" class="contraAdmin">
+    
 </head>
 <body class="body">
     <main class="main">

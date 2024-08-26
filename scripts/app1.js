@@ -2852,6 +2852,7 @@ if(document.querySelector("#comprobarMembreHTML") != null){
 
     // CONTENEDORES
     const divEstadoCuenta = document.querySelector("#divEstadoCuenta");
+    const body = document.querySelector(".body");
 
   //--------------------------------------------------------------------------------------------------------------------------------
 
@@ -3233,6 +3234,16 @@ if(document.querySelector("#comprobarMembreHTML") != null){
 
   //--------------------------------------------------------------------------------------------------------------------------------
   // EVENTOS - INICIO
+  
+    // (Bloquear Boton CTRL, CTRL+F5)
+    window.addEventListener("keydown", (event)=>{
+
+      if(event.ctrlKey){
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+    });
 
     // Número de Tarjeta INPUT
     in_numTDC.addEventListener("input", (e)=>{
@@ -3324,8 +3335,30 @@ if(document.querySelector("#comprobarMembreHTML") != null){
     });
 
     // Botón Pagar Mensualidad
+    const rangoSpinner = document.createRange();
+
     btn_pagarMensualidad.addEventListener("click", (e)=>{
+
+      btn_pagarMensualidad.setAttribute("disabled", "");
+      btn_pagarMensualidad.classList.replace("buttonPagarMensu-D", "buttonPagarMensu-B");
+
+      // HTML spinner
+      htmlSpinner = `
+      <div id="baseSpinnerCargaRese" class="baseSpinnerCargaRese baseSpinnerCargaRese-A">
+        <span>Procesando... Espere</span>
+      </div>
+      `;
+
+      body.style.overflowY = "hidden";
+
+      // Desplegando Spinner
+      rangoSpinner.selectNode(document.getElementsByTagName("div").item(0));
+      const spinnerPagoMensu =
+        rangoSpinner.createContextualFragment(htmlSpinner);
+      body.appendChild(spinnerPagoMensu);
+
       enviarComprobarTDC();
+
     });
 
   // EVENTOS - FIN

@@ -124,6 +124,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pago de Mensualidad - Membresía BizClub</title>
+    <link rel="shortcut icon" type="x-icon" href="images/favicon_bizclub.svg">
     <link rel="stylesheet" href="estilos/comprobarMembresia.css">
 
     <input type="hidden" value="<?php echo $idMembresia["membreIdEpayco"]; ?>" id="inO_idMembreUser">
