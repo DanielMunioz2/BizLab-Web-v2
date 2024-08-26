@@ -4,20 +4,20 @@
     //------------------------------------------------------------------------------------------------------------------------------------------
     // Variables Globales
 
-    // var urlInfoAdmin = "http://165.22.176.119/BizLab/consultarInfoAdmin.php";
-    // var urlConfirTDC = "http://165.22.176.119/BizLab/confirTarjetaCredito.php";
-    // var urlCreaFacMembre = "http://165.22.176.119/BizLab/registrarFacMembre.php";
-    // var urlGuardaTokenUser = "http://165.22.176.119/BizLab/guardarMiembroEpayco.php";
-    // var urlCrearSub = "http://165.22.176.119/BizLab/crearSubNueva.php";
-    // var urlCrearUserToken = "http://165.22.176.119/BizLab/crearUserToken.php";
-    // var urlModoCLienteData = "http://165.22.176.119/BizLab/consultarInfoCliente.php";
-    var urlInfoAdmin = "http://localhost/BizLab/consultarInfoAdmin.php";
-    var urlConfirTDC = "http://localhost/BizLab/confirTarjetaCredito.php";
-    var urlCreaFacMembre = "http://localhost/BizLab/registrarFacMembre.php";
-    var urlGuardaTokenUser = "http://localhost/BizLab/guardarMiembroEpayco.php";
-    var urlCrearSub = "http://localhost/BizLab/crearSubNueva.php";
-    var urlCrearUserToken = "http://localhost/BizLab/crearUserToken.php";
-    var urlModoCLienteData = "http://localhost/BizLab/consultarInfoCliente.php";
+    var urlInfoAdmin = "http://165.22.176.119/BizLab/consultarInfoAdmin.php";
+    var urlConfirTDC = "http://165.22.176.119/BizLab/confirTarjetaCredito.php";
+    var urlCreaFacMembre = "http://165.22.176.119/BizLab/registrarFacMembre.php";
+    var urlGuardaTokenUser = "http://165.22.176.119/BizLab/guardarMiembroEpayco.php";
+    var urlCrearSub = "http://165.22.176.119/BizLab/crearSubNueva.php";
+    var urlCrearUserToken = "http://165.22.176.119/BizLab/crearUserToken.php";
+    var urlModoCLienteData = "http://165.22.176.119/BizLab/consultarInfoCliente.php";
+    // var urlInfoAdmin = "http://localhost/BizLab/consultarInfoAdmin.php";
+    // var urlConfirTDC = "http://localhost/BizLab/confirTarjetaCredito.php";
+    // var urlCreaFacMembre = "http://localhost/BizLab/registrarFacMembre.php";
+    // var urlGuardaTokenUser = "http://localhost/BizLab/guardarMiembroEpayco.php";
+    // var urlCrearSub = "http://localhost/BizLab/crearSubNueva.php";
+    // var urlCrearUserToken = "http://localhost/BizLab/crearUserToken.php";
+    // var urlModoCLienteData = "http://localhost/BizLab/consultarInfoCliente.php";
 
     var mesesFactura = {
         1 : "enero",
@@ -6809,10 +6809,10 @@ if(document.querySelector("#realizarReseCLI-HTML") != null){
                     extra28: precioXCant,
                     extra29: precioTotal,
 
-                    // confirmation: "http://165.22.176.119/BizLab/confirmacionPage.php",
-                    // response: "http://165.22.176.119/BizLab/transaccionExitosa.php",
-                    confirmation: "http://127.0.0.1/BizLab/confirmacionPage.php",
-                    response: "http://127.0.0.1/BizLab/transaccionExitosa.php",
+                    confirmation: "http://165.22.176.119/BizLab/confirmacionPage.php",
+                    response: "http://165.22.176.119/BizLab/transaccionExitosa.php",
+                    // confirmation: "http://127.0.0.1/BizLab/confirmacionPage.php",
+                    // response: "http://127.0.0.1/BizLab/transaccionExitosa.php",
 
                     //Atributos cliente
                     name_billing: String(nombreUser),
