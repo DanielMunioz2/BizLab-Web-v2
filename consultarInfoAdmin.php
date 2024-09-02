@@ -78,30 +78,8 @@
 
             //------------------------------------------------------------------------------------------
 
-            //Consulta 4: Mensajes
-
-            $resultadoMensajes = $conn->query(
-                "SELECT * FROM `bizlabDB`.`mensajes`
-                WHERE `mensajes`.`tipoMensaje` = 'Problema'
-                AND `mensajes`.`estadoMensaje` = 'Sin Respuesta';"
-            );
-
-            $numRowsMensaje = $resultadoMensajes->num_rows;
-
-            $arrayMensajes = [$numRowsMensaje];
-
-            if($numRowsMensaje > 0){
-
-                while($row = $resultadoMensajes->fetch_assoc()){
-                    array_push($arrayMensajes, $row);
-                }
-
-            };
-
-            //------------------------------------------------------------------------------------------
-
             //Devolviendo los datos
-            echo json_encode([$arrayFacturas, $arrayMiembros, $arrayReservas, $arrayMensajes], JSON_UNESCAPED_UNICODE);
+            echo json_encode([$arrayFacturas, $arrayMiembros, $arrayReservas], JSON_UNESCAPED_UNICODE);
 
         }
 
@@ -146,6 +124,74 @@
 
         }
 
+    //--------------------------------------------------------------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------------------------------------------------------------
+    //----------------------------------
+    // Calendario MODO MES/DÍA | INICIO
+    //----------------------------------
+        
+        //----------------------------------------------------------------------------------------------------------------------------
+
+        if(isset($_POST["unidadesPdtNRAdmin"])){
+
+            $idUnidades= $_POST["unidadesPdtNRAdmin"];
+
+            $resultUnidades = $conn->query(
+                "SELECT * FROM `bizlabDB`.`unidades`
+                WHERE `unidades`.`id_unidad` IN (".$idUnidades.");"
+            );
+
+            $rowUnidad = $resultUnidades->num_rows;
+
+            $arrayUnidades = [$rowUnidad-1];
+
+            if($rowUnidad > 0){
+
+                while($row = $resultUnidades->fetch_assoc()){
+
+                    array_push($arrayUnidades, $row);
+                    
+                }
+
+            }
+
+            echo json_encode($arrayUnidades, JSON_UNESCAPED_UNICODE);
+
+        }
+
+        if(isset($_POST["nombrePdtNRAdmin"])){
+
+            $nombre= $_POST["nombrePdtNRAdmin"];
+
+            $resultPdt = $conn->query(
+                "SELECT * FROM `bizlabDB`.`productos`
+                WHERE `productos`.`produNombre` LIKE '%".$nombre."%';"
+            );
+
+            $rowPdt = $resultPdt->num_rows;
+
+            $arrayPdtNRAdmin = [$rowPdt-1];
+
+            if($rowPdt > 0){
+
+                while($row = $resultPdt->fetch_assoc()){
+
+                    array_push($arrayPdtNRAdmin, $row);
+                    
+                }
+
+            }
+
+            echo json_encode($arrayPdtNRAdmin, JSON_UNESCAPED_UNICODE);
+
+        }
+
+        //----------------------------------------------------------------------------------------------------------------------------
+
+    //----------------------------------
+    // Calendario MODO MES/DÍA | FIN
+    //----------------------------------
     //--------------------------------------------------------------------------------------------------------------------------------
 
     // Actualizar Perfil
@@ -788,8 +834,6 @@
                 `membresiauser`.`id_membreUser` = `historial`.`tarea_membresiaUser`
                 JOIN `bizlabDB`.`membresias` ON 
                 `membresias`.`id_membresia` = `historial`.`tarea_membresia`
-                JOIN `bizlabDB`.`mensajes` ON 
-                `mensajes`.`id_mensaje` = `historial`.`tarea_mensaje`
                 WHERE `historial`.`tarea_fOrigen` = '".$fecha."'
                 OR `historial`.`tarea_fOrigen` = '".$fechaAnte."'
                 ORDER BY `historial`.`id_historial`;"

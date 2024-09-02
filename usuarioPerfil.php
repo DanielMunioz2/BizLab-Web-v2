@@ -25,7 +25,24 @@
         $generoMas = $resultadoUser["user_genero"] == "Masculino" ? "selected" : "";
         $generoFem = $resultadoUser["user_genero"] == "Femenino" ? "selected" : "";
 
-        if($userTipo == "Miembro"){
+        $htmlLi = "";
+        
+        if($_SESSION["tipoUsuario"] == "Miembro"){
+            $htmlLi = '
+            <li><a class="btnPagarMensuali">Pagar Mensualidad</a></li>
+            <li><a class="btnRealizaRese">Reservar Unidad</a></li>
+            <li><a href="membresiasCliente.php" class="btnRealizaRese">Membresías</a></li>
+            ';
+        }
+
+        if($_SESSION["tipoUsuario"] == "Usuario"){
+            $htmlLi = '
+            <li><a class="btnRealizaRese">Reservar Unidad</a></li>
+            <li><a href="membresiasCliente.php" class="btnRealizaRese">Membresías</a></li>
+            ';
+        }
+
+        if($userTipo == "Miembro" || $userTipo == "Usuario"){
             $htmlHeader = '
             <header class="headerCli"> 
                 <div class="headerDiv1">
@@ -87,8 +104,7 @@
                         <input name="realizaReseCli" type="hidden" value="true">
                     </form>
                     <ul class="ulNav">
-                        <li><a class="btnPagarMensuali">Pagar Mensualidad</a></li>
-                        <li><a class="btnRealizaRese">Reservar Unidad</a></li>
+                        '.$htmlLi.'
                     </ul>
                 </nav>   
             </header>

@@ -43,12 +43,78 @@
         <form id="formCreUnid" name="formCreUnid" method="post" action="crearProd.php">
             <input value="unidad" id="tipoInputCreP" name="productoCrear" type="hidden">
         </form>
+
+        <!-- Datos Nueva Reserva -->
+        
+
+        <!------------------------------------------------------------------------------------------------>
         
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </head>
     <body class="body">
+        <div id="fondoNegroNewRese" class="fondoNegroNewRese fondoNegroNewRese-O">
+            <div class="baseReseGeneral">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_idPdtSelecNR" name="inO_idPdtSelecNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_tipoReseNR" name="inO_tipoReseNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_idUserNR" name="inO_idUserNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_idUnidNR" name="inO_idUnidNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_idOtrosUsersNR" name="inO_idOtrosUsersNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_fechaInicioNR" name="inO_fechaInicioNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_fechaFinalNR" name="inO_fechaFinalNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_horaInicioNR" name="inO_horaInicioNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_horaFinalNR" name="inO_horaFinalNR" value="">
+                <input type="text" style="font-size: 1.8rem; padding-left: 1rem" id="inO_cadenaFechasNR" name="inO_cadenaFechasNR" value="">
+
+                <!-- Por Hora -->
+                <input type="text" id="inO_cantHorasNR" name="inO_cantHorasNR" value="">
+
+                <!-- Por Día -->
+                <input type="text" id="inO_cantDiasNR" name="inO_cantDiasNR" value="">
+
+                <div class="dataReseBaseGene">
+                    <span class="spanGeneral">Datos de la Reserva</span>
+                    <div class="divReseProduBaseGene">
+                        <span class="spanPdt">Producto</span>
+                        <div class="divInputPdt">
+                            <div id="div_pdtSeleContainer" class="pdtSeleContainer pdtSeleContainer-O">
+                            </div>
+                            <input 
+                                type="text" 
+                                id="in_pdtNomAdminNR"
+                                class="in_pdtNomAdminNR-V"
+                                placeholder="¿Qué quiere reservar?"
+                            >
+                            <div id="div_listaPdt" class="listaPdt-O">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divGeneBaseInput">
+                        <div class="divFacturaGeneDiv">
+
+                        </div>
+                        <div class="divInputsDivGene">
+                            <div id="div_tipoReseYTiempoGene" class="div_tipoReseYTiempoGene div_tipoReseYTiempoGene-O">
+                                <div class="separador"></div>
+                                <div class="base1">
+                                    <div class="div_tipoReseBase">
+                                        <span>Tipo de Reserva</span>
+                                        <button tipo="hora" id="btnReseXH" class="btnTipoRese" disabled>Por Hora</button>
+                                        <button tipo="dia" id="btnReseXD" class="btnTipoRese" disabled>Por Día</button>
+                                        <button tipo="semana" id="btnReseXS" class="btnTipoRese" disabled>Por Semana</button>
+                                        <button tipo="mes" id="btnReseXM" class="btnTipoRese">Por Mes</button>
+                                    </div>
+                                    <div id="div_tiempoReseBase" class="div_tiempoReseBase div_tiempoReseBase-O">
+                                    </div>
+                                </div>
+                                <div class="separador"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <header class="header">
             <div class="header_div1">
                 <div class="divPerfilContaint">

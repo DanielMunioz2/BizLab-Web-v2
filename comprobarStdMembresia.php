@@ -53,7 +53,7 @@
 
                 // Usuario Datos
                 $resultadoUser = $conn->query(
-                    "SELECT * FROM `bizlabdb`.`usuarios`
+                    "SELECT * FROM `bizlabDB`.`usuarios`
                     WHERE `usuarios`.`id_usuario` = ".intval($_SESSION["iniciado"]).";"
                 );
 
@@ -64,7 +64,7 @@
                 $idMembresia = "";
 
                 $resultadoMembresia = $conn->query(
-                    "SELECT `membreIdEpayco`, `membreId`, `membreCodEpayco`, `membreCodigo` FROM `bizlabdb`.`membresiauser`
+                    "SELECT `membreIdEpayco`, `membreId`, `membreCodEpayco`, `membreCodigo` FROM `bizlabDB`.`membresiauser`
                     WHERE `membresiauser`.`membreUser` = ".intval($_SESSION["iniciado"]).";"
                 );
 

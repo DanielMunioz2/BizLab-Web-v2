@@ -190,6 +190,7 @@ if(isset($_SESSION["iniciado"])){
                 </form>
                 <ul class="ulNav">
                     <li><a class="btnPagarMensuali">Pagar Mensualidad</a></li>
+                    <li><a href="membresiasCliente.php" class="btnRealizaRese">Membresías</a></li>
                 </ul>
             </nav>   
         </header>

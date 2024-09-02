@@ -86,7 +86,7 @@
             $idinsertadoFac = $conn->insert_id;
 
             $updateMembreUser = $conn->query(
-                "UPDATE `bizlabdb`.`membresiauser` 
+                "UPDATE `bizlabDB`.`membresiauser` 
                 SET `membreFechaPagoP` = '$fechaFacCaduca' 
                 WHERE (`membreIdEpayco` = '$membreIdEpayco');"
             );
@@ -103,7 +103,7 @@
             $estadoMembre = $_POST["estadoMembre"];
 
             $resultUpdateMembre = $conn->query(
-                "UPDATE `bizlabdb`.`membresiauser` SET `membreEstado` = '$estadoMembre' WHERE (`membreIdEpayco` = '$idMembresiaUser');"
+                "UPDATE `bizlabDB`.`membresiauser` SET `membreEstado` = '$estadoMembre' WHERE (`membreIdEpayco` = '$idMembresiaUser');"
             );
 
             echo json_encode('Cuenta '.$estadoMembre, JSON_UNESCAPED_UNICODE);

@@ -6,16 +6,16 @@
   //-----------------------------------------------------------------------------------------------------------------------------
   // VARIABLES
 
-  var urlEnviContraRecu = "http://165.22.176.119/BizLab/enviarContraRecu.php";
-  var urlInfoClienteDB = "http://165.22.176.119/BizLab/consultarInfoCliente.php";
-  var urlConsultarUser = "http://165.22.176.119/BizLab/consultarUsuario.php";
-  var urlConsultarTDC = "http://165.22.176.119/BizLab/confirTarjetaCredito.php";
-  var urlPagarMensualidadTDC = "http://165.22.176.119/BizLab/transapagoMensualidad.php";
-  // var urlEnviContraRecu = "http://localhost/BizLab/enviarContraRecu.php";
-  // var urlInfoClienteDB = "http://localhost/BizLab/consultarInfoCliente.php";
-  // var urlConsultarUser = "http://localhost/BizLab/consultarUsuario.php";
-  // var urlConsultarTDC = "http://localhost/BizLab/confirTarjetaCredito.php";
-  // var urlPagarMensualidadTDC = "http://localhost/BizLab/transapagoMensualidad.php";
+  // var urlEnviContraRecu = "http://165.22.176.119/BizLab/enviarContraRecu.php";
+  // var urlInfoClienteDB = "http://165.22.176.119/BizLab/consultarInfoCliente.php";
+  // var urlConsultarUser = "http://165.22.176.119/BizLab/consultarUsuario.php";
+  // var urlConsultarTDC = "http://165.22.176.119/BizLab/confirTarjetaCredito.php";
+  // var urlPagarMensualidadTDC = "http://165.22.176.119/BizLab/transapagoMensualidad.php";
+  var urlEnviContraRecu = "http://localhost/BizLab/enviarContraRecu.php";
+  var urlInfoClienteDB = "http://localhost/BizLab/consultarInfoCliente.php";
+  var urlConsultarUser = "http://localhost/BizLab/consultarUsuario.php";
+  var urlConsultarTDC = "http://localhost/BizLab/confirTarjetaCredito.php";
+  var urlPagarMensualidadTDC = "http://localhost/BizLab/transapagoMensualidad.php";
 
   var diaGeneNum = new Date().getDate();
   var mesGeneNum = new Date().getMonth()+1;

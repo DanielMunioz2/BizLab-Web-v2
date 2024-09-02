@@ -6,17 +6,6 @@
 
     if(isset($_SESSION["iniciado"])){
 
-        // Comprobando el Rol del USUARIO (Si no es "Administrador", redirecionar al pago de membresia)
-        if(
-            $_SESSION["tipoUsuario"] == "Miembro" ||
-            $_SESSION["tipoUsuario"] == "Administrador"
-        ){
-
-            header("location:index.php");
-
-        }
-        //--------------------------------------------------------------------------------------------------
-
         // Datos USUARIO INICIADO 
         $resultUsuario = $conn->query(
             "SELECT * FROM `bizlabDB`.`usuarios` 
@@ -94,33 +83,20 @@
         }
         //-------------------------------------------------------------------------------------------------------------
 
-        //---------------------------------------------------------------------------------------------------
-        // Div para verificar si el usuario es miembro o no
-
-        $htmlMembreDispo = "";
-        $claseMembre = "divMembreConfirmGene-C";
-
-        if($_SESSION["tipoUsuario"] == "Usuario"){
-
-            $claseMembre = "divMembreConfirmGene-A";
-
-            $htmlMembreDispo = '
-            <div class="divMembreDispo">
-                <div class="spanSvgDiv">
-                    <div class="svgDiv">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.49 452.25"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M492.28,284.85c-28.94-45.84-57.46-91.93-86.17-137.91-21-33.56-41.37-67.5-63.11-100.55C311.86-1,247.39-14,199.68,16.32c-16.43,10.45-28.07,25-38.21,41.35Q89.26,174,16.56,290c-14,22.35-19,46.49-15.46,72.52C8,412.94,52.66,452.18,103.37,452.2q152.43.06,304.85-.05c33.23-.06,60-14.17,80.93-39.55,12.38-15,19-32.58,22.34-51.56V333.1C508.6,315.61,501.75,299.83,492.28,284.85ZM422.86,419.44a93.5,93.5,0,0,1-20.78,2.12q-73.09,0-146.17,0-73.33,0-146.67,0c-15.19,0-29.78-2.92-42.79-11.31-20.7-13.36-32.63-32.12-34.92-56.87C30,336.5,34,321.07,42.9,306.83q49.62-79.56,99.29-159.09C159,120.8,175.75,93.82,192.64,66.93c14.6-23.24,36-35.4,63.18-35.49,26.74-.09,48.35,11.53,62.75,34.39,34.65,55,68.91,110.24,103.32,165.39,15.41,24.68,30.65,49.46,46.27,74,8.19,12.86,13,26.81,12.78,41.86C480.33,384.78,455.06,412.12,422.86,419.44Z"/><path d="M295.61,83a48.46,48.46,0,0,0-9.81-11.87c-22.15-18.53-53.49-13.46-69.08,11.34-17.42,27.73-34.68,55.57-52,83.36q-49,78.51-97.9,157c-9.36,15.09-9.73,31-1.07,46.43S88.1,392.36,106,392.34q75.09-.06,150.17,0t150.18,0a44.32,44.32,0,0,0,8.93-.6c32.1-6.71,46.93-41.69,29.52-69.63Q370.24,202.49,295.61,83ZM421,348c-.66,7.81-6.57,13-15.28,13.63-2.48.17-5,.06-7.48.06H112.29c-1.66,0-3.32,0-5,0-13.82-.18-20.33-12.74-13.17-24,18.72-29.47,37-59.2,55.52-88.83,30.19-48.38,60.79-96.52,90.34-145.3,9.52-15.71,22.29-15.76,32,0,47.55,77.33,95.88,154.19,143.94,231.21C418.47,338.84,421.38,342.86,421,348Z"/><path d="M271.3,218.85c0-16.29-.08-32.57.05-48.86,0-3.61-1.14-5.07-4.87-5-7.14.2-14.29.15-21.43,0-3.19-.05-4.41,1.17-4.41,4.38q.11,48.85,0,97.72c0,3.64,1.63,4.51,4.85,4.45,6.65-.14,13.31-.27,19.94,0,4.56.22,6-1.34,6-5.93C271.15,250.1,271.3,234.47,271.3,218.85Z"/><path d="M267.43,300.82q-11.44.09-22.9,0c-2.74,0-3.88,1.14-3.86,3.86q.11,11.46,0,22.91c0,2.73,1.14,3.91,3.87,3.85,4-.08,8,0,12,0,14.82,0,14.82,0,14.78-14.83,0-4-.06-8,0-11.95C271.35,301.94,270.16,300.79,267.43,300.82Z"/></g></g></svg>
-                    </div>
-                    <div class="spansDiv">
-                        <span>Su Rol actual en BizClub es el de <b>Usuario Común</b></span>
-                        <span>Para acceder a los servicios debe hacerse miembro</span>
-                    </div>
-                </div>
-            </div>
+        $htmlLi = "";
+        
+        if($_SESSION["tipoUsuario"] == "Miembro"){
+            $htmlLi = '
+            <li><a class="btnPagarMensuali">Pagar Mensualidad</a></li>
+            <li><a class="btnRealizaRese">Reservar Unidad</a></li>
             ';
-
         }
 
-        //---------------------------------------------------------------------------------------------------
+        if($_SESSION["tipoUsuario"] == "Usuario"){
+            $htmlLi = '
+            <li><a class="btnRealizaRese">Reservar Unidad</a></li>
+            ';
+        }
 
     }else{
 
@@ -140,7 +116,7 @@
     <link rel="stylesheet" href="estilos/membresiasCliente.css">
 </head>
 <body class="body">
-    <header class="header"> 
+    <header class="headerCli"> 
         <div class="headerDiv1">
             <div class="divLogo">  
                 <a href="index.php" title="Inicio"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1994.45 241.28"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M443,120.46c-3.67-3.34-4.15-5.32-1.12-9.62C457.28,88.93,459.79,65.17,448.4,41S417.2,2.5,390.19.87C367.78-.48,345.24.14,322.76.14Q220.82.15,
@@ -182,15 +158,13 @@
         </div> 
         <nav class="headerNav">
             <ul class="ulNav">
+                <?php echo $htmlLi; ?>
             </ul>
         </nav>   
     </header>
     <main class="main">
         <span class="serviciosSpan">Membresías BizClub</span>
         <span class="serviReseSpan">Escoja un producto</span>
-        <div class="divMembreConfirmGene <?php echo $claseMembre; ?>">
-            <?php echo $htmlMembreDispo; ?>
-        </div>
         <div class="divAsideGene">
             <div class="divDatosAside"></div>
         </div>
